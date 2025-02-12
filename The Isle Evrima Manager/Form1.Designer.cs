@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             stsStripMain = new StatusStrip();
             lblServerStatus = new ToolStripStatusLabel();
             groupBox1 = new GroupBox();
@@ -43,17 +44,27 @@
             label4 = new Label();
             label3 = new Label();
             groupBox3 = new GroupBox();
-            richTextBox1 = new RichTextBox();
+            txtConsole = new RichTextBox();
+            toolStrip1 = new ToolStrip();
+            toolStripDropDownButton1 = new ToolStripDropDownButton();
+            exitToolStripMenuItem = new ToolStripMenuItem();
+            toolStripDropDownButton2 = new ToolStripDropDownButton();
+            viewLogsToolStripMenuItem = new ToolStripMenuItem();
+            downloadDependenciesToolStripMenuItem = new ToolStripMenuItem();
+            steamCMDToolStripMenuItem = new ToolStripMenuItem();
+            theIsleServerToolStripMenuItem = new ToolStripMenuItem();
+            steamClientToolStripMenuItem = new ToolStripMenuItem();
             stsStripMain.SuspendLayout();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
+            toolStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // stsStripMain
             // 
             stsStripMain.Items.AddRange(new ToolStripItem[] { lblServerStatus });
-            stsStripMain.Location = new Point(0, 428);
+            stsStripMain.Location = new Point(0, 464);
             stsStripMain.Name = "stsStripMain";
             stsStripMain.Size = new Size(800, 22);
             stsStripMain.TabIndex = 0;
@@ -71,7 +82,7 @@
             groupBox1.Controls.Add(lblcplusplus);
             groupBox1.Controls.Add(label2);
             groupBox1.Controls.Add(label1);
-            groupBox1.Location = new Point(12, 12);
+            groupBox1.Location = new Point(12, 41);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(259, 64);
             groupBox1.TabIndex = 1;
@@ -123,9 +134,9 @@
             groupBox2.Controls.Add(label5);
             groupBox2.Controls.Add(label4);
             groupBox2.Controls.Add(label3);
-            groupBox2.Location = new Point(12, 82);
+            groupBox2.Location = new Point(12, 111);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(160, 79);
+            groupBox2.Size = new Size(259, 79);
             groupBox2.TabIndex = 2;
             groupBox2.TabStop = false;
             groupBox2.Text = "Server Info";
@@ -186,27 +197,98 @@
             // 
             // groupBox3
             // 
-            groupBox3.Controls.Add(richTextBox1);
-            groupBox3.Location = new Point(12, 167);
+            groupBox3.Controls.Add(txtConsole);
+            groupBox3.Location = new Point(12, 196);
             groupBox3.Name = "groupBox3";
             groupBox3.Size = new Size(776, 258);
             groupBox3.TabIndex = 3;
             groupBox3.TabStop = false;
             groupBox3.Text = "Server Console";
             // 
-            // richTextBox1
+            // txtConsole
             // 
-            richTextBox1.Location = new Point(6, 22);
-            richTextBox1.Name = "richTextBox1";
-            richTextBox1.Size = new Size(764, 230);
-            richTextBox1.TabIndex = 0;
-            richTextBox1.Text = "";
+            txtConsole.Location = new Point(6, 22);
+            txtConsole.Name = "txtConsole";
+            txtConsole.ReadOnly = true;
+            txtConsole.Size = new Size(764, 230);
+            txtConsole.TabIndex = 0;
+            txtConsole.Text = "";
+            // 
+            // toolStrip1
+            // 
+            toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripDropDownButton1, toolStripDropDownButton2 });
+            toolStrip1.Location = new Point(0, 0);
+            toolStrip1.Name = "toolStrip1";
+            toolStrip1.Size = new Size(800, 25);
+            toolStrip1.TabIndex = 4;
+            toolStrip1.Text = "toolStrip1";
+            // 
+            // toolStripDropDownButton1
+            // 
+            toolStripDropDownButton1.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            toolStripDropDownButton1.DropDownItems.AddRange(new ToolStripItem[] { exitToolStripMenuItem });
+            toolStripDropDownButton1.Image = (Image)resources.GetObject("toolStripDropDownButton1.Image");
+            toolStripDropDownButton1.ImageTransparentColor = Color.Magenta;
+            toolStripDropDownButton1.Name = "toolStripDropDownButton1";
+            toolStripDropDownButton1.Size = new Size(38, 22);
+            toolStripDropDownButton1.Text = "File";
+            // 
+            // exitToolStripMenuItem
+            // 
+            exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            exitToolStripMenuItem.Size = new Size(93, 22);
+            exitToolStripMenuItem.Text = "Exit";
+            exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
+            // 
+            // toolStripDropDownButton2
+            // 
+            toolStripDropDownButton2.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            toolStripDropDownButton2.DropDownItems.AddRange(new ToolStripItem[] { viewLogsToolStripMenuItem, downloadDependenciesToolStripMenuItem });
+            toolStripDropDownButton2.Image = (Image)resources.GetObject("toolStripDropDownButton2.Image");
+            toolStripDropDownButton2.ImageTransparentColor = Color.Magenta;
+            toolStripDropDownButton2.Name = "toolStripDropDownButton2";
+            toolStripDropDownButton2.Size = new Size(47, 22);
+            toolStripDropDownButton2.Text = "Tools";
+            // 
+            // viewLogsToolStripMenuItem
+            // 
+            viewLogsToolStripMenuItem.Name = "viewLogsToolStripMenuItem";
+            viewLogsToolStripMenuItem.Size = new Size(230, 22);
+            viewLogsToolStripMenuItem.Text = "View Logs";
+            // 
+            // downloadDependenciesToolStripMenuItem
+            // 
+            downloadDependenciesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { steamCMDToolStripMenuItem, theIsleServerToolStripMenuItem, steamClientToolStripMenuItem });
+            downloadDependenciesToolStripMenuItem.Name = "downloadDependenciesToolStripMenuItem";
+            downloadDependenciesToolStripMenuItem.Size = new Size(230, 22);
+            downloadDependenciesToolStripMenuItem.Text = "Download Dependencies (All)";
+            // 
+            // steamCMDToolStripMenuItem
+            // 
+            steamCMDToolStripMenuItem.Name = "steamCMDToolStripMenuItem";
+            steamCMDToolStripMenuItem.Size = new Size(180, 22);
+            steamCMDToolStripMenuItem.Text = "SteamCMD";
+            steamCMDToolStripMenuItem.Click += steamCMDToolStripMenuItem_Click;
+            // 
+            // theIsleServerToolStripMenuItem
+            // 
+            theIsleServerToolStripMenuItem.Name = "theIsleServerToolStripMenuItem";
+            theIsleServerToolStripMenuItem.Size = new Size(180, 22);
+            theIsleServerToolStripMenuItem.Text = "The Isle Server";
+            theIsleServerToolStripMenuItem.Click += theIsleServerToolStripMenuItem_Click;
+            // 
+            // steamClientToolStripMenuItem
+            // 
+            steamClientToolStripMenuItem.Name = "steamClientToolStripMenuItem";
+            steamClientToolStripMenuItem.Size = new Size(180, 22);
+            steamClientToolStripMenuItem.Text = "Steam Client";
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(800, 486);
+            Controls.Add(toolStrip1);
             Controls.Add(groupBox3);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
@@ -221,6 +303,8 @@
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
             groupBox3.ResumeLayout(false);
+            toolStrip1.ResumeLayout(false);
+            toolStrip1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -242,6 +326,15 @@
         private Label lblCores;
         private Label lblRAM;
         private GroupBox groupBox3;
-        private RichTextBox richTextBox1;
+        private RichTextBox txtConsole;
+        private ToolStrip toolStrip1;
+        private ToolStripDropDownButton toolStripDropDownButton1;
+        private ToolStripMenuItem exitToolStripMenuItem;
+        private ToolStripDropDownButton toolStripDropDownButton2;
+        private ToolStripMenuItem viewLogsToolStripMenuItem;
+        private ToolStripMenuItem downloadDependenciesToolStripMenuItem;
+        private ToolStripMenuItem steamCMDToolStripMenuItem;
+        private ToolStripMenuItem theIsleServerToolStripMenuItem;
+        private ToolStripMenuItem steamClientToolStripMenuItem;
     }
 }

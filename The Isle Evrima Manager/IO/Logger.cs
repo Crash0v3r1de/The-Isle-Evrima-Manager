@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using The_Isle_Evrima_Manager.Threadz.ThreadTracking;
 
 namespace The_Isle_Evrima_Manager.IO
 {
@@ -24,12 +25,21 @@ namespace The_Isle_Evrima_Manager.IO
                     break;
                 case LogType.Error:
                     Console.ForegroundColor = ConsoleColor.Red;
-                    WriteLog($"{currTime} - [ERROR] {message}");
+                    WritErrorLog($"{currTime} - [ERROR] {message}");
                     break;
             }
         }
         private static void WriteLog(string msg) {
-            using (StreamWriter sw = File.AppendText($"{logDir}/{DateTime.Today.ToString("MM-dd-yyyy")}.txt")) { 
+            Form1.AppendConsoleEntry(msg);
+            using (StreamWriter sw = File.AppendText($"{ManagerStatusTracker.logDir}\\{DateTime.Today.ToString("MM-dd-yyyy")}.txt")) { 
+                sw.WriteLine(msg);
+            }
+        }
+        private static void WritErrorLog(string msg)
+        {
+            Form1.AppendConsoleEntry(msg);
+            using (StreamWriter sw = File.AppendText($"{ManagerStatusTracker.logDir}\\Errors-{DateTime.Today.ToString("MM-dd-yyyy")}.txt"))
+            {
                 sw.WriteLine(msg);
             }
         }

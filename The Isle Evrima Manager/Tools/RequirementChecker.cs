@@ -38,7 +38,8 @@ namespace The_Isle_Evrima_Manager.Tools
         public bool SteamPresent() {
             // Lazy check, but it works
             RegistryKey steamKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Valve\Steam", false);
-            return steamKey.SubKeyCount > 0;
+            if(steamKey != null )return steamKey.SubKeyCount > 0;
+            else return false;
         }
     }
 }
