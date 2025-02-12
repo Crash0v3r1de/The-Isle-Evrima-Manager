@@ -73,7 +73,7 @@
             groupBox1.Controls.Add(label1);
             groupBox1.Location = new Point(12, 12);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(200, 64);
+            groupBox1.Size = new Size(259, 64);
             groupBox1.TabIndex = 1;
             groupBox1.TabStop = false;
             groupBox1.Text = "System Checks";
@@ -81,7 +81,7 @@
             // lblSteamClient
             // 
             lblSteamClient.AutoSize = true;
-            lblSteamClient.Location = new Point(89, 39);
+            lblSteamClient.Location = new Point(84, 39);
             lblSteamClient.Name = "lblSteamClient";
             lblSteamClient.Size = new Size(38, 15);
             lblSteamClient.TabIndex = 2;
@@ -90,7 +90,7 @@
             // lblcplusplus
             // 
             lblcplusplus.AutoSize = true;
-            lblcplusplus.Location = new Point(92, 19);
+            lblcplusplus.Location = new Point(87, 19);
             lblcplusplus.Name = "lblcplusplus";
             lblcplusplus.Size = new Size(38, 15);
             lblcplusplus.TabIndex = 2;
@@ -125,7 +125,7 @@
             groupBox2.Controls.Add(label3);
             groupBox2.Location = new Point(12, 82);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(200, 79);
+            groupBox2.Size = new Size(160, 79);
             groupBox2.TabIndex = 2;
             groupBox2.TabStop = false;
             groupBox2.Text = "Server Info";
