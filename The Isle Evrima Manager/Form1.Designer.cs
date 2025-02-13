@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             stsStripMain = new StatusStrip();
             lblServerStatus = new ToolStripStatusLabel();
+            lblMemUsage = new ToolStripStatusLabel();
             groupBox1 = new GroupBox();
             lblSteamClient = new Label();
             lblcplusplus = new Label();
@@ -47,6 +48,8 @@
             txtConsole = new RichTextBox();
             toolStrip1 = new ToolStrip();
             toolStripDropDownButton1 = new ToolStripDropDownButton();
+            refreshResourcesToolStripMenuItem = new ToolStripMenuItem();
+            toolStripSeparator1 = new ToolStripSeparator();
             exitToolStripMenuItem = new ToolStripMenuItem();
             toolStripDropDownButton2 = new ToolStripDropDownButton();
             viewLogsToolStripMenuItem = new ToolStripMenuItem();
@@ -54,16 +57,27 @@
             steamCMDToolStripMenuItem = new ToolStripMenuItem();
             theIsleServerToolStripMenuItem = new ToolStripMenuItem();
             steamClientToolStripMenuItem = new ToolStripMenuItem();
+            toolStripDropDownButton3 = new ToolStripDropDownButton();
+            btnStartIsleServer = new ToolStripMenuItem();
+            btnStopIsleServer = new ToolStripMenuItem();
+            toolStripSeparator2 = new ToolStripSeparator();
+            btnVerifyIsleServer = new ToolStripMenuItem();
+            btnServerStatsRefresh = new ToolStripMenuItem();
+            groupBox4 = new GroupBox();
+            lblPlayerDataCount = new Label();
+            label6 = new Label();
+            managerSettingsToolStripMenuItem = new ToolStripMenuItem();
             stsStripMain.SuspendLayout();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
             toolStrip1.SuspendLayout();
+            groupBox4.SuspendLayout();
             SuspendLayout();
             // 
             // stsStripMain
             // 
-            stsStripMain.Items.AddRange(new ToolStripItem[] { lblServerStatus });
+            stsStripMain.Items.AddRange(new ToolStripItem[] { lblServerStatus, lblMemUsage });
             stsStripMain.Location = new Point(0, 464);
             stsStripMain.Name = "stsStripMain";
             stsStripMain.Size = new Size(800, 22);
@@ -75,6 +89,12 @@
             lblServerStatus.Name = "lblServerStatus";
             lblServerStatus.Size = new Size(35, 17);
             lblServerStatus.Text = "Idle...";
+            // 
+            // lblMemUsage
+            // 
+            lblMemUsage.Name = "lblMemUsage";
+            lblMemUsage.Size = new Size(80, 17);
+            lblMemUsage.Text = "RAM Free: 0%";
             // 
             // groupBox1
             // 
@@ -216,7 +236,7 @@
             // 
             // toolStrip1
             // 
-            toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripDropDownButton1, toolStripDropDownButton2 });
+            toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripDropDownButton1, toolStripDropDownButton2, toolStripDropDownButton3 });
             toolStrip1.Location = new Point(0, 0);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Size = new Size(800, 25);
@@ -226,17 +246,31 @@
             // toolStripDropDownButton1
             // 
             toolStripDropDownButton1.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            toolStripDropDownButton1.DropDownItems.AddRange(new ToolStripItem[] { exitToolStripMenuItem });
+            toolStripDropDownButton1.DropDownItems.AddRange(new ToolStripItem[] { refreshResourcesToolStripMenuItem, managerSettingsToolStripMenuItem, toolStripSeparator1, exitToolStripMenuItem });
             toolStripDropDownButton1.Image = (Image)resources.GetObject("toolStripDropDownButton1.Image");
             toolStripDropDownButton1.ImageTransparentColor = Color.Magenta;
             toolStripDropDownButton1.Name = "toolStripDropDownButton1";
             toolStripDropDownButton1.Size = new Size(38, 22);
             toolStripDropDownButton1.Text = "File";
             // 
+            // refreshResourcesToolStripMenuItem
+            // 
+            refreshResourcesToolStripMenuItem.Checked = true;
+            refreshResourcesToolStripMenuItem.CheckState = CheckState.Checked;
+            refreshResourcesToolStripMenuItem.Name = "refreshResourcesToolStripMenuItem";
+            refreshResourcesToolStripMenuItem.Size = new Size(180, 22);
+            refreshResourcesToolStripMenuItem.Text = "Refresh Resources";
+            refreshResourcesToolStripMenuItem.Click += refreshResourcesToolStripMenuItem_Click;
+            // 
+            // toolStripSeparator1
+            // 
+            toolStripSeparator1.Name = "toolStripSeparator1";
+            toolStripSeparator1.Size = new Size(177, 6);
+            // 
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(93, 22);
+            exitToolStripMenuItem.Size = new Size(180, 22);
             exitToolStripMenuItem.Text = "Exit";
             exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 
@@ -266,28 +300,107 @@
             // steamCMDToolStripMenuItem
             // 
             steamCMDToolStripMenuItem.Name = "steamCMDToolStripMenuItem";
-            steamCMDToolStripMenuItem.Size = new Size(180, 22);
+            steamCMDToolStripMenuItem.Size = new Size(148, 22);
             steamCMDToolStripMenuItem.Text = "SteamCMD";
             steamCMDToolStripMenuItem.Click += steamCMDToolStripMenuItem_Click;
             // 
             // theIsleServerToolStripMenuItem
             // 
             theIsleServerToolStripMenuItem.Name = "theIsleServerToolStripMenuItem";
-            theIsleServerToolStripMenuItem.Size = new Size(180, 22);
+            theIsleServerToolStripMenuItem.Size = new Size(148, 22);
             theIsleServerToolStripMenuItem.Text = "The Isle Server";
             theIsleServerToolStripMenuItem.Click += theIsleServerToolStripMenuItem_Click;
             // 
             // steamClientToolStripMenuItem
             // 
             steamClientToolStripMenuItem.Name = "steamClientToolStripMenuItem";
-            steamClientToolStripMenuItem.Size = new Size(180, 22);
+            steamClientToolStripMenuItem.Size = new Size(148, 22);
             steamClientToolStripMenuItem.Text = "Steam Client";
+            // 
+            // toolStripDropDownButton3
+            // 
+            toolStripDropDownButton3.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            toolStripDropDownButton3.DropDownItems.AddRange(new ToolStripItem[] { btnStartIsleServer, btnStopIsleServer, toolStripSeparator2, btnVerifyIsleServer, btnServerStatsRefresh });
+            toolStripDropDownButton3.Image = (Image)resources.GetObject("toolStripDropDownButton3.Image");
+            toolStripDropDownButton3.ImageTransparentColor = Color.Magenta;
+            toolStripDropDownButton3.Name = "toolStripDropDownButton3";
+            toolStripDropDownButton3.Size = new Size(52, 22);
+            toolStripDropDownButton3.Text = "Server";
+            // 
+            // btnStartIsleServer
+            // 
+            btnStartIsleServer.Name = "btnStartIsleServer";
+            btnStartIsleServer.Size = new Size(213, 22);
+            btnStartIsleServer.Text = "Start";
+            // 
+            // btnStopIsleServer
+            // 
+            btnStopIsleServer.Name = "btnStopIsleServer";
+            btnStopIsleServer.Size = new Size(213, 22);
+            btnStopIsleServer.Text = "Stop";
+            // 
+            // toolStripSeparator2
+            // 
+            toolStripSeparator2.Name = "toolStripSeparator2";
+            toolStripSeparator2.Size = new Size(210, 6);
+            // 
+            // btnVerifyIsleServer
+            // 
+            btnVerifyIsleServer.Name = "btnVerifyIsleServer";
+            btnVerifyIsleServer.Size = new Size(213, 22);
+            btnVerifyIsleServer.Text = "Verify (will stop if running)";
+            // 
+            // btnServerStatsRefresh
+            // 
+            btnServerStatsRefresh.Checked = true;
+            btnServerStatsRefresh.CheckState = CheckState.Checked;
+            btnServerStatsRefresh.Name = "btnServerStatsRefresh";
+            btnServerStatsRefresh.Size = new Size(213, 22);
+            btnServerStatsRefresh.Text = "Refresh Stats Data";
+            btnServerStatsRefresh.Click += btnServerStatsRefresh_Click;
+            // 
+            // groupBox4
+            // 
+            groupBox4.Controls.Add(lblPlayerDataCount);
+            groupBox4.Controls.Add(label6);
+            groupBox4.Location = new Point(277, 41);
+            groupBox4.Name = "groupBox4";
+            groupBox4.Size = new Size(251, 149);
+            groupBox4.TabIndex = 5;
+            groupBox4.TabStop = false;
+            groupBox4.Text = "Server Info";
+            // 
+            // lblPlayerDataCount
+            // 
+            lblPlayerDataCount.AutoSize = true;
+            lblPlayerDataCount.Location = new Point(148, 19);
+            lblPlayerDataCount.Name = "lblPlayerDataCount";
+            lblPlayerDataCount.Size = new Size(13, 15);
+            lblPlayerDataCount.TabIndex = 1;
+            lblPlayerDataCount.Text = "0";
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(6, 19);
+            label6.Name = "label6";
+            label6.Size = new Size(140, 15);
+            label6.TabIndex = 0;
+            label6.Text = "Total Players Data Entries:";
+            // 
+            // managerSettingsToolStripMenuItem
+            // 
+            managerSettingsToolStripMenuItem.Name = "managerSettingsToolStripMenuItem";
+            managerSettingsToolStripMenuItem.Size = new Size(180, 22);
+            managerSettingsToolStripMenuItem.Text = "Manager Settings";
+            managerSettingsToolStripMenuItem.Click += managerSettingsToolStripMenuItem_Click;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 486);
+            Controls.Add(groupBox4);
             Controls.Add(toolStrip1);
             Controls.Add(groupBox3);
             Controls.Add(groupBox2);
@@ -305,6 +418,8 @@
             groupBox3.ResumeLayout(false);
             toolStrip1.ResumeLayout(false);
             toolStrip1.PerformLayout();
+            groupBox4.ResumeLayout(false);
+            groupBox4.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -336,5 +451,18 @@
         private ToolStripMenuItem steamCMDToolStripMenuItem;
         private ToolStripMenuItem theIsleServerToolStripMenuItem;
         private ToolStripMenuItem steamClientToolStripMenuItem;
+        private ToolStripStatusLabel lblMemUsage;
+        private ToolStripMenuItem refreshResourcesToolStripMenuItem;
+        private ToolStripSeparator toolStripSeparator1;
+        private GroupBox groupBox4;
+        private Label lblPlayerDataCount;
+        private Label label6;
+        private ToolStripDropDownButton toolStripDropDownButton3;
+        private ToolStripMenuItem btnStartIsleServer;
+        private ToolStripMenuItem btnStopIsleServer;
+        private ToolStripSeparator toolStripSeparator2;
+        private ToolStripMenuItem btnVerifyIsleServer;
+        private ToolStripMenuItem btnServerStatsRefresh;
+        private ToolStripMenuItem managerSettingsToolStripMenuItem;
     }
 }

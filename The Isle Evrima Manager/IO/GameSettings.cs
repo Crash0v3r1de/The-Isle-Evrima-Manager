@@ -9,18 +9,23 @@ namespace The_Isle_Evrima_Manager.IO
     public static class GameSettings
     {
         // \tiserver\TheIsle\Saved\Config\WindowsServer
-        private static string iniDir = "/server/TheIsle/Saved/Config/WindowsServer";
-        private static string iniFile = "/server/TheIsle/Saved/Config/WindowsServer/Game.ini";
+        private static string iniDir = @"\server\TheIsle\Saved\Config\WindowsServer";
+        private static string iniFile = @"\server\TheIsle\Saved\Config\WindowsServer\Game.ini";
+        private static string savedPlayerDataDir = @"\server\TheIsle\Saved\PlayerData";
         private static string windowsServerDirName = "WindowsServer";
         private static string serverDir = "/server";
         // will need to make this cleaner for dynamic paths
 
-        private static void PrepFolder()
+        public static void PrepFolder()
         {
             if (!Directory.Exists(iniDir))
             {
                 Directory.CreateDirectory(iniDir);
             }
+        }
+        public static int PlayerDataCount() {
+            var files = Directory.GetFiles(savedPlayerDataDir).Where(f => f.ToLower().EndsWith("sav"));
+            return files.Count();
         }
         public static List<string> GetGameSettings()
         {

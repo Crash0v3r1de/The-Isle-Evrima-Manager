@@ -18,5 +18,12 @@ namespace The_Isle_Evrima_Manager.Threadz.ThreadTracking
         public static string serverExe = Environment.CurrentDirectory + @"\server\TheIsleServer.exe";
         public static string gameINI = Environment.CurrentDirectory + @"\server\Game.ini";
         public static string logDir = Environment.CurrentDirectory + @"\logs\";
+        public static int resourceRefreshInt = 1200;
+        public static int serverStatsRefreshInt = 1200;
+        public static bool monitorHardware = true;
+        public static bool monitorServer = true;
+        public static bool checkForManagerUpdates = true;
+        public static bool enableDiscordNotifications = true;
+        public static string discordWebhookURL = "";
     }
 }

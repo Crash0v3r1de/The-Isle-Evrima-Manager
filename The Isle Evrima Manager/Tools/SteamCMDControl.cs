@@ -86,6 +86,7 @@ namespace The_Isle_Evrima_Manager.Tools
             proc.Start();
             proc.BeginOutputReadLine();
             proc.WaitForExit();
+            GameSettings.PrepFolder();
             Logger.Log("The Isle EVIRMA Dedicated Server installed!.", LogType.Info);
         }
     }

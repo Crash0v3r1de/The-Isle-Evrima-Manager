@@ -4,6 +4,7 @@ using System.Management;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using The_Isle_Evrima_Manager.Enums;
+using The_Isle_Evrima_Manager.Forms;
 using The_Isle_Evrima_Manager.IO;
 using The_Isle_Evrima_Manager.Threadz.ThreadTracking;
 using The_Isle_Evrima_Manager.Tools;
@@ -36,6 +37,10 @@ namespace The_Isle_Evrima_Manager
             new Thread(() =>
             {
                 RuntimeReqChecks();
+            }).Start();
+            new Thread(() =>
+            {
+                MonitorMemory();
             }).Start();
 
             lblServerStatus.ForeColor = Color.OrangeRed;
@@ -83,8 +88,8 @@ namespace The_Isle_Evrima_Manager
 
             while (!allGood)
             {
-                if (cplusres & steam) allGood = true; break;
-
+                bool cplusgood = false;
+                bool steamgood = false;
                 if (!cplusres)
                 {
                     lblcplusplus.ForeColor = Color.OrangeRed;
@@ -95,6 +100,7 @@ namespace The_Isle_Evrima_Manager
                 {
                     lblcplusplus.ForeColor = Color.Green;
                     lblcplusplus.Text = "Installed";
+                    cplusgood = true;
                 }
                 if (!steam)
                 {
@@ -106,9 +112,11 @@ namespace The_Isle_Evrima_Manager
                 {
                     lblSteamClient.ForeColor = Color.Green;
                     lblSteamClient.Text = "Installed";
+                    steamgood = true;
                 }
                 Debug.WriteLine("Waiting for requirements to be met...");
                 Thread.Sleep(1000);
+                if (cplusgood && steamgood) break; allGood = true;
             }
         }
         private void HardwareInfo()
@@ -235,6 +243,73 @@ namespace The_Isle_Evrima_Manager
                 ManagerStatusTracker.CurrentStatus = ManagerStatus.idle;
             }).Start();
 
+        }
+        private void UpdateMemLabel(decimal data, double freeGB, decimal cpu)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(UpdateMemLabel, data, freeGB, cpu);
+                return;
+            }
+            lblMemUsage.Text = $"RAM Free: {data}% ({freeGB}GB) | CPU {cpu}%";
+        }
+        private void MonitorMemory()
+        {
+            while (refreshResourcesToolStripMenuItem.Checked)
+            {
+                UpdateMemLabel(HardwareData.FreeCompMemory(), HardwareData.RamFree(), Math.Round(HardwareData.CompCPUUsage(), 1));
+                Thread.Sleep(ManagerStatusTracker.resourceRefreshInt);
+            }
+        }
+
+        private void refreshResourcesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (refreshResourcesToolStripMenuItem.Checked)
+            {
+                refreshResourcesToolStripMenuItem.Checked = false;
+            }
+            else
+            {
+                refreshResourcesToolStripMenuItem.Checked = true;
+                new Thread(() => { MonitorMemory(); }).Start();
+            }
+        }
+
+        private void btnServerStatsRefresh_Click(object sender, EventArgs e)
+        {
+            if (btnServerStatsRefresh.Checked)
+            {
+                btnServerStatsRefresh.Checked = false;
+            }
+            else
+            {
+                btnServerStatsRefresh.Checked = true;
+                new Thread(() => { UpdateServerStats(); }).Start();
+            }
+        }
+        private void UpdateServerStats()
+        {
+            while (btnServerStatsRefresh.Checked)
+            {
+
+
+                Thread.Sleep(ManagerStatusTracker.serverStatsRefreshInt);
+            }
+        }
+        private void UpdateServerStatLabels(string plrDataCnt)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(UpdateServerStatLabels, plrDataCnt);
+                return;
+            }
+            lblPlayerDataCount.Text = plrDataCnt;
+        }
+
+        private void managerSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ManagerSettings manSettings = new ManagerSettings();
+            manSettings.Show();
         }
     }
 }
