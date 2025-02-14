@@ -38,13 +38,14 @@ namespace The_Isle_Evrima_Manager.Tools
             return false;
         }
         public bool SteamPresent() {
-            // Lazy check, but it works
+            // broad reg check - has failed on test machines so added default C drive install
+            if (File.Exists("C:\\Program Files (x86)\\Steam\\steam.exe")) return true; // lazy check for steam binary installed in default location
             RegistryKey steamKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Valve\Steam", false);
             if (steamKey != null) {
-                ManagerStatusTracker.steamClientInstalled = true; 
+                ManagerStatusTracker.steamClientInstalled = true;                
                 return steamKey.SubKeyCount > 0;
             }
             else return false;
-        }
+        }        
     }
 }

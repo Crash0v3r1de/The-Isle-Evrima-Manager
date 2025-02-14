@@ -1,7 +1,9 @@
 using Microsoft.VisualBasic.Devices;
+using System.Configuration;
 using System.Diagnostics;
 using System.Management;
 using System.Net;
+using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using The_Isle_Evrima_Manager.Enums;
@@ -25,24 +27,36 @@ namespace The_Isle_Evrima_Manager
         }
         private void SysPrep()
         {
+            if (InvokeRequired) {
+                Invoke(SysPrep);
+                return;
+            }
             CoreFiles.InitializeStructure();
-            new Thread(() =>
+            var t1 = new Thread(() =>
             {
                 StatusTracker();
-            }).Start();
-            new Thread(() =>
+            });
+            t1.IsBackground = true;
+            t1.Start();
+            var t2 = new Thread(() =>
             {
                 CoreFiles.InitializeStructure();
-            }).Start();
+            });
+            t2.IsBackground = true;
+            t2.Start();
             HardwareInfo();
-            new Thread(() =>
+            var t3 = new Thread(() =>
             {
                 RuntimeReqChecks();
-            }).Start();
-            new Thread(() =>
+            });
+            t3.IsBackground = true;
+            t3.Start();
+            var t4 = new Thread(() =>
             {
                 MonitorMemory();
-            }).Start();
+            });
+            t4.IsBackground = true;
+            t4.Start();
 
             lblServerStatus.ForeColor = Color.OrangeRed;
             lblServerStatus.Text = "Server idle...";
@@ -136,8 +150,20 @@ namespace The_Isle_Evrima_Manager
         private void Form1_Load(object sender, EventArgs e)
         {
             SysPrep(); // Need to run this first to setup folders for logs
+            UpdateTitle();
             Logger.Log($"Tool Started | Current Dir: {Environment.CurrentDirectory}", LogType.Info);
 
+        }
+        private void UpdateTitle() {
+            if (InvokeRequired) {
+                Invoke(UpdateTitle);
+                return;
+            }
+
+            // This used to be ALOT easier/simpler but .NET Core gunna .NET Core
+            Assembly ass = Assembly.GetExecutingAssembly();
+            FileVersionInfo fv = FileVersionInfo.GetVersionInfo(ass.Location);
+            this.Text = $"The Isle Evirma Server Manager - v{fv.FileVersion} | Windows {Environment.OSVersion.Version.Major}";
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -272,7 +298,9 @@ namespace The_Isle_Evrima_Manager
             else
             {
                 refreshResourcesToolStripMenuItem.Checked = true;
-                new Thread(() => { MonitorMemory(); }).Start();
+                var memt1 = new Thread(() => { MonitorMemory(); });
+                memt1.IsBackground = true;
+                memt1.Start();
             }
         }
 
@@ -285,7 +313,9 @@ namespace The_Isle_Evrima_Manager
             else
             {
                 btnServerStatsRefresh.Checked = true;
-                new Thread(() => { UpdateServerStats(); }).Start();
+                var statst = new Thread(() => { UpdateServerStats(); });
+                statst.IsBackground = true;
+                statst.Start();
             }
         }
         private void UpdateServerStats()
@@ -315,7 +345,8 @@ namespace The_Isle_Evrima_Manager
 
         private void steamClientToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new Thread(() => {
+            new Thread(() =>
+            {
                 Logger.Log("Downloading Steam Client...", LogType.Info);
                 new WebClient().DownloadFile("https://cdn.fastly.steamstatic.com/client/installer/SteamSetup.exe", $"{ManagerStatusTracker.tmpPath}\\SteamSetup.exe");
                 ProcessStartInfo args = new ProcessStartInfo($"{ManagerStatusTracker.tmpPath}\\SteamSetup.exe");
@@ -329,6 +360,16 @@ namespace The_Isle_Evrima_Manager
                 ManagerStatusTracker.steamClientInstalled = true;
                 File.Delete($"{ManagerStatusTracker.tmpPath}\\SteamSetup.exe");
             }).Start();
+        }
+
+        private void steamClientWhatGivesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("The server will not process clients connecting without Steam being installed. It should be as simple as a missing DLL needed somewhere in the server root but cant find anything about that.\nSo for a workaround installing the steam client completely fixes this issue and allows users to connect successfully.\n\nKnow the proper fix for this? Please post it on the project's github!", "Why the heck do I have to install the Steam client for a server?", MessageBoxButtons.OK, MessageBoxIcon.Question);
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process.Start("explorer.exe", "https://github.com/Crash0v3r1de/the-isle-evrima-manager");
         }
     }
 }

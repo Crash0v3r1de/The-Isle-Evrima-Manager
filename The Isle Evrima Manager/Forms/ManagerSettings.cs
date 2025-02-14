@@ -100,5 +100,11 @@ namespace The_Isle_Evrima_Manager.Forms
             this.Close();
             this.Dispose();
         }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            this.Dispose();
+        }
     }
 }
