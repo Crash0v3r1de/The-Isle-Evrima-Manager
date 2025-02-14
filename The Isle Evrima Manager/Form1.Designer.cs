@@ -49,6 +49,7 @@
             toolStrip1 = new ToolStrip();
             toolStripDropDownButton1 = new ToolStripDropDownButton();
             refreshResourcesToolStripMenuItem = new ToolStripMenuItem();
+            managerSettingsToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator1 = new ToolStripSeparator();
             exitToolStripMenuItem = new ToolStripMenuItem();
             toolStripDropDownButton2 = new ToolStripDropDownButton();
@@ -66,7 +67,6 @@
             groupBox4 = new GroupBox();
             lblPlayerDataCount = new Label();
             label6 = new Label();
-            managerSettingsToolStripMenuItem = new ToolStripMenuItem();
             stsStripMain.SuspendLayout();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
@@ -258,19 +258,26 @@
             refreshResourcesToolStripMenuItem.Checked = true;
             refreshResourcesToolStripMenuItem.CheckState = CheckState.Checked;
             refreshResourcesToolStripMenuItem.Name = "refreshResourcesToolStripMenuItem";
-            refreshResourcesToolStripMenuItem.Size = new Size(180, 22);
+            refreshResourcesToolStripMenuItem.Size = new Size(169, 22);
             refreshResourcesToolStripMenuItem.Text = "Refresh Resources";
             refreshResourcesToolStripMenuItem.Click += refreshResourcesToolStripMenuItem_Click;
+            // 
+            // managerSettingsToolStripMenuItem
+            // 
+            managerSettingsToolStripMenuItem.Name = "managerSettingsToolStripMenuItem";
+            managerSettingsToolStripMenuItem.Size = new Size(169, 22);
+            managerSettingsToolStripMenuItem.Text = "Manager Settings";
+            managerSettingsToolStripMenuItem.Click += managerSettingsToolStripMenuItem_Click;
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(177, 6);
+            toolStripSeparator1.Size = new Size(166, 6);
             // 
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(180, 22);
+            exitToolStripMenuItem.Size = new Size(169, 22);
             exitToolStripMenuItem.Text = "Exit";
             exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 
@@ -300,22 +307,23 @@
             // steamCMDToolStripMenuItem
             // 
             steamCMDToolStripMenuItem.Name = "steamCMDToolStripMenuItem";
-            steamCMDToolStripMenuItem.Size = new Size(148, 22);
+            steamCMDToolStripMenuItem.Size = new Size(180, 22);
             steamCMDToolStripMenuItem.Text = "SteamCMD";
             steamCMDToolStripMenuItem.Click += steamCMDToolStripMenuItem_Click;
             // 
             // theIsleServerToolStripMenuItem
             // 
             theIsleServerToolStripMenuItem.Name = "theIsleServerToolStripMenuItem";
-            theIsleServerToolStripMenuItem.Size = new Size(148, 22);
+            theIsleServerToolStripMenuItem.Size = new Size(180, 22);
             theIsleServerToolStripMenuItem.Text = "The Isle Server";
             theIsleServerToolStripMenuItem.Click += theIsleServerToolStripMenuItem_Click;
             // 
             // steamClientToolStripMenuItem
             // 
             steamClientToolStripMenuItem.Name = "steamClientToolStripMenuItem";
-            steamClientToolStripMenuItem.Size = new Size(148, 22);
+            steamClientToolStripMenuItem.Size = new Size(180, 22);
             steamClientToolStripMenuItem.Text = "Steam Client";
+            steamClientToolStripMenuItem.Click += steamClientToolStripMenuItem_Click;
             // 
             // toolStripDropDownButton3
             // 
@@ -387,13 +395,6 @@
             label6.Size = new Size(140, 15);
             label6.TabIndex = 0;
             label6.Text = "Total Players Data Entries:";
-            // 
-            // managerSettingsToolStripMenuItem
-            // 
-            managerSettingsToolStripMenuItem.Name = "managerSettingsToolStripMenuItem";
-            managerSettingsToolStripMenuItem.Size = new Size(180, 22);
-            managerSettingsToolStripMenuItem.Text = "Manager Settings";
-            managerSettingsToolStripMenuItem.Click += managerSettingsToolStripMenuItem_Click;
             // 
             // Form1
             // 

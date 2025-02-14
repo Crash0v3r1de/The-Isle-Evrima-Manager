@@ -25,8 +25,8 @@ namespace The_Isle_Evrima_Manager.WebActions
                 Logger.Log("SteamCMD extracted, removing tmp file...", LogType.Info);
             }
             else Logger.Log("SteamCMD already exists, skipping download...", LogType.Info);
-            
-
+            ManagerStatusTracker.steamCMDInstalled = true;
+            // I should add some error handling here, add to the TODO: list
             return false;
         }
     }

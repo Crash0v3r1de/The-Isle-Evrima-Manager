@@ -25,5 +25,9 @@ namespace The_Isle_Evrima_Manager.Threadz.ThreadTracking
         public static bool checkForManagerUpdates = true;
         public static bool enableDiscordNotifications = true;
         public static string discordWebhookURL = "";
+        public static bool cplusplusInstalled = false;
+        public static bool steamClientInstalled = false;
+        public static bool steamCMDInstalled = false;
+        public static bool isleServerInstalled = false;
     }
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using The_Isle_Evrima_Manager.Threadz.ThreadTracking;
 
 namespace The_Isle_Evrima_Manager.Tools
 {
@@ -28,6 +29,7 @@ namespace The_Isle_Evrima_Manager.Tools
 
                         if (Regex.IsMatch(value, @"C\+\+ 2015\-2022.*\(x64\)")) 
                         {
+                            ManagerStatusTracker.cplusplusInstalled = true;
                             return true;
                         }
                     }
@@ -38,7 +40,10 @@ namespace The_Isle_Evrima_Manager.Tools
         public bool SteamPresent() {
             // Lazy check, but it works
             RegistryKey steamKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Valve\Steam", false);
-            if(steamKey != null )return steamKey.SubKeyCount > 0;
+            if (steamKey != null) {
+                ManagerStatusTracker.steamClientInstalled = true; 
+                return steamKey.SubKeyCount > 0;
+            }
             else return false;
         }
     }

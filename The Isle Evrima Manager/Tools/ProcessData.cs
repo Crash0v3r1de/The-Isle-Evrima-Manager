@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace The_Isle_Evrima_Manager.Tools
 {
-    public static class ProccessData
+    public static class ProcessData
     {
         private static string serverPrimaryBinary = "TheIsleServer-Win64-Shipping.exe"; // This is the actual server
         private static string serverSecondayBinary = "TheIsleServer.exe"; // Main binary to load the actual server

@@ -1,6 +1,7 @@
 using Microsoft.VisualBasic.Devices;
 using System.Diagnostics;
 using System.Management;
+using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using The_Isle_Evrima_Manager.Enums;
@@ -310,6 +311,24 @@ namespace The_Isle_Evrima_Manager
         {
             ManagerSettings manSettings = new ManagerSettings();
             manSettings.Show();
+        }
+
+        private void steamClientToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new Thread(() => {
+                Logger.Log("Downloading Steam Client...", LogType.Info);
+                new WebClient().DownloadFile("https://cdn.fastly.steamstatic.com/client/installer/SteamSetup.exe", $"{ManagerStatusTracker.tmpPath}\\SteamSetup.exe");
+                ProcessStartInfo args = new ProcessStartInfo($"{ManagerStatusTracker.tmpPath}\\SteamSetup.exe");
+                args.Arguments = "/S"; // add silent install option
+                Process installer = new Process();
+                installer.StartInfo = args;
+                Logger.Log("Installing Steam Client...", LogType.Info);
+                installer.Start();
+                installer.WaitForExit(); // Unsure of exit code indicating installed correctly - I'll log it
+                Logger.Log($"Steam Client installed(?) - Exit code {installer.ExitCode}", LogType.Info);
+                ManagerStatusTracker.steamClientInstalled = true;
+                File.Delete($"{ManagerStatusTracker.tmpPath}\\SteamSetup.exe");
+            }).Start();
         }
     }
 }
