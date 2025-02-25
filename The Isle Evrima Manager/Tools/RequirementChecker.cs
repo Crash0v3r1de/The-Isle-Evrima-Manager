@@ -11,6 +11,7 @@ namespace The_Isle_Evrima_Manager.Tools
 {
     public class RequirementChecker
     {
+        // Also needs .NET 3.5 installed
         public bool VisualcCheck()
         {
             // Too lazy to want to make my own - copied and modified for 2015-2022 version 

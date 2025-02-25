@@ -1,6 +1,6 @@
 ﻿namespace The_Isle_Evrima_Manager.Forms
 {
-    partial class ServerVIPS
+    partial class frmDynoClasses
     {
         /// <summary>
         /// Required designer variable.
@@ -28,17 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            SuspendLayout();
-            // 
-            // ServerVIPS
-            // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
-            Name = "ServerVIPS";
-            Text = "ServerVIPS";
-            Load += ServerVIPS_Load;
-            ResumeLayout(false);
+            this.components = new System.ComponentModel.Container();
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Text = "frmDynoClasses";
         }
 
         #endregion

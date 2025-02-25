@@ -1,6 +1,6 @@
 ﻿namespace The_Isle_Evrima_Manager.Forms
 {
-    partial class ServerVIPS
+    partial class ServerWhitelist
     {
         /// <summary>
         /// Required designer variable.
@@ -30,14 +30,14 @@
         {
             SuspendLayout();
             // 
-            // ServerVIPS
+            // ServerWhitelist
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Name = "ServerVIPS";
-            Text = "ServerVIPS";
-            Load += ServerVIPS_Load;
+            Name = "ServerWhitelist";
+            Text = "ServerWhitelist";
+            Load += ServerWhitelist_Load;
             ResumeLayout(false);
         }
 

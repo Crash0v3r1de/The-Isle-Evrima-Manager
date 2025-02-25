@@ -10,15 +10,15 @@ using System.Windows.Forms;
 
 namespace The_Isle_Evrima_Manager.Forms
 {
-    public partial class ServerAdmins : Form
+    public partial class ServerWhitelist : Form
     {
-        public List<string> AdminSteamIDs = new List<string>();
-        public ServerAdmins()
+        public List<string> WhitelistIDs = new List<string>();
+        public ServerWhitelist()
         {
             InitializeComponent();
         }
 
-        private void ServerAdmins_Load(object sender, EventArgs e)
+        private void ServerWhitelist_Load(object sender, EventArgs e)
         {
 
         }

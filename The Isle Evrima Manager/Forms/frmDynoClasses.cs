@@ -10,17 +10,11 @@ using System.Windows.Forms;
 
 namespace The_Isle_Evrima_Manager.Forms
 {
-    public partial class ServerAdmins : Form
+    public partial class frmDynoClasses: Form
     {
-        public List<string> AdminSteamIDs = new List<string>();
-        public ServerAdmins()
+        public frmDynoClasses()
         {
             InitializeComponent();
-        }
-
-        private void ServerAdmins_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }

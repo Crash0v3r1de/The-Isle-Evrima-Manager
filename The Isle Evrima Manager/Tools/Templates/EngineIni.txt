@@ -1,0 +1,3 @@
+﻿[EpicOnlineServices]
+DedicatedServerClientId=xyza7891gk5PRo3J7G9puCJGFJjmEguW
+DedicatedServerClientSecret=pKWl6t5i9NJK8gTpVlAxzENZ65P8hYzodV8Dqe5Rlc8
