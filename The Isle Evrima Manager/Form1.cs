@@ -93,7 +93,7 @@ namespace The_Isle_Evrima_Manager
             {
                 lblSteamClient.ForeColor = Color.OrangeRed;
                 lblSteamClient.Font = new Font(lblSteamClient.Font, FontStyle.Bold);
-                lblSteamClient.Text = "Not Installed - manually install"; // Eventually we'll automate install or add button option
+                lblSteamClient.Text = "Install via Tools Menu"; // Eventually we'll automate install or add button option
             }
             else
             {
@@ -121,7 +121,7 @@ namespace The_Isle_Evrima_Manager
                 {
                     lblSteamClient.ForeColor = Color.OrangeRed;
                     lblSteamClient.Font = new Font(lblSteamClient.Font, FontStyle.Bold);
-                    lblSteamClient.Text = "Not Installed - manually install"; // Eventually we'll automate install or add button option
+                    lblSteamClient.Text = "Install via Tools Menu"; // Eventually we'll automate install or add button option
                 }
                 else
                 {

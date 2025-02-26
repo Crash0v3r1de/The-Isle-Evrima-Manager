@@ -116,7 +116,7 @@
             // lblSteamClient
             // 
             lblSteamClient.AutoSize = true;
-            lblSteamClient.Location = new Point(84, 39);
+            lblSteamClient.Location = new Point(78, 39);
             lblSteamClient.Name = "lblSteamClient";
             lblSteamClient.Size = new Size(38, 15);
             lblSteamClient.TabIndex = 2;
@@ -136,9 +136,9 @@
             label2.AutoSize = true;
             label2.Location = new Point(6, 39);
             label2.Name = "label2";
-            label2.Size = new Size(77, 15);
+            label2.Size = new Size(71, 15);
             label2.TabIndex = 2;
-            label2.Text = "Steam Client:";
+            label2.Text = "Steam DLLs:";
             // 
             // label1
             // 
@@ -311,22 +311,22 @@
             // steamCMDToolStripMenuItem
             // 
             steamCMDToolStripMenuItem.Name = "steamCMDToolStripMenuItem";
-            steamCMDToolStripMenuItem.Size = new Size(148, 22);
+            steamCMDToolStripMenuItem.Size = new Size(180, 22);
             steamCMDToolStripMenuItem.Text = "SteamCMD";
             steamCMDToolStripMenuItem.Click += steamCMDToolStripMenuItem_Click;
             // 
             // theIsleServerToolStripMenuItem
             // 
             theIsleServerToolStripMenuItem.Name = "theIsleServerToolStripMenuItem";
-            theIsleServerToolStripMenuItem.Size = new Size(148, 22);
+            theIsleServerToolStripMenuItem.Size = new Size(180, 22);
             theIsleServerToolStripMenuItem.Text = "The Isle Server";
             theIsleServerToolStripMenuItem.Click += theIsleServerToolStripMenuItem_Click;
             // 
             // steamClientToolStripMenuItem
             // 
             steamClientToolStripMenuItem.Name = "steamClientToolStripMenuItem";
-            steamClientToolStripMenuItem.Size = new Size(148, 22);
-            steamClientToolStripMenuItem.Text = "Steam Client";
+            steamClientToolStripMenuItem.Size = new Size(180, 22);
+            steamClientToolStripMenuItem.Text = "Steam DLLs";
             steamClientToolStripMenuItem.Click += steamClientToolStripMenuItem_Click;
             // 
             // toolStripDropDownButton3
