@@ -136,6 +136,7 @@ namespace The_Isle_Evrima_Manager
         }
         private void HardwareInfo()
         {
+            // Clock speeds return kinda weird - https://stackoverflow.com/questions/6923763/how-to-get-cpu-frequency-in-c-sharp
             ramSize = new ComputerInfo().TotalPhysicalMemory;
             using (ManagementObject Mo = new ManagementObject("Win32_Processor.DeviceID='CPU0'"))
             {
