@@ -2,8 +2,12 @@
 Windows based server manager for running the isle evrima servers and managing them as you wish. Unfortunatekly the dev's of this game seem to have no care in the world for people spinning up unoffical servers and wanting to maintain and enjoy them. I made this tool for folks that want to do exactly that.
 ## Features
 * Automated requirement installs outside of the server binary
-* Game settings adjustments with the ability to restart the server after - wipes config if changes made while server is running (dev feature I'd guess)
-* User management for Admins, VIPs and Whitelists
+* Game settings adjustments with the ability to restart the server after
+  * The server wipes config if changes made while server is running (dev feature I'd guess)
+* User management - [Uses SteamID64](https://steamid.io/)
+  * Admin Users
+  * VIP Users
+  * Whitelist Users
 * Togglable resource monitor via the GUI
 * Scheduled RCON tasks within the manager itself
 * Automated update checking for the manager as well as game server
@@ -47,5 +51,5 @@ This will obviously be an annoying thing to update as Valve updates these librar
 * Help with code would be nice
 * Eth - 0xd101B9E05441518eE7E849C7709cbb2e9DfaEb96
 
-## Notice of time to project
+## Notice of time dedicated to project
 Just to be completely transparent - this is PURELY a side project. I work fulltime as well as volunteer alot of time for county work. I do not guarentee this will be maintained as quickly as game and Steam updates. Thankfully the dev's for The Isle push updates infrequently so that's kind of a plus.
