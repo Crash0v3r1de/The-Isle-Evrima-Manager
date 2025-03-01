@@ -98,23 +98,23 @@
             chkMassMigrations = new CheckBox();
             chkMigrations = new CheckBox();
             groupBox6 = new GroupBox();
-            chkDryosaurus = new CheckBox();
-            chkHypsilophodon = new CheckBox();
-            chkPachycephalosaurus = new CheckBox();
-            chkStegosaurus = new CheckBox();
-            chkTenontosaurus = new CheckBox();
-            chkCarnotaurus = new CheckBox();
-            chkCeratosaurus = new CheckBox();
-            chkDeinosuchus = new CheckBox();
-            chkDiabloceratops = new CheckBox();
-            chkOmniraptor = new CheckBox();
-            chkPteranodon = new CheckBox();
-            chkTroodon = new CheckBox();
-            chkBeipiaosaurus = new CheckBox();
-            chkGallimimus = new CheckBox();
-            chkDilophosaurus = new CheckBox();
-            chkHerrerasaurus = new CheckBox();
             chkMaiasaura = new CheckBox();
+            chkHerrerasaurus = new CheckBox();
+            chkDilophosaurus = new CheckBox();
+            chkGallimimus = new CheckBox();
+            chkBeipiaosaurus = new CheckBox();
+            chkTroodon = new CheckBox();
+            chkPteranodon = new CheckBox();
+            chkOmniraptor = new CheckBox();
+            chkDiabloceratops = new CheckBox();
+            chkDeinosuchus = new CheckBox();
+            chkCeratosaurus = new CheckBox();
+            chkCarnotaurus = new CheckBox();
+            chkTenontosaurus = new CheckBox();
+            chkStegosaurus = new CheckBox();
+            chkPachycephalosaurus = new CheckBox();
+            chkHypsilophodon = new CheckBox();
+            chkDryosaurus = new CheckBox();
             txtMapName.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)txtGrowthRate).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtQueuePort).BeginInit();
@@ -458,6 +458,7 @@
             saveAndCloseToolStripMenuItem.Name = "saveAndCloseToolStripMenuItem";
             saveAndCloseToolStripMenuItem.Size = new Size(98, 20);
             saveAndCloseToolStripMenuItem.Text = "Save and Close";
+            saveAndCloseToolStripMenuItem.Click += saveAndCloseToolStripMenuItem_Click;
             // 
             // toolStripMenuItem1
             // 
@@ -900,185 +901,17 @@
             groupBox6.TabStop = false;
             groupBox6.Text = "Dynos";
             // 
-            // chkDryosaurus
+            // chkMaiasaura
             // 
-            chkDryosaurus.AutoSize = true;
-            chkDryosaurus.Checked = true;
-            chkDryosaurus.CheckState = CheckState.Checked;
-            chkDryosaurus.Location = new Point(6, 24);
-            chkDryosaurus.Name = "chkDryosaurus";
-            chkDryosaurus.Size = new Size(85, 19);
-            chkDryosaurus.TabIndex = 0;
-            chkDryosaurus.Text = "Dryosaurus";
-            chkDryosaurus.UseVisualStyleBackColor = true;
-            // 
-            // chkHypsilophodon
-            // 
-            chkHypsilophodon.AutoSize = true;
-            chkHypsilophodon.Checked = true;
-            chkHypsilophodon.CheckState = CheckState.Checked;
-            chkHypsilophodon.Location = new Point(6, 49);
-            chkHypsilophodon.Name = "chkHypsilophodon";
-            chkHypsilophodon.Size = new Size(108, 19);
-            chkHypsilophodon.TabIndex = 1;
-            chkHypsilophodon.Text = "Hypsilophodon";
-            chkHypsilophodon.UseVisualStyleBackColor = true;
-            // 
-            // chkPachycephalosaurus
-            // 
-            chkPachycephalosaurus.AutoSize = true;
-            chkPachycephalosaurus.Checked = true;
-            chkPachycephalosaurus.CheckState = CheckState.Checked;
-            chkPachycephalosaurus.Location = new Point(8, 74);
-            chkPachycephalosaurus.Name = "chkPachycephalosaurus";
-            chkPachycephalosaurus.Size = new Size(134, 19);
-            chkPachycephalosaurus.TabIndex = 2;
-            chkPachycephalosaurus.Text = "Pachycephalosaurus";
-            chkPachycephalosaurus.UseVisualStyleBackColor = true;
-            // 
-            // chkStegosaurus
-            // 
-            chkStegosaurus.AutoSize = true;
-            chkStegosaurus.Checked = true;
-            chkStegosaurus.CheckState = CheckState.Checked;
-            chkStegosaurus.Location = new Point(6, 99);
-            chkStegosaurus.Name = "chkStegosaurus";
-            chkStegosaurus.Size = new Size(90, 19);
-            chkStegosaurus.TabIndex = 3;
-            chkStegosaurus.Text = "Stegosaurus";
-            chkStegosaurus.UseVisualStyleBackColor = true;
-            // 
-            // chkTenontosaurus
-            // 
-            chkTenontosaurus.AutoSize = true;
-            chkTenontosaurus.Checked = true;
-            chkTenontosaurus.CheckState = CheckState.Checked;
-            chkTenontosaurus.Location = new Point(6, 124);
-            chkTenontosaurus.Name = "chkTenontosaurus";
-            chkTenontosaurus.Size = new Size(103, 19);
-            chkTenontosaurus.TabIndex = 4;
-            chkTenontosaurus.Text = "Tenontosaurus";
-            chkTenontosaurus.UseVisualStyleBackColor = true;
-            // 
-            // chkCarnotaurus
-            // 
-            chkCarnotaurus.AutoSize = true;
-            chkCarnotaurus.Checked = true;
-            chkCarnotaurus.CheckState = CheckState.Checked;
-            chkCarnotaurus.Location = new Point(6, 149);
-            chkCarnotaurus.Name = "chkCarnotaurus";
-            chkCarnotaurus.Size = new Size(91, 19);
-            chkCarnotaurus.TabIndex = 5;
-            chkCarnotaurus.Text = "Carnotaurus";
-            chkCarnotaurus.UseVisualStyleBackColor = true;
-            // 
-            // chkCeratosaurus
-            // 
-            chkCeratosaurus.AutoSize = true;
-            chkCeratosaurus.Checked = true;
-            chkCeratosaurus.CheckState = CheckState.Checked;
-            chkCeratosaurus.Location = new Point(6, 174);
-            chkCeratosaurus.Name = "chkCeratosaurus";
-            chkCeratosaurus.Size = new Size(95, 19);
-            chkCeratosaurus.TabIndex = 6;
-            chkCeratosaurus.Text = "Ceratosaurus";
-            chkCeratosaurus.UseVisualStyleBackColor = true;
-            // 
-            // chkDeinosuchus
-            // 
-            chkDeinosuchus.AutoSize = true;
-            chkDeinosuchus.Checked = true;
-            chkDeinosuchus.CheckState = CheckState.Checked;
-            chkDeinosuchus.Location = new Point(6, 199);
-            chkDeinosuchus.Name = "chkDeinosuchus";
-            chkDeinosuchus.Size = new Size(94, 19);
-            chkDeinosuchus.TabIndex = 7;
-            chkDeinosuchus.Text = "Deinosuchus";
-            chkDeinosuchus.UseVisualStyleBackColor = true;
-            // 
-            // chkDiabloceratops
-            // 
-            chkDiabloceratops.AutoSize = true;
-            chkDiabloceratops.Checked = true;
-            chkDiabloceratops.CheckState = CheckState.Checked;
-            chkDiabloceratops.Location = new Point(6, 222);
-            chkDiabloceratops.Name = "chkDiabloceratops";
-            chkDiabloceratops.Size = new Size(105, 19);
-            chkDiabloceratops.TabIndex = 8;
-            chkDiabloceratops.Text = "Diabloceratops";
-            chkDiabloceratops.UseVisualStyleBackColor = true;
-            // 
-            // chkOmniraptor
-            // 
-            chkOmniraptor.AutoSize = true;
-            chkOmniraptor.Checked = true;
-            chkOmniraptor.CheckState = CheckState.Checked;
-            chkOmniraptor.Location = new Point(6, 247);
-            chkOmniraptor.Name = "chkOmniraptor";
-            chkOmniraptor.Size = new Size(88, 19);
-            chkOmniraptor.TabIndex = 9;
-            chkOmniraptor.Text = "Omniraptor";
-            chkOmniraptor.UseVisualStyleBackColor = true;
-            // 
-            // chkPteranodon
-            // 
-            chkPteranodon.AutoSize = true;
-            chkPteranodon.Checked = true;
-            chkPteranodon.CheckState = CheckState.Checked;
-            chkPteranodon.Location = new Point(143, 49);
-            chkPteranodon.Name = "chkPteranodon";
-            chkPteranodon.Size = new Size(88, 19);
-            chkPteranodon.TabIndex = 10;
-            chkPteranodon.Text = "Pteranodon";
-            chkPteranodon.UseVisualStyleBackColor = true;
-            // 
-            // chkTroodon
-            // 
-            chkTroodon.AutoSize = true;
-            chkTroodon.Checked = true;
-            chkTroodon.CheckState = CheckState.Checked;
-            chkTroodon.Location = new Point(143, 74);
-            chkTroodon.Name = "chkTroodon";
-            chkTroodon.Size = new Size(70, 19);
-            chkTroodon.TabIndex = 11;
-            chkTroodon.Text = "Troodon";
-            chkTroodon.UseVisualStyleBackColor = true;
-            // 
-            // chkBeipiaosaurus
-            // 
-            chkBeipiaosaurus.AutoSize = true;
-            chkBeipiaosaurus.Checked = true;
-            chkBeipiaosaurus.CheckState = CheckState.Checked;
-            chkBeipiaosaurus.Location = new Point(143, 99);
-            chkBeipiaosaurus.Name = "chkBeipiaosaurus";
-            chkBeipiaosaurus.Size = new Size(99, 19);
-            chkBeipiaosaurus.TabIndex = 12;
-            chkBeipiaosaurus.Text = "Beipiaosaurus";
-            chkBeipiaosaurus.UseVisualStyleBackColor = true;
-            // 
-            // chkGallimimus
-            // 
-            chkGallimimus.AutoSize = true;
-            chkGallimimus.Checked = true;
-            chkGallimimus.CheckState = CheckState.Checked;
-            chkGallimimus.Location = new Point(143, 124);
-            chkGallimimus.Name = "chkGallimimus";
-            chkGallimimus.Size = new Size(86, 19);
-            chkGallimimus.TabIndex = 13;
-            chkGallimimus.Text = "Gallimimus";
-            chkGallimimus.UseVisualStyleBackColor = true;
-            // 
-            // chkDilophosaurus
-            // 
-            chkDilophosaurus.AutoSize = true;
-            chkDilophosaurus.Checked = true;
-            chkDilophosaurus.CheckState = CheckState.Checked;
-            chkDilophosaurus.Location = new Point(143, 149);
-            chkDilophosaurus.Name = "chkDilophosaurus";
-            chkDilophosaurus.Size = new Size(89, 19);
-            chkDilophosaurus.TabIndex = 14;
-            chkDilophosaurus.Text = "checkBox16";
-            chkDilophosaurus.UseVisualStyleBackColor = true;
+            chkMaiasaura.AutoSize = true;
+            chkMaiasaura.Checked = true;
+            chkMaiasaura.CheckState = CheckState.Checked;
+            chkMaiasaura.Location = new Point(143, 199);
+            chkMaiasaura.Name = "chkMaiasaura";
+            chkMaiasaura.Size = new Size(80, 19);
+            chkMaiasaura.TabIndex = 16;
+            chkMaiasaura.Text = "Maiasaura";
+            chkMaiasaura.UseVisualStyleBackColor = true;
             // 
             // chkHerrerasaurus
             // 
@@ -1092,17 +925,185 @@
             chkHerrerasaurus.Text = "Herrerasaurus";
             chkHerrerasaurus.UseVisualStyleBackColor = true;
             // 
-            // chkMaiasaura
+            // chkDilophosaurus
             // 
-            chkMaiasaura.AutoSize = true;
-            chkMaiasaura.Checked = true;
-            chkMaiasaura.CheckState = CheckState.Checked;
-            chkMaiasaura.Location = new Point(143, 199);
-            chkMaiasaura.Name = "chkMaiasaura";
-            chkMaiasaura.Size = new Size(80, 19);
-            chkMaiasaura.TabIndex = 16;
-            chkMaiasaura.Text = "Maiasaura";
-            chkMaiasaura.UseVisualStyleBackColor = true;
+            chkDilophosaurus.AutoSize = true;
+            chkDilophosaurus.Checked = true;
+            chkDilophosaurus.CheckState = CheckState.Checked;
+            chkDilophosaurus.Location = new Point(143, 149);
+            chkDilophosaurus.Name = "chkDilophosaurus";
+            chkDilophosaurus.Size = new Size(89, 19);
+            chkDilophosaurus.TabIndex = 14;
+            chkDilophosaurus.Text = "checkBox16";
+            chkDilophosaurus.UseVisualStyleBackColor = true;
+            // 
+            // chkGallimimus
+            // 
+            chkGallimimus.AutoSize = true;
+            chkGallimimus.Checked = true;
+            chkGallimimus.CheckState = CheckState.Checked;
+            chkGallimimus.Location = new Point(143, 124);
+            chkGallimimus.Name = "chkGallimimus";
+            chkGallimimus.Size = new Size(86, 19);
+            chkGallimimus.TabIndex = 13;
+            chkGallimimus.Text = "Gallimimus";
+            chkGallimimus.UseVisualStyleBackColor = true;
+            // 
+            // chkBeipiaosaurus
+            // 
+            chkBeipiaosaurus.AutoSize = true;
+            chkBeipiaosaurus.Checked = true;
+            chkBeipiaosaurus.CheckState = CheckState.Checked;
+            chkBeipiaosaurus.Location = new Point(143, 99);
+            chkBeipiaosaurus.Name = "chkBeipiaosaurus";
+            chkBeipiaosaurus.Size = new Size(99, 19);
+            chkBeipiaosaurus.TabIndex = 12;
+            chkBeipiaosaurus.Text = "Beipiaosaurus";
+            chkBeipiaosaurus.UseVisualStyleBackColor = true;
+            // 
+            // chkTroodon
+            // 
+            chkTroodon.AutoSize = true;
+            chkTroodon.Checked = true;
+            chkTroodon.CheckState = CheckState.Checked;
+            chkTroodon.Location = new Point(143, 74);
+            chkTroodon.Name = "chkTroodon";
+            chkTroodon.Size = new Size(70, 19);
+            chkTroodon.TabIndex = 11;
+            chkTroodon.Text = "Troodon";
+            chkTroodon.UseVisualStyleBackColor = true;
+            // 
+            // chkPteranodon
+            // 
+            chkPteranodon.AutoSize = true;
+            chkPteranodon.Checked = true;
+            chkPteranodon.CheckState = CheckState.Checked;
+            chkPteranodon.Location = new Point(143, 49);
+            chkPteranodon.Name = "chkPteranodon";
+            chkPteranodon.Size = new Size(88, 19);
+            chkPteranodon.TabIndex = 10;
+            chkPteranodon.Text = "Pteranodon";
+            chkPteranodon.UseVisualStyleBackColor = true;
+            // 
+            // chkOmniraptor
+            // 
+            chkOmniraptor.AutoSize = true;
+            chkOmniraptor.Checked = true;
+            chkOmniraptor.CheckState = CheckState.Checked;
+            chkOmniraptor.Location = new Point(6, 247);
+            chkOmniraptor.Name = "chkOmniraptor";
+            chkOmniraptor.Size = new Size(88, 19);
+            chkOmniraptor.TabIndex = 9;
+            chkOmniraptor.Text = "Omniraptor";
+            chkOmniraptor.UseVisualStyleBackColor = true;
+            // 
+            // chkDiabloceratops
+            // 
+            chkDiabloceratops.AutoSize = true;
+            chkDiabloceratops.Checked = true;
+            chkDiabloceratops.CheckState = CheckState.Checked;
+            chkDiabloceratops.Location = new Point(6, 222);
+            chkDiabloceratops.Name = "chkDiabloceratops";
+            chkDiabloceratops.Size = new Size(105, 19);
+            chkDiabloceratops.TabIndex = 8;
+            chkDiabloceratops.Text = "Diabloceratops";
+            chkDiabloceratops.UseVisualStyleBackColor = true;
+            // 
+            // chkDeinosuchus
+            // 
+            chkDeinosuchus.AutoSize = true;
+            chkDeinosuchus.Checked = true;
+            chkDeinosuchus.CheckState = CheckState.Checked;
+            chkDeinosuchus.Location = new Point(6, 199);
+            chkDeinosuchus.Name = "chkDeinosuchus";
+            chkDeinosuchus.Size = new Size(94, 19);
+            chkDeinosuchus.TabIndex = 7;
+            chkDeinosuchus.Text = "Deinosuchus";
+            chkDeinosuchus.UseVisualStyleBackColor = true;
+            // 
+            // chkCeratosaurus
+            // 
+            chkCeratosaurus.AutoSize = true;
+            chkCeratosaurus.Checked = true;
+            chkCeratosaurus.CheckState = CheckState.Checked;
+            chkCeratosaurus.Location = new Point(6, 174);
+            chkCeratosaurus.Name = "chkCeratosaurus";
+            chkCeratosaurus.Size = new Size(95, 19);
+            chkCeratosaurus.TabIndex = 6;
+            chkCeratosaurus.Text = "Ceratosaurus";
+            chkCeratosaurus.UseVisualStyleBackColor = true;
+            // 
+            // chkCarnotaurus
+            // 
+            chkCarnotaurus.AutoSize = true;
+            chkCarnotaurus.Checked = true;
+            chkCarnotaurus.CheckState = CheckState.Checked;
+            chkCarnotaurus.Location = new Point(6, 149);
+            chkCarnotaurus.Name = "chkCarnotaurus";
+            chkCarnotaurus.Size = new Size(91, 19);
+            chkCarnotaurus.TabIndex = 5;
+            chkCarnotaurus.Text = "Carnotaurus";
+            chkCarnotaurus.UseVisualStyleBackColor = true;
+            // 
+            // chkTenontosaurus
+            // 
+            chkTenontosaurus.AutoSize = true;
+            chkTenontosaurus.Checked = true;
+            chkTenontosaurus.CheckState = CheckState.Checked;
+            chkTenontosaurus.Location = new Point(6, 124);
+            chkTenontosaurus.Name = "chkTenontosaurus";
+            chkTenontosaurus.Size = new Size(103, 19);
+            chkTenontosaurus.TabIndex = 4;
+            chkTenontosaurus.Text = "Tenontosaurus";
+            chkTenontosaurus.UseVisualStyleBackColor = true;
+            // 
+            // chkStegosaurus
+            // 
+            chkStegosaurus.AutoSize = true;
+            chkStegosaurus.Checked = true;
+            chkStegosaurus.CheckState = CheckState.Checked;
+            chkStegosaurus.Location = new Point(6, 99);
+            chkStegosaurus.Name = "chkStegosaurus";
+            chkStegosaurus.Size = new Size(90, 19);
+            chkStegosaurus.TabIndex = 3;
+            chkStegosaurus.Text = "Stegosaurus";
+            chkStegosaurus.UseVisualStyleBackColor = true;
+            // 
+            // chkPachycephalosaurus
+            // 
+            chkPachycephalosaurus.AutoSize = true;
+            chkPachycephalosaurus.Checked = true;
+            chkPachycephalosaurus.CheckState = CheckState.Checked;
+            chkPachycephalosaurus.Location = new Point(8, 74);
+            chkPachycephalosaurus.Name = "chkPachycephalosaurus";
+            chkPachycephalosaurus.Size = new Size(134, 19);
+            chkPachycephalosaurus.TabIndex = 2;
+            chkPachycephalosaurus.Text = "Pachycephalosaurus";
+            chkPachycephalosaurus.UseVisualStyleBackColor = true;
+            // 
+            // chkHypsilophodon
+            // 
+            chkHypsilophodon.AutoSize = true;
+            chkHypsilophodon.Checked = true;
+            chkHypsilophodon.CheckState = CheckState.Checked;
+            chkHypsilophodon.Location = new Point(6, 49);
+            chkHypsilophodon.Name = "chkHypsilophodon";
+            chkHypsilophodon.Size = new Size(108, 19);
+            chkHypsilophodon.TabIndex = 1;
+            chkHypsilophodon.Text = "Hypsilophodon";
+            chkHypsilophodon.UseVisualStyleBackColor = true;
+            // 
+            // chkDryosaurus
+            // 
+            chkDryosaurus.AutoSize = true;
+            chkDryosaurus.Checked = true;
+            chkDryosaurus.CheckState = CheckState.Checked;
+            chkDryosaurus.Location = new Point(6, 24);
+            chkDryosaurus.Name = "chkDryosaurus";
+            chkDryosaurus.Size = new Size(85, 19);
+            chkDryosaurus.TabIndex = 0;
+            chkDryosaurus.Text = "Dryosaurus";
+            chkDryosaurus.UseVisualStyleBackColor = true;
             // 
             // frmServerSettings
             // 

@@ -118,5 +118,10 @@ namespace The_Isle_Evrima_Manager.Forms
                 // Parse into the settings JSON then handle saving to INI if not running server
             }
         }
+
+        private void saveAndCloseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
