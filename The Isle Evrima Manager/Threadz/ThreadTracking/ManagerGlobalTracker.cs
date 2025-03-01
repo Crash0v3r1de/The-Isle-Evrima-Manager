@@ -9,6 +9,7 @@ namespace The_Isle_Evrima_Manager.Threadz.ThreadTracking
 {
     public static class ManagerGlobalTracker
     {
+        private static string currDir = Environment.CurrentDirectory;
         public static ManagerStatus CurrentStatus { get; set; } = ManagerStatus.idle;
         public static bool IsRunning { get; set; } = true;
         public static string steamCMDexe = Environment.CurrentDirectory + @"\utils\steamcmd\steamcmd.exe";
@@ -34,5 +35,6 @@ namespace The_Isle_Evrima_Manager.Threadz.ThreadTracking
         public static bool isleServerInstalled = false;
         public static bool autoloadDLLs = true;
         public static bool steamCMDInitialized = false;
+        public static bool customServerDir = false;
     }
 }

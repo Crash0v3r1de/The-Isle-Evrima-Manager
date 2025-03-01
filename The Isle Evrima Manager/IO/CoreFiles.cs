@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO.Compression;
 using The_Isle_Evrima_Manager.Threadz.ThreadTracking;
+using Newtonsoft.Json;
+using The_Isle_Evrima_Manager.JSON;
 
 namespace The_Isle_Evrima_Manager.IO
 {
@@ -89,9 +91,11 @@ namespace The_Isle_Evrima_Manager.IO
                 }
             }
         }
-        public static void PrcoessServerPathMove(string newPath) { 
-            Directory.Move(ManagerGlobalTracker.serverPath, newPath);
-            ManagerGlobalTracker.serverPath = newPath; // Set new path also
+        public static void PrcoessServerPathMove(string newPath) {
+            if (Directory.Exists(ManagerGlobalTracker.serverPath+ "TheIsle")) {
+                Directory.Move(ManagerGlobalTracker.serverPath, newPath);
+            }            
+            if(ManagerGlobalTracker.serverPath != newPath) ManagerGlobalTracker.serverPath = newPath; // Set new path also - if move before install this'll keep everything happy
         }
         public static bool CopyDLLs() {
             try {
@@ -110,5 +114,48 @@ namespace The_Isle_Evrima_Manager.IO
             }            
             return true;
         }
+        public static void WriteEngineINI() {
+            // The server when ran seems to remove this file and this is used in the run arguments but we'll write it anyway
+            var fullPath = ManagerGlobalTracker.serverPath + ManagerGlobalTracker.engineINI;
+            using (StreamWriter sw = new StreamWriter(fullPath,false)) { 
+                sw.WriteLine("[EpicOnlineServices]");
+                sw.WriteLine("DedicatedServerClientId=xyza7891gk5PRo3J7G9puCJGFJjmEguW");
+                sw.WriteLine("DedicatedServerClientSecret=pKWl6t5i9NJK8gTpVlAxzENZ65P8hYzodV8Dqe5Rlc8");
+            }
+        }
+        public static void SaveManagerSettings()
+        {
+            var fullPath = ManagerGlobalTracker.managerConfDir + "manager.json";
+            File.WriteAllText(fullPath, JsonConvert.SerializeObject(ParseManagerSettings()));
+        }
+
+        #region Private Methods
+        private static ManagerSettingsJSON ParseManagerSettings() {
+            ManagerSettingsJSON managerSettings = new ManagerSettingsJSON();
+            managerSettings.AutoloadDLLs = ManagerGlobalTracker.autoloadDLLs;
+            managerSettings.checkForManagerUpdates = ManagerGlobalTracker.checkForManagerUpdates;
+            managerSettings.cplusplusInstalled = ManagerGlobalTracker.cplusplusInstalled;
+            managerSettings.CurrentStatus = ManagerGlobalTracker.CurrentStatus;
+            managerSettings.discordWebhookURL = ManagerGlobalTracker.discordWebhookURL;
+            managerSettings.enableDiscordNotifications = ManagerGlobalTracker.enableDiscordNotifications;
+            managerSettings.engineINI = ManagerGlobalTracker.engineINI;
+            managerSettings.isleServerInstalled = ManagerGlobalTracker.isleServerInstalled;
+            managerSettings.logDir = ManagerGlobalTracker.logDir;
+            managerSettings.managerConfDir = ManagerGlobalTracker.managerConfDir;
+            managerSettings.monitorHardware = ManagerGlobalTracker.monitorHardware;
+            managerSettings.monitorServer = ManagerGlobalTracker.monitorServer;
+            managerSettings.resourceRefreshInt = ManagerGlobalTracker.resourceRefreshInt;
+            managerSettings.serverExe = ManagerGlobalTracker.serverExe;
+            managerSettings.serverPath = ManagerGlobalTracker.serverPath;
+            managerSettings.serverStatsRefreshInt = ManagerGlobalTracker.serverStatsRefreshInt;
+            managerSettings.steamCMDexe = ManagerGlobalTracker.steamCMDexe;
+            managerSettings.steamCMDInstalled = ManagerGlobalTracker.steamCMDInstalled;
+            managerSettings.steamCMDInitialized = ManagerGlobalTracker.steamCMDInitialized;
+            managerSettings.steamClientInstalled = ManagerGlobalTracker.steamClientInstalled;
+            managerSettings.tmpPath = ManagerGlobalTracker.tmpPath;
+            managerSettings.utilPath = ManagerGlobalTracker.utilPath;
+            return managerSettings;
+        }
+        #endregion
     }
 }

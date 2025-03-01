@@ -50,6 +50,7 @@
             toolStrip1 = new ToolStrip();
             toolStripDropDownButton1 = new ToolStripDropDownButton();
             refreshResourcesToolStripMenuItem = new ToolStripMenuItem();
+            autoCopyRequiredDLLsToolStripMenuItem = new ToolStripMenuItem();
             managerSettingsToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator1 = new ToolStripSeparator();
             exitToolStripMenuItem = new ToolStripMenuItem();
@@ -60,27 +61,38 @@
             theIsleServerToolStripMenuItem = new ToolStripMenuItem();
             steamClientToolStripMenuItem = new ToolStripMenuItem();
             btnChangeProcPrior = new ToolStripMenuItem();
+            changeServerDirectoryLocationToolStripMenuItem = new ToolStripMenuItem();
             toolStripDropDownButton3 = new ToolStripDropDownButton();
             btnStartIsleServer = new ToolStripMenuItem();
             btnStopIsleServer = new ToolStripMenuItem();
+            btnForceStopIsleServer = new ToolStripMenuItem();
             toolStripSeparator2 = new ToolStripSeparator();
+            generalServerSettingsToolStripMenuItem = new ToolStripMenuItem();
+            userSettingsToolStripMenuItem = new ToolStripMenuItem();
+            adminsToolStripMenuItem = new ToolStripMenuItem();
+            vIPsToolStripMenuItem = new ToolStripMenuItem();
+            whitelistToolStripMenuItem = new ToolStripMenuItem();
+            toolStripSeparator4 = new ToolStripSeparator();
             btnVerifyIsleServer = new ToolStripMenuItem();
             btnServerStatsRefresh = new ToolStripMenuItem();
-            toolStripSeparator3 = new ToolStripSeparator();
-            toolStripDropDownButton4 = new ToolStripDropDownButton();
-            steamClientWhatGivesToolStripMenuItem = new ToolStripMenuItem();
-            aboutToolStripMenuItem = new ToolStripMenuItem();
             toolStripDropDownButton5 = new ToolStripDropDownButton();
             configureRCONConnectionToolStripMenuItem = new ToolStripMenuItem();
             configureRCONTasksToolStripMenuItem = new ToolStripMenuItem();
+            toolStripSeparator3 = new ToolStripSeparator();
+            toolStripDropDownButton4 = new ToolStripDropDownButton();
+            aboutToolStripMenuItem = new ToolStripMenuItem();
             groupBox4 = new GroupBox();
             lblPlayerDataCount = new Label();
             label6 = new Label();
-            autoCopyRequiredDLLsToolStripMenuItem = new ToolStripMenuItem();
-            changeServerDirectoryLocationToolStripMenuItem = new ToolStripMenuItem();
-            button1 = new Button();
-            button2 = new Button();
-            button3 = new Button();
+            btnStartServerUI = new Button();
+            btnUIStopServerGraceful = new Button();
+            btnForceStopUI = new Button();
+            label7 = new Label();
+            label8 = new Label();
+            label9 = new Label();
+            lblAdminCount = new Label();
+            lblVIPCount = new Label();
+            lblWhitelistCount = new Label();
             stsStripMain.SuspendLayout();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
@@ -262,6 +274,7 @@
             toolStrip1.Size = new Size(800, 25);
             toolStrip1.TabIndex = 4;
             toolStrip1.Text = "toolStrip1";
+            toolStrip1.ItemClicked += toolStrip1_ItemClicked;
             // 
             // toolStripDropDownButton1
             // 
@@ -281,6 +294,14 @@
             refreshResourcesToolStripMenuItem.Size = new Size(209, 22);
             refreshResourcesToolStripMenuItem.Text = "Refresh Resources";
             refreshResourcesToolStripMenuItem.Click += refreshResourcesToolStripMenuItem_Click;
+            // 
+            // autoCopyRequiredDLLsToolStripMenuItem
+            // 
+            autoCopyRequiredDLLsToolStripMenuItem.Checked = true;
+            autoCopyRequiredDLLsToolStripMenuItem.CheckState = CheckState.Checked;
+            autoCopyRequiredDLLsToolStripMenuItem.Name = "autoCopyRequiredDLLsToolStripMenuItem";
+            autoCopyRequiredDLLsToolStripMenuItem.Size = new Size(209, 22);
+            autoCopyRequiredDLLsToolStripMenuItem.Text = "Auto Copy Required DLLs";
             // 
             // managerSettingsToolStripMenuItem
             // 
@@ -314,14 +335,14 @@
             // viewLogsToolStripMenuItem
             // 
             viewLogsToolStripMenuItem.Name = "viewLogsToolStripMenuItem";
-            viewLogsToolStripMenuItem.Size = new Size(234, 22);
+            viewLogsToolStripMenuItem.Size = new Size(250, 22);
             viewLogsToolStripMenuItem.Text = "View Logs";
             // 
             // downloadDependenciesToolStripMenuItem
             // 
             downloadDependenciesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { steamCMDToolStripMenuItem, theIsleServerToolStripMenuItem, steamClientToolStripMenuItem });
             downloadDependenciesToolStripMenuItem.Name = "downloadDependenciesToolStripMenuItem";
-            downloadDependenciesToolStripMenuItem.Size = new Size(234, 22);
+            downloadDependenciesToolStripMenuItem.Size = new Size(250, 22);
             downloadDependenciesToolStripMenuItem.Text = "Download Dependencies (All)";
             // 
             // steamCMDToolStripMenuItem
@@ -348,13 +369,20 @@
             // btnChangeProcPrior
             // 
             btnChangeProcPrior.Name = "btnChangeProcPrior";
-            btnChangeProcPrior.Size = new Size(234, 22);
+            btnChangeProcPrior.Size = new Size(250, 22);
             btnChangeProcPrior.Text = "Change Server Process Priority";
+            // 
+            // changeServerDirectoryLocationToolStripMenuItem
+            // 
+            changeServerDirectoryLocationToolStripMenuItem.Name = "changeServerDirectoryLocationToolStripMenuItem";
+            changeServerDirectoryLocationToolStripMenuItem.Size = new Size(250, 22);
+            changeServerDirectoryLocationToolStripMenuItem.Text = "Change Server Directory Location";
+            changeServerDirectoryLocationToolStripMenuItem.Click += changeServerDirectoryLocationToolStripMenuItem_Click;
             // 
             // toolStripDropDownButton3
             // 
             toolStripDropDownButton3.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            toolStripDropDownButton3.DropDownItems.AddRange(new ToolStripItem[] { btnStartIsleServer, btnStopIsleServer, toolStripSeparator2, btnVerifyIsleServer, btnServerStatsRefresh });
+            toolStripDropDownButton3.DropDownItems.AddRange(new ToolStripItem[] { btnStartIsleServer, btnStopIsleServer, btnForceStopIsleServer, toolStripSeparator2, generalServerSettingsToolStripMenuItem, userSettingsToolStripMenuItem, toolStripSeparator4, btnVerifyIsleServer, btnServerStatsRefresh });
             toolStripDropDownButton3.Image = (Image)resources.GetObject("toolStripDropDownButton3.Image");
             toolStripDropDownButton3.ImageTransparentColor = Color.Magenta;
             toolStripDropDownButton3.Name = "toolStripDropDownButton3";
@@ -364,24 +392,70 @@
             // btnStartIsleServer
             // 
             btnStartIsleServer.Name = "btnStartIsleServer";
-            btnStartIsleServer.Size = new Size(213, 22);
+            btnStartIsleServer.Size = new Size(248, 22);
             btnStartIsleServer.Text = "Start";
+            btnStartIsleServer.Click += btnStartIsleServer_Click;
             // 
             // btnStopIsleServer
             // 
             btnStopIsleServer.Name = "btnStopIsleServer";
-            btnStopIsleServer.Size = new Size(213, 22);
-            btnStopIsleServer.Text = "Stop";
+            btnStopIsleServer.Size = new Size(248, 22);
+            btnStopIsleServer.Text = "Stop (Gradefully)";
+            btnStopIsleServer.Click += btnStopIsleServer_Click;
+            // 
+            // btnForceStopIsleServer
+            // 
+            btnForceStopIsleServer.Name = "btnForceStopIsleServer";
+            btnForceStopIsleServer.Size = new Size(248, 22);
+            btnForceStopIsleServer.Text = "Force Stop (NOT Recommended)";
+            btnForceStopIsleServer.Click += btnForceStopIsleServer_Click;
             // 
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new Size(210, 6);
+            toolStripSeparator2.Size = new Size(245, 6);
+            // 
+            // generalServerSettingsToolStripMenuItem
+            // 
+            generalServerSettingsToolStripMenuItem.Name = "generalServerSettingsToolStripMenuItem";
+            generalServerSettingsToolStripMenuItem.Size = new Size(248, 22);
+            generalServerSettingsToolStripMenuItem.Text = "General Server Settings";
+            // 
+            // userSettingsToolStripMenuItem
+            // 
+            userSettingsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { adminsToolStripMenuItem, vIPsToolStripMenuItem, whitelistToolStripMenuItem });
+            userSettingsToolStripMenuItem.Name = "userSettingsToolStripMenuItem";
+            userSettingsToolStripMenuItem.Size = new Size(248, 22);
+            userSettingsToolStripMenuItem.Text = "User Settings";
+            // 
+            // adminsToolStripMenuItem
+            // 
+            adminsToolStripMenuItem.Name = "adminsToolStripMenuItem";
+            adminsToolStripMenuItem.Size = new Size(120, 22);
+            adminsToolStripMenuItem.Text = "Admins";
+            adminsToolStripMenuItem.Click += adminsToolStripMenuItem_Click;
+            // 
+            // vIPsToolStripMenuItem
+            // 
+            vIPsToolStripMenuItem.Name = "vIPsToolStripMenuItem";
+            vIPsToolStripMenuItem.Size = new Size(120, 22);
+            vIPsToolStripMenuItem.Text = "VIPs";
+            // 
+            // whitelistToolStripMenuItem
+            // 
+            whitelistToolStripMenuItem.Name = "whitelistToolStripMenuItem";
+            whitelistToolStripMenuItem.Size = new Size(120, 22);
+            whitelistToolStripMenuItem.Text = "Whitelist";
+            // 
+            // toolStripSeparator4
+            // 
+            toolStripSeparator4.Name = "toolStripSeparator4";
+            toolStripSeparator4.Size = new Size(245, 6);
             // 
             // btnVerifyIsleServer
             // 
             btnVerifyIsleServer.Name = "btnVerifyIsleServer";
-            btnVerifyIsleServer.Size = new Size(213, 22);
+            btnVerifyIsleServer.Size = new Size(248, 22);
             btnVerifyIsleServer.Text = "Verify (will stop if running)";
             // 
             // btnServerStatsRefresh
@@ -389,38 +463,9 @@
             btnServerStatsRefresh.Checked = true;
             btnServerStatsRefresh.CheckState = CheckState.Checked;
             btnServerStatsRefresh.Name = "btnServerStatsRefresh";
-            btnServerStatsRefresh.Size = new Size(213, 22);
+            btnServerStatsRefresh.Size = new Size(248, 22);
             btnServerStatsRefresh.Text = "Refresh Stats Data";
             btnServerStatsRefresh.Click += btnServerStatsRefresh_Click;
-            // 
-            // toolStripSeparator3
-            // 
-            toolStripSeparator3.Name = "toolStripSeparator3";
-            toolStripSeparator3.Size = new Size(6, 25);
-            // 
-            // toolStripDropDownButton4
-            // 
-            toolStripDropDownButton4.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            toolStripDropDownButton4.DropDownItems.AddRange(new ToolStripItem[] { steamClientWhatGivesToolStripMenuItem, aboutToolStripMenuItem });
-            toolStripDropDownButton4.Image = (Image)resources.GetObject("toolStripDropDownButton4.Image");
-            toolStripDropDownButton4.ImageTransparentColor = Color.Magenta;
-            toolStripDropDownButton4.Name = "toolStripDropDownButton4";
-            toolStripDropDownButton4.Size = new Size(45, 22);
-            toolStripDropDownButton4.Text = "Help";
-            // 
-            // steamClientWhatGivesToolStripMenuItem
-            // 
-            steamClientWhatGivesToolStripMenuItem.Name = "steamClientWhatGivesToolStripMenuItem";
-            steamClientWhatGivesToolStripMenuItem.Size = new Size(225, 22);
-            steamClientWhatGivesToolStripMenuItem.Text = "Steam Client - What gives???";
-            steamClientWhatGivesToolStripMenuItem.Click += steamClientWhatGivesToolStripMenuItem_Click;
-            // 
-            // aboutToolStripMenuItem
-            // 
-            aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            aboutToolStripMenuItem.Size = new Size(225, 22);
-            aboutToolStripMenuItem.Text = "About";
-            aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
             // 
             // toolStripDropDownButton5
             // 
@@ -446,8 +491,36 @@
             configureRCONTasksToolStripMenuItem.Text = "Configure RCON Tasks";
             configureRCONTasksToolStripMenuItem.Click += configureRCONTasksToolStripMenuItem_Click;
             // 
+            // toolStripSeparator3
+            // 
+            toolStripSeparator3.Name = "toolStripSeparator3";
+            toolStripSeparator3.Size = new Size(6, 25);
+            // 
+            // toolStripDropDownButton4
+            // 
+            toolStripDropDownButton4.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            toolStripDropDownButton4.DropDownItems.AddRange(new ToolStripItem[] { aboutToolStripMenuItem });
+            toolStripDropDownButton4.Image = (Image)resources.GetObject("toolStripDropDownButton4.Image");
+            toolStripDropDownButton4.ImageTransparentColor = Color.Magenta;
+            toolStripDropDownButton4.Name = "toolStripDropDownButton4";
+            toolStripDropDownButton4.Size = new Size(45, 22);
+            toolStripDropDownButton4.Text = "Help";
+            // 
+            // aboutToolStripMenuItem
+            // 
+            aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            aboutToolStripMenuItem.Size = new Size(107, 22);
+            aboutToolStripMenuItem.Text = "About";
+            aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
+            // 
             // groupBox4
             // 
+            groupBox4.Controls.Add(lblWhitelistCount);
+            groupBox4.Controls.Add(lblVIPCount);
+            groupBox4.Controls.Add(lblAdminCount);
+            groupBox4.Controls.Add(label9);
+            groupBox4.Controls.Add(label8);
+            groupBox4.Controls.Add(label7);
             groupBox4.Controls.Add(lblPlayerDataCount);
             groupBox4.Controls.Add(label6);
             groupBox4.Location = new Point(277, 41);
@@ -460,7 +533,7 @@
             // lblPlayerDataCount
             // 
             lblPlayerDataCount.AutoSize = true;
-            lblPlayerDataCount.Location = new Point(148, 19);
+            lblPlayerDataCount.Location = new Point(139, 19);
             lblPlayerDataCount.Name = "lblPlayerDataCount";
             lblPlayerDataCount.Size = new Size(13, 15);
             lblPlayerDataCount.TabIndex = 1;
@@ -471,60 +544,102 @@
             label6.AutoSize = true;
             label6.Location = new Point(6, 19);
             label6.Name = "label6";
-            label6.Size = new Size(140, 15);
+            label6.Size = new Size(135, 15);
             label6.TabIndex = 0;
-            label6.Text = "Total Players Data Entries:";
+            label6.Text = "Total Player Data Entries:";
             // 
-            // autoCopyRequiredDLLsToolStripMenuItem
+            // btnStartServerUI
             // 
-            autoCopyRequiredDLLsToolStripMenuItem.Checked = true;
-            autoCopyRequiredDLLsToolStripMenuItem.CheckState = CheckState.Checked;
-            autoCopyRequiredDLLsToolStripMenuItem.Name = "autoCopyRequiredDLLsToolStripMenuItem";
-            autoCopyRequiredDLLsToolStripMenuItem.Size = new Size(209, 22);
-            autoCopyRequiredDLLsToolStripMenuItem.Text = "Auto Copy Required DLLs";
+            btnStartServerUI.Location = new Point(534, 52);
+            btnStartServerUI.Name = "btnStartServerUI";
+            btnStartServerUI.Size = new Size(254, 53);
+            btnStartServerUI.TabIndex = 6;
+            btnStartServerUI.Text = "Start\r\n(Prompts for setup if needed)";
+            btnStartServerUI.UseVisualStyleBackColor = true;
+            btnStartServerUI.Click += btnStartServerUI_Click;
             // 
-            // changeServerDirectoryLocationToolStripMenuItem
+            // btnUIStopServerGraceful
             // 
-            changeServerDirectoryLocationToolStripMenuItem.Name = "changeServerDirectoryLocationToolStripMenuItem";
-            changeServerDirectoryLocationToolStripMenuItem.Size = new Size(250, 22);
-            changeServerDirectoryLocationToolStripMenuItem.Text = "Change Server Directory Location";
+            btnUIStopServerGraceful.Location = new Point(534, 111);
+            btnUIStopServerGraceful.Name = "btnUIStopServerGraceful";
+            btnUIStopServerGraceful.Size = new Size(254, 52);
+            btnUIStopServerGraceful.TabIndex = 7;
+            btnUIStopServerGraceful.Text = "Stop Grafeully";
+            btnUIStopServerGraceful.UseVisualStyleBackColor = true;
+            btnUIStopServerGraceful.Click += btnUIStopServerGraceful_Click;
             // 
-            // button1
+            // btnForceStopUI
             // 
-            button1.Location = new Point(534, 52);
-            button1.Name = "button1";
-            button1.Size = new Size(254, 53);
-            button1.TabIndex = 6;
-            button1.Text = "Start\r\n(Prompts for setup if needed)";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
+            btnForceStopUI.Location = new Point(534, 167);
+            btnForceStopUI.Name = "btnForceStopUI";
+            btnForceStopUI.Size = new Size(254, 23);
+            btnForceStopUI.TabIndex = 8;
+            btnForceStopUI.Text = "Force Exit (NOT Recommended)";
+            btnForceStopUI.UseVisualStyleBackColor = true;
+            btnForceStopUI.Click += btnForceStopUI_Click;
             // 
-            // button2
+            // label7
             // 
-            button2.Location = new Point(534, 111);
-            button2.Name = "button2";
-            button2.Size = new Size(254, 52);
-            button2.TabIndex = 7;
-            button2.Text = "Stop Grafeully";
-            button2.UseVisualStyleBackColor = true;
+            label7.AutoSize = true;
+            label7.Location = new Point(6, 39);
+            label7.Name = "label7";
+            label7.Size = new Size(75, 15);
+            label7.TabIndex = 2;
+            label7.Text = "# of Admins:";
             // 
-            // button3
+            // label8
             // 
-            button3.Location = new Point(534, 167);
-            button3.Name = "button3";
-            button3.Size = new Size(254, 23);
-            button3.TabIndex = 8;
-            button3.Text = "Force Exit (NOT Recommended)";
-            button3.UseVisualStyleBackColor = true;
+            label8.AutoSize = true;
+            label8.Location = new Point(6, 60);
+            label8.Name = "label8";
+            label8.Size = new Size(56, 15);
+            label8.TabIndex = 3;
+            label8.Text = "# of VIPs:";
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(6, 82);
+            label9.Name = "label9";
+            label9.Size = new Size(85, 15);
+            label9.TabIndex = 4;
+            label9.Text = "# of Whitelists:";
+            // 
+            // lblAdminCount
+            // 
+            lblAdminCount.AutoSize = true;
+            lblAdminCount.Location = new Point(78, 39);
+            lblAdminCount.Name = "lblAdminCount";
+            lblAdminCount.Size = new Size(13, 15);
+            lblAdminCount.TabIndex = 5;
+            lblAdminCount.Text = "0";
+            // 
+            // lblVIPCount
+            // 
+            lblVIPCount.AutoSize = true;
+            lblVIPCount.Location = new Point(59, 60);
+            lblVIPCount.Name = "lblVIPCount";
+            lblVIPCount.Size = new Size(13, 15);
+            lblVIPCount.TabIndex = 6;
+            lblVIPCount.Text = "0";
+            // 
+            // lblWhitelistCount
+            // 
+            lblWhitelistCount.AutoSize = true;
+            lblWhitelistCount.Location = new Point(88, 82);
+            lblWhitelistCount.Name = "lblWhitelistCount";
+            lblWhitelistCount.Size = new Size(13, 15);
+            lblWhitelistCount.TabIndex = 7;
+            lblWhitelistCount.Text = "0";
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 486);
-            Controls.Add(button3);
-            Controls.Add(button2);
-            Controls.Add(button1);
+            Controls.Add(btnForceStopUI);
+            Controls.Add(btnUIStopServerGraceful);
+            Controls.Add(btnStartServerUI);
             Controls.Add(groupBox4);
             Controls.Add(toolStrip1);
             Controls.Add(groupBox3);
@@ -591,7 +706,6 @@
         private ToolStripMenuItem managerSettingsToolStripMenuItem;
         private ToolStripDropDownButton toolStripDropDownButton4;
         private ToolStripSeparator toolStripSeparator3;
-        private ToolStripMenuItem steamClientWhatGivesToolStripMenuItem;
         private ToolStripMenuItem aboutToolStripMenuItem;
         private ToolStripMenuItem btnChangeProcPrior;
         private ToolStripStatusLabel lblIsAdmin;
@@ -600,8 +714,21 @@
         private ToolStripMenuItem configureRCONTasksToolStripMenuItem;
         private ToolStripMenuItem autoCopyRequiredDLLsToolStripMenuItem;
         private ToolStripMenuItem changeServerDirectoryLocationToolStripMenuItem;
-        private Button button1;
-        private Button button2;
-        private Button button3;
+        private Button btnStartServerUI;
+        private Button btnUIStopServerGraceful;
+        private Button btnForceStopUI;
+        private ToolStripMenuItem btnForceStopIsleServer;
+        private ToolStripMenuItem generalServerSettingsToolStripMenuItem;
+        private ToolStripMenuItem userSettingsToolStripMenuItem;
+        private ToolStripMenuItem adminsToolStripMenuItem;
+        private ToolStripMenuItem vIPsToolStripMenuItem;
+        private ToolStripMenuItem whitelistToolStripMenuItem;
+        private ToolStripSeparator toolStripSeparator4;
+        private Label lblWhitelistCount;
+        private Label lblVIPCount;
+        private Label lblAdminCount;
+        private Label label9;
+        private Label label8;
+        private Label label7;
     }
 }

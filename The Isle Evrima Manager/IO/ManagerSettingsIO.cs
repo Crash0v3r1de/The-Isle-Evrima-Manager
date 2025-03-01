@@ -12,8 +12,8 @@ namespace The_Isle_Evrima_Manager.IO
 {
     public class ManagerSettingsIO
     {
-        private string managerSettingsJSON = ManagerGlobalTracker.managerConfDir + @"\managersettings.json";
-        private string rconSettingsJSON = ManagerGlobalTracker.managerConfDir + @"\rconsettings.json";
+        private string managerSettingsJSON = ManagerGlobalTracker.managerConfDir + @"\manager.json";
+        private string rconSettingsJSON = ManagerGlobalTracker.managerConfDir + @"\rcon.json";
         private string rconTasksJSON = ManagerGlobalTracker.managerConfDir + @"\rcon-tasks.json";
 
         public bool FirstRun()

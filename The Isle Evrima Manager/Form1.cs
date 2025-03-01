@@ -21,6 +21,7 @@ namespace The_Isle_Evrima_Manager
         private string baseSpeed = "";
         private string maxSpeed = "";
         private ulong ramSize;
+        private ManagerSettingsIO manSet = new ManagerSettingsIO();
 
         public Form1()
         {
@@ -38,39 +39,38 @@ namespace The_Isle_Evrima_Manager
                 return;
             }
             CoreFiles.InitializeStructure();
-            var t1 = new Thread(() =>
-            {
-                StatusTracker();
-            });
-            t1.IsBackground = true;
-            t1.Start();
+
             var t2 = new Thread(() =>
             {
                 CoreFiles.InitializeStructure();
             });
             t2.IsBackground = true;
             t2.Start();
+        }
+        private void StartThreads()
+        {
             HardwareInfo();
+            var t1 = new Thread(() =>
+            {
+                StatusTracker();
+            });
+            t1.IsBackground = true;
+            t1.Start();
             var t3 = new Thread(() =>
             {
                 RuntimeReqChecks();
             });
-            t3.IsBackground = true;
-            t3.Start();
             var t4 = new Thread(() =>
             {
                 MonitorMemory();
             });
             t4.IsBackground = true;
             t4.Start();
-
             lblServerStatus.ForeColor = Color.OrangeRed;
             lblServerStatus.Text = "Server idle...";
             lblCores.Text = Environment.ProcessorCount.ToString();
             lblCoreSpeed.Text = $"{baseSpeed}GHz (Max {maxSpeed}GHz)";
             lblRAM.Text = $"{ramSize / 1024 / 1024 / 1024}GB";
-
-
         }
         private void RuntimeReqChecks()
         {
@@ -151,16 +151,28 @@ namespace The_Isle_Evrima_Manager
                 baseSpeed = b.ToString("0.0");
                 maxSpeed = m.ToString("0.0");
             }
+            // Might be usable, look into later - really not a big priority at the moment
+            //PerformanceCounter cpuCounter = new PerformanceCounter("Processor Information", "% Processor Performance", "_Total");
+            //double cpuValue = cpuCounter.NextValue();
+            //foreach (ManagementObject obj in new ManagementObjectSearcher("SELECT *, Name FROM Win32_Processor").Get())
+            //{
+            //    double maxSpeed = Convert.ToDouble(obj["MaxClockSpeed"]) / 1000;
+            //    double turboSpeed = maxSpeed * cpuValue / 100;
+            //    var data = string.Format("{0} Running at {1:0.00}Ghz, Turbo Speed: {2:0.00}Ghz", obj["Name"], maxSpeed, turboSpeed);
+            //    Debug.WriteLine(data);
+            //}
         }
 
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            ManagerSettingsIO manSet = new ManagerSettingsIO();
             CheckRunningPriv();
             if (manSet.FirstRun()) SysPrep(); // Need to run this first to setup folders for logs
+            else manSet.LoadManagerSettings();
+            StartThreads();
             UpdateTitle();
             Logger.Log($"Tool Started | Current Dir: {Environment.CurrentDirectory}", LogType.Info);
+            Logger.Log($"Server Dir: {ManagerGlobalTracker.serverPath}", LogType.Info);
 
         }
         private void CheckRunningPriv()
@@ -170,6 +182,7 @@ namespace The_Isle_Evrima_Manager
             if (new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator))
             {
                 // running as admin - process priority can be changed
+                lblIsAdmin.ForeColor = Color.Green;
                 lblIsAdmin.Text = "Running as admin - able to update process priority";
                 btnChangeProcPrior.Enabled = true;
 
@@ -177,7 +190,6 @@ namespace The_Isle_Evrima_Manager
             else
             {
                 // running as normal priv - process priority cannot be changed
-                lblIsAdmin.ForeColor = Color.Green;
                 lblIsAdmin.Text = "Running as normal user - change proccess priority disabled";
                 btnChangeProcPrior.Enabled = false;
                 btnChangeProcPrior.Text = "Change Server Process Priority (NOT ADMIN)";
@@ -251,6 +263,7 @@ namespace The_Isle_Evrima_Manager
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            CoreFiles.SaveManagerSettings();
             Environment.Exit(0);
             Application.Exit(); // Force any hanging threads close I guess
         }
@@ -259,39 +272,14 @@ namespace The_Isle_Evrima_Manager
         {
             new Thread(() =>
             {
-                ManagerGlobalTracker.CurrentStatus = ManagerStatus.downloadingSteamCMD;
+                ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.downloadingSteamCMD);
                 new BinaryDownloader().DownloadSteamCMD();
                 new SteamCMDControl().InitializeTool();
-                ManagerGlobalTracker.CurrentStatus = Enums.ManagerStatus.idle;
+                ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.idle);
             }).Start();
         }
 
-        /// <summary>
-        /// Allow outside threads/methods to append to the console
-        /// </summary>
-        /// <param name="entry">string of message to append</param>
-        public static void AppendConsoleEntry(string entry)
-        {
-            // Really unsure what memory usage will look like overtime
-            // Eventually I'll add a code to check usage . xxxMB and reset textbox
-            if (Application.OpenForms["Form1"] is Form1 form)
-            {
-                if (form.txtConsole.InvokeRequired)
-                {
-                    form.txtConsole.Invoke(new Action<string>(AppendConsoleEntry), entry);
-                }
-                else
-                {
-                    if (!entry.Contains("Redirect"))
-                    { // ignore .NET redirect messages
-                        form.txtConsole.AppendText(entry + "\n");
-                        form.txtConsole.Refresh();
-                        form.txtConsole.SelectionStart = form.txtConsole.Text.Length;
-                        form.txtConsole.ScrollToCaret();
-                    }
-                }
-            }
-        }
+
 
         private void theIsleServerToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -377,21 +365,12 @@ namespace The_Isle_Evrima_Manager
 
         private void steamClientToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new Thread(() =>
+            if (!ManagerGlobalTracker.isleServerInstalled) MessageBox.Show("You must install the game server first...");
+            else
             {
-                Logger.Log("Downloading Steam Client...", LogType.Info);
-                new WebClient().DownloadFile("https://cdn.fastly.steamstatic.com/client/installer/SteamSetup.exe", $"{ManagerGlobalTracker.tmpPath}\\SteamSetup.exe");
-                ProcessStartInfo args = new ProcessStartInfo($"{ManagerGlobalTracker.tmpPath}\\SteamSetup.exe");
-                args.Arguments = "/S"; // add silent install option
-                Process installer = new Process();
-                installer.StartInfo = args;
-                Logger.Log("Installing Steam Client...", LogType.Info);
-                installer.Start();
-                installer.WaitForExit(); // Unsure of exit code indicating installed correctly - I'll log it
-                Logger.Log($"Steam Client installed(?) - Exit code {installer.ExitCode}", LogType.Info);
-                ManagerGlobalTracker.steamClientInstalled = true;
-                File.Delete($"{ManagerGlobalTracker.tmpPath}\\SteamSetup.exe");
-            }).Start();
+                Logger.Log("Copying required Steam DLLs...", LogType.Info);
+                if (!CoreFiles.CopyDLLs()) Logger.Log("Failed to copy Steam DLLs, please do manually and report issue on Github", LogType.Error);
+            }
         }
 
         private void steamClientWhatGivesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -402,24 +381,6 @@ namespace The_Isle_Evrima_Manager
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Process.Start("explorer.exe", "https://github.com/Crash0v3r1de/the-isle-evrima-manager");
-        }
-        public static void UpdateManagerStatus(ManagerStatus status)
-        {
-            switch (status)
-            {
-                case ManagerStatus.idle:
-                    break;
-                case ManagerStatus.downloadingSteamCMD:
-                    break;
-                case ManagerStatus.downloadingServerFiles:
-                    break;
-                case ManagerStatus.startingServer:
-                    break;
-                case ManagerStatus.stoppingServer:
-                    break;
-                case ManagerStatus.error:
-                    break;
-            }
         }
 
         private void configureRCONTasksToolStripMenuItem_Click(object sender, EventArgs e)
@@ -434,30 +395,109 @@ namespace The_Isle_Evrima_Manager
             rconSettings.ShowDialog();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnStartServerUI_Click(object sender, EventArgs e)
         {
-            var t = new Thread(() =>
-            {
-                var steam = new SteamCMDControl();
-                if (ManagerGlobalTracker.steamClientInstalled)
-                { // SteamCMD is installed
-                    if (ManagerGlobalTracker.isleServerInstalled) steam.InstallIsleServer();
-                }
-                else { 
-                    steam.InitializeTool();
-                    steam.InstallIsleServer();
-                    CoreFiles.CopyDLLs();
-                }
-                if (ManagerGlobalTracker.isleServerInstalled) { 
-                    // Check for settings, start if everything looks good
-                }
-            });
-            t.IsBackground = true;
-            t.Start();
+            GameServer.StartServer();
         }
-        private void PromptFreshInstallSettings() { 
+
+        private void PromptFreshInstallSettings()
+        {
             // Open all settings windows, parse to JSON as well as INI after install
             // set install to true
+        }
+
+        private void toolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void changeServerDirectoryLocationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog dir = new FolderBrowserDialog();
+            dir.Tag = "Select the directory where the server files will be installed";
+            dir.ShowDialog();
+            while (true)
+            {
+                // quick loop to ensure instal is not on the root of a drive directly
+                DirectoryInfo d = new DirectoryInfo(dir.SelectedPath);
+                if (d.Parent == null) { MessageBox.Show("Steam cannot install directly onto a drive, please create a folder to use."); dir.ShowDialog(); }
+                else break;
+            }
+            var newPath = dir.SelectedPath;
+            UpdateGameServerPaths(newPath);
+            CoreFiles.SaveManagerSettings();
+            CoreFiles.PrcoessServerPathMove(newPath);
+            Logger.Log($"Changed server directory to {newPath}", LogType.Info);
+        }
+
+        private void btnUIStopServerGraceful_Click(object sender, EventArgs e)
+        {
+            GameServer.StopGracefully();
+        }
+
+        private void btnStartIsleServer_Click(object sender, EventArgs e)
+        {
+            GameServer.StartServer();
+        }
+
+        private void btnStopIsleServer_Click(object sender, EventArgs e)
+        {
+            GameServer.StopGracefully();
+        }
+
+        private void btnForceStopIsleServer_Click(object sender, EventArgs e)
+        {
+            GameServer.StopForcefully();
+        }
+
+        private void btnForceStopUI_Click(object sender, EventArgs e)
+        {
+            GameServer.StopForcefully();
+        }
+
+        private void UpdateGameServerPaths(string rootDir)
+        {
+            // TODO: Not ideal but can redo later
+            ManagerGlobalTracker.customServerDir = true;
+            ManagerGlobalTracker.serverPath = rootDir;
+            ManagerGlobalTracker.dllDir = rootDir + @"\TheIsle\Binaries\Win64\";
+            ManagerGlobalTracker.serverExe = rootDir + @"\TheIsleServer.exe";
+        }
+
+        #region Public Methods
+        /// <summary>
+        /// Allow outside threads/methods to append to the console
+        /// </summary>
+        /// <param name="entry">string of message to append</param>
+        public static void AppendConsoleEntry(string entry)
+        {
+            // Really unsure what memory usage will look like overtime
+            // Eventually I'll add a code to check usage . xxxMB and reset textbox
+            if (Application.OpenForms["Form1"] is Form1 form)
+            {
+                if (form.txtConsole.InvokeRequired)
+                {
+                    form.txtConsole.Invoke(new Action<string>(AppendConsoleEntry), entry);
+                }
+                else
+                {
+                    // TODO: add method for alert strings to be notified on
+                    if (!entry.Contains("Redirect"))
+                    { // ignore .NET redirect messages
+                        form.txtConsole.AppendText(entry + "\n");
+                        form.txtConsole.Refresh();
+                        form.txtConsole.SelectionStart = form.txtConsole.Text.Length;
+                        form.txtConsole.ScrollToCaret();
+                    }
+                }
+            }
+        }
+        #endregion
+
+        private void adminsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ServerAdmins admins = new ServerAdmins();
+            admins.Show();
         }
     }
 }

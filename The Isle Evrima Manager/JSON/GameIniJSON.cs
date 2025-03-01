@@ -55,12 +55,12 @@ namespace The_Isle_Evrima_Manager.JSON
     }
     public class  GameIniStateBase
     {
-        public List<string> AdminSteamIDs { get; set; }
-        public List<string> WhitelistIDs { get; set; }
-        public List<string> VIPs { get; set; }
-        public List<DinoClasses> AllowedClasses { get; set; } // null/empty to enable all
-        public List<Mutations> EnabledMutations { get; set; } // null/empty to enable all
-        public List<AIClasses> DisallowedAIClasses { get; set; } // null/empty to enable all
+        public List<string> AdminSteamIDs { get; set; } = new List<string>();
+        public List<string> WhitelistIDs { get; set; } = new List<string>();
+        public List<string> VIPs { get; set; } = new List<string>();
+        public List<DinoClasses> AllowedClasses { get; set; } = new List<DinoClasses>(); // null/empty to enable all
+        public List<Mutations> EnabledMutations { get; set; } = new List<Mutations>(); // null/empty to enable all
+        public List<AIClasses> DisallowedAIClasses { get; set; } = new List<AIClasses>(); // null/empty to enable all
     }
     public class DinoClasses
     {

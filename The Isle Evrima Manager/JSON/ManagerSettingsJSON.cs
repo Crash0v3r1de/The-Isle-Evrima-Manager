@@ -10,7 +10,7 @@ namespace The_Isle_Evrima_Manager.JSON
     public class ManagerSettingsJSON
     {
         // Needs to mirror the ManagerGlobalTracker class
-        // If JSON is older/wrong scheme than this it's going to error out
+        // If JSON is older/wrong scheme than this, it's going to error out
         // {serverDir}\Saved\Config\WindowsServer
         public ManagerStatus CurrentStatus { get; set; } = ManagerStatus.idle;
         public bool IsRunning { get; set; } = true;
@@ -36,5 +36,6 @@ namespace The_Isle_Evrima_Manager.JSON
         public bool isleServerInstalled { get; set; } = false;
         public bool AutoloadDLLs { get; set; } = true;
         public bool steamCMDInitialized { get; set; } = false;
+        public bool customServerDir { get; set; } = false;
     }
 }
