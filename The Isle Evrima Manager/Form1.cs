@@ -252,6 +252,7 @@ namespace The_Isle_Evrima_Manager
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Environment.Exit(0);
+            Application.Exit(); // Force any hanging threads close I guess
         }
 
         private void steamCMDToolStripMenuItem_Click(object sender, EventArgs e)
@@ -431,6 +432,32 @@ namespace The_Isle_Evrima_Manager
         {
             frmRCONSettings rconSettings = new frmRCONSettings();
             rconSettings.ShowDialog();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var t = new Thread(() =>
+            {
+                var steam = new SteamCMDControl();
+                if (ManagerGlobalTracker.steamClientInstalled)
+                { // SteamCMD is installed
+                    if (ManagerGlobalTracker.isleServerInstalled) steam.InstallIsleServer();
+                }
+                else { 
+                    steam.InitializeTool();
+                    steam.InstallIsleServer();
+                    CoreFiles.CopyDLLs();
+                }
+                if (ManagerGlobalTracker.isleServerInstalled) { 
+                    // Check for settings, start if everything looks good
+                }
+            });
+            t.IsBackground = true;
+            t.Start();
+        }
+        private void PromptFreshInstallSettings() { 
+            // Open all settings windows, parse to JSON as well as INI after install
+            // set install to true
         }
     }
 }

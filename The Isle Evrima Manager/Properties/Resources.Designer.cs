@@ -59,5 +59,65 @@ namespace The_Isle_Evrima_Manager.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] steamclient {
+            get {
+                object obj = ResourceManager.GetObject("steamclient", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] steamclient64 {
+            get {
+                object obj = ResourceManager.GetObject("steamclient64", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] tier0_s {
+            get {
+                object obj = ResourceManager.GetObject("tier0_s", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] tier0_s64 {
+            get {
+                object obj = ResourceManager.GetObject("tier0_s64", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] vstdlib_s {
+            get {
+                object obj = ResourceManager.GetObject("vstdlib_s", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] vstdlib_s64 {
+            get {
+                object obj = ResourceManager.GetObject("vstdlib_s64", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

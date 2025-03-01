@@ -15,8 +15,10 @@ namespace The_Isle_Evrima_Manager.Threadz.ThreadTracking
         public static string utilPath = Environment.CurrentDirectory + @"\utils\";
         public static string tmpPath = Environment.CurrentDirectory + @"\tmp\";
         public static string serverPath = Environment.CurrentDirectory + @"\server\";
+        public static string dllDir = Environment.CurrentDirectory + @"\server\TheIsle\Binaries\Win64\";
         public static string serverExe = Environment.CurrentDirectory + @"\server\TheIsleServer.exe";
-        public static string gameINI = Environment.CurrentDirectory + @"\server\Game.ini";
+        public static string gameINI { get; set; } = @"Saved\Config\WindowsServer\Game.ini";
+        public static string engineINI { get; set; } = @"Saved\Config\WindowsServer\Engine.ini";
         public static string logDir = Environment.CurrentDirectory + @"\logs\";
         public static string managerConfDir = Environment.CurrentDirectory + @"\conf\";
         public static int resourceRefreshInt = 1200;
@@ -30,5 +32,7 @@ namespace The_Isle_Evrima_Manager.Threadz.ThreadTracking
         public static bool steamClientInstalled = false;
         public static bool steamCMDInstalled = false;
         public static bool isleServerInstalled = false;
+        public static bool autoloadDLLs = true;
+        public static bool steamCMDInitialized = false;
     }
 }

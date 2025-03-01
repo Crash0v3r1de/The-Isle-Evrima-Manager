@@ -115,6 +115,8 @@
             chkPachycephalosaurus = new CheckBox();
             chkHypsilophodon = new CheckBox();
             chkDryosaurus = new CheckBox();
+            label21 = new Label();
+            numCorpseDecay = new NumericUpDown();
             txtMapName.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)txtGrowthRate).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtQueuePort).BeginInit();
@@ -138,10 +140,13 @@
             ((System.ComponentModel.ISupportInitialize)txtMaxMigrationTime).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtSpeciesMigrationTime).BeginInit();
             groupBox6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numCorpseDecay).BeginInit();
             SuspendLayout();
             // 
             // txtMapName
             // 
+            txtMapName.Controls.Add(numCorpseDecay);
+            txtMapName.Controls.Add(label21);
             txtMapName.Controls.Add(btnAdmins);
             txtMapName.Controls.Add(btnVIPs);
             txtMapName.Controls.Add(btnMutations);
@@ -1105,6 +1110,24 @@
             chkDryosaurus.Text = "Dryosaurus";
             chkDryosaurus.UseVisualStyleBackColor = true;
             // 
+            // label21
+            // 
+            label21.AutoSize = true;
+            label21.Location = new Point(6, 295);
+            label21.Name = "label21";
+            label21.Size = new Size(133, 15);
+            label21.TabIndex = 27;
+            label21.Text = "Corpse Decay Multiplier";
+            // 
+            // numCorpseDecay
+            // 
+            numCorpseDecay.DecimalPlaces = 1;
+            numCorpseDecay.Location = new Point(142, 292);
+            numCorpseDecay.Name = "numCorpseDecay";
+            numCorpseDecay.Size = new Size(79, 23);
+            numCorpseDecay.TabIndex = 28;
+            numCorpseDecay.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            // 
             // frmServerSettings
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1151,6 +1174,7 @@
             ((System.ComponentModel.ISupportInitialize)txtSpeciesMigrationTime).EndInit();
             groupBox6.ResumeLayout(false);
             groupBox6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)numCorpseDecay).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1244,5 +1268,7 @@
         private CheckBox chkMaiasaura;
         private CheckBox chkHerrerasaurus;
         private CheckBox chkDilophosaurus;
+        private NumericUpDown numCorpseDecay;
+        private Label label21;
     }
 }

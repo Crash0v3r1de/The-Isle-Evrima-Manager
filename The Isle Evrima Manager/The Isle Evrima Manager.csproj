@@ -14,6 +14,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="Tools\GameServer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="CoreRCON" Version="5.4.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Octokit" Version="14.0.0" />

@@ -76,6 +76,11 @@
             groupBox4 = new GroupBox();
             lblPlayerDataCount = new Label();
             label6 = new Label();
+            autoCopyRequiredDLLsToolStripMenuItem = new ToolStripMenuItem();
+            changeServerDirectoryLocationToolStripMenuItem = new ToolStripMenuItem();
+            button1 = new Button();
+            button2 = new Button();
+            button3 = new Button();
             stsStripMain.SuspendLayout();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
@@ -129,18 +134,18 @@
             lblSteamClient.AutoSize = true;
             lblSteamClient.Location = new Point(78, 39);
             lblSteamClient.Name = "lblSteamClient";
-            lblSteamClient.Size = new Size(38, 15);
+            lblSteamClient.Size = new Size(32, 15);
             lblSteamClient.TabIndex = 2;
-            lblSteamClient.Text = "label3";
+            lblSteamClient.Text = "DLLs";
             // 
             // lblcplusplus
             // 
             lblcplusplus.AutoSize = true;
             lblcplusplus.Location = new Point(87, 19);
             lblcplusplus.Name = "lblcplusplus";
-            lblcplusplus.Size = new Size(38, 15);
+            lblcplusplus.Size = new Size(29, 15);
             lblcplusplus.TabIndex = 2;
-            lblcplusplus.Text = "label3";
+            lblcplusplus.Text = "c++";
             // 
             // label2
             // 
@@ -251,7 +256,7 @@
             // 
             // toolStrip1
             // 
-            toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripDropDownButton1, toolStripDropDownButton2, toolStripDropDownButton3, toolStripSeparator3, toolStripDropDownButton4, toolStripDropDownButton5 });
+            toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripDropDownButton1, toolStripDropDownButton2, toolStripDropDownButton3, toolStripDropDownButton5, toolStripSeparator3, toolStripDropDownButton4 });
             toolStrip1.Location = new Point(0, 0);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Size = new Size(800, 25);
@@ -261,7 +266,7 @@
             // toolStripDropDownButton1
             // 
             toolStripDropDownButton1.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            toolStripDropDownButton1.DropDownItems.AddRange(new ToolStripItem[] { refreshResourcesToolStripMenuItem, managerSettingsToolStripMenuItem, toolStripSeparator1, exitToolStripMenuItem });
+            toolStripDropDownButton1.DropDownItems.AddRange(new ToolStripItem[] { refreshResourcesToolStripMenuItem, autoCopyRequiredDLLsToolStripMenuItem, managerSettingsToolStripMenuItem, toolStripSeparator1, exitToolStripMenuItem });
             toolStripDropDownButton1.Image = (Image)resources.GetObject("toolStripDropDownButton1.Image");
             toolStripDropDownButton1.ImageTransparentColor = Color.Magenta;
             toolStripDropDownButton1.Name = "toolStripDropDownButton1";
@@ -273,33 +278,33 @@
             refreshResourcesToolStripMenuItem.Checked = true;
             refreshResourcesToolStripMenuItem.CheckState = CheckState.Checked;
             refreshResourcesToolStripMenuItem.Name = "refreshResourcesToolStripMenuItem";
-            refreshResourcesToolStripMenuItem.Size = new Size(169, 22);
+            refreshResourcesToolStripMenuItem.Size = new Size(209, 22);
             refreshResourcesToolStripMenuItem.Text = "Refresh Resources";
             refreshResourcesToolStripMenuItem.Click += refreshResourcesToolStripMenuItem_Click;
             // 
             // managerSettingsToolStripMenuItem
             // 
             managerSettingsToolStripMenuItem.Name = "managerSettingsToolStripMenuItem";
-            managerSettingsToolStripMenuItem.Size = new Size(169, 22);
+            managerSettingsToolStripMenuItem.Size = new Size(209, 22);
             managerSettingsToolStripMenuItem.Text = "Manager Settings";
             managerSettingsToolStripMenuItem.Click += managerSettingsToolStripMenuItem_Click;
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(166, 6);
+            toolStripSeparator1.Size = new Size(206, 6);
             // 
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(169, 22);
+            exitToolStripMenuItem.Size = new Size(209, 22);
             exitToolStripMenuItem.Text = "Exit";
             exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 
             // toolStripDropDownButton2
             // 
             toolStripDropDownButton2.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            toolStripDropDownButton2.DropDownItems.AddRange(new ToolStripItem[] { viewLogsToolStripMenuItem, downloadDependenciesToolStripMenuItem, btnChangeProcPrior });
+            toolStripDropDownButton2.DropDownItems.AddRange(new ToolStripItem[] { viewLogsToolStripMenuItem, downloadDependenciesToolStripMenuItem, btnChangeProcPrior, changeServerDirectoryLocationToolStripMenuItem });
             toolStripDropDownButton2.Image = (Image)resources.GetObject("toolStripDropDownButton2.Image");
             toolStripDropDownButton2.ImageTransparentColor = Color.Magenta;
             toolStripDropDownButton2.Name = "toolStripDropDownButton2";
@@ -470,11 +475,56 @@
             label6.TabIndex = 0;
             label6.Text = "Total Players Data Entries:";
             // 
+            // autoCopyRequiredDLLsToolStripMenuItem
+            // 
+            autoCopyRequiredDLLsToolStripMenuItem.Checked = true;
+            autoCopyRequiredDLLsToolStripMenuItem.CheckState = CheckState.Checked;
+            autoCopyRequiredDLLsToolStripMenuItem.Name = "autoCopyRequiredDLLsToolStripMenuItem";
+            autoCopyRequiredDLLsToolStripMenuItem.Size = new Size(209, 22);
+            autoCopyRequiredDLLsToolStripMenuItem.Text = "Auto Copy Required DLLs";
+            // 
+            // changeServerDirectoryLocationToolStripMenuItem
+            // 
+            changeServerDirectoryLocationToolStripMenuItem.Name = "changeServerDirectoryLocationToolStripMenuItem";
+            changeServerDirectoryLocationToolStripMenuItem.Size = new Size(250, 22);
+            changeServerDirectoryLocationToolStripMenuItem.Text = "Change Server Directory Location";
+            // 
+            // button1
+            // 
+            button1.Location = new Point(534, 52);
+            button1.Name = "button1";
+            button1.Size = new Size(254, 53);
+            button1.TabIndex = 6;
+            button1.Text = "Start\r\n(Prompts for setup if needed)";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
+            // button2
+            // 
+            button2.Location = new Point(534, 111);
+            button2.Name = "button2";
+            button2.Size = new Size(254, 52);
+            button2.TabIndex = 7;
+            button2.Text = "Stop Grafeully";
+            button2.UseVisualStyleBackColor = true;
+            // 
+            // button3
+            // 
+            button3.Location = new Point(534, 167);
+            button3.Name = "button3";
+            button3.Size = new Size(254, 23);
+            button3.TabIndex = 8;
+            button3.Text = "Force Exit (NOT Recommended)";
+            button3.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 486);
+            Controls.Add(button3);
+            Controls.Add(button2);
+            Controls.Add(button1);
             Controls.Add(groupBox4);
             Controls.Add(toolStrip1);
             Controls.Add(groupBox3);
@@ -548,5 +598,10 @@
         private ToolStripDropDownButton toolStripDropDownButton5;
         private ToolStripMenuItem configureRCONConnectionToolStripMenuItem;
         private ToolStripMenuItem configureRCONTasksToolStripMenuItem;
+        private ToolStripMenuItem autoCopyRequiredDLLsToolStripMenuItem;
+        private ToolStripMenuItem changeServerDirectoryLocationToolStripMenuItem;
+        private Button button1;
+        private Button button2;
+        private Button button3;
     }
 }

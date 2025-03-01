@@ -117,4 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="steamclient" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ServerDefaultFileReferences\Runtimes\steamclient.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="steamclient64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ServerDefaultFileReferences\Runtimes\steamclient64.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tier0_s" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ServerDefaultFileReferences\Runtimes\tier0_s.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tier0_s64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ServerDefaultFileReferences\Runtimes\tier0_s64.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="vstdlib_s" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ServerDefaultFileReferences\Runtimes\vstdlib_s.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="vstdlib_s64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ServerDefaultFileReferences\Runtimes\vstdlib_s64.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

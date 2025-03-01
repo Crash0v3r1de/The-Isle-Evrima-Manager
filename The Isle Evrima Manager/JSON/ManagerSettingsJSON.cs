@@ -11,6 +11,7 @@ namespace The_Isle_Evrima_Manager.JSON
     {
         // Needs to mirror the ManagerGlobalTracker class
         // If JSON is older/wrong scheme than this it's going to error out
+        // {serverDir}\Saved\Config\WindowsServer
         public ManagerStatus CurrentStatus { get; set; } = ManagerStatus.idle;
         public bool IsRunning { get; set; } = true;
         public string steamCMDexe { get; set; } = Environment.CurrentDirectory + @"\utils\steamcmd\steamcmd.exe";
@@ -18,7 +19,8 @@ namespace The_Isle_Evrima_Manager.JSON
         public string tmpPath { get; set; } = Environment.CurrentDirectory + @"\tmp\";
         public string serverPath { get; set; } = Environment.CurrentDirectory + @"\server\";
         public string serverExe { get; set; } = Environment.CurrentDirectory + @"\server\TheIsleServer.exe";
-        public string gameINI { get; set; } = Environment.CurrentDirectory + @"\server\Game.ini";
+        public string gameINI { get; set; } = @"Saved\Config\WindowsServer";
+        public string engineINI { get; set; } = @"Saved\Config\WindowsServer\Engine.ini";
         public string logDir { get; set; } = Environment.CurrentDirectory + @"\logs\";
         public string managerConfDir { get; set; } = Environment.CurrentDirectory + @"\conf\";
         public int resourceRefreshInt { get; set; } = 1200;
@@ -32,5 +34,7 @@ namespace The_Isle_Evrima_Manager.JSON
         public bool steamClientInstalled { get; set; } = false;
         public bool steamCMDInstalled { get; set; } = false;
         public bool isleServerInstalled { get; set; } = false;
+        public bool AutoloadDLLs { get; set; } = true;
+        public bool steamCMDInitialized { get; set; } = false;
     }
 }
