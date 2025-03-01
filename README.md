@@ -10,6 +10,7 @@ Windows based server manager for running the isle evrima servers and managing th
   * Whitelist Users
 * Togglable resource monitor via the GUI
 * Scheduled RCON tasks within the manager itself
+  * [Offical RCON Documentation](https://docs.google.com/document/d/1JI_qVdKIZrqcVTY2Tqnm1T_Ws3_1r5nINGxfprbWw7w/edit?tab=t.0#heading=h.p9tfb89b07jd) (to my knowledge)
 * Automated update checking for the manager as well as game server
 * Customizable install locations for game server (defaults to manager directory)
 * Server console direct into the manager console box
