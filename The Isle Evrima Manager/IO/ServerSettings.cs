@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace The_Isle_Evrima_Manager.IO
 {
-    public static class GameSettings
+    public static class ServerSettings
     {
         // \tiserver\TheIsle\Saved\Config\WindowsServer
         private static string iniDir = @"\server\TheIsle\Saved\Config\WindowsServer";
@@ -39,5 +39,6 @@ namespace The_Isle_Evrima_Manager.IO
             }
             return settings;
         }
+        
     }
 }

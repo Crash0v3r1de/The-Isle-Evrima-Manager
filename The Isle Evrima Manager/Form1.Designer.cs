@@ -32,6 +32,7 @@
             stsStripMain = new StatusStrip();
             lblServerStatus = new ToolStripStatusLabel();
             lblMemUsage = new ToolStripStatusLabel();
+            lblIsAdmin = new ToolStripStatusLabel();
             groupBox1 = new GroupBox();
             lblSteamClient = new Label();
             lblcplusplus = new Label();
@@ -58,6 +59,7 @@
             steamCMDToolStripMenuItem = new ToolStripMenuItem();
             theIsleServerToolStripMenuItem = new ToolStripMenuItem();
             steamClientToolStripMenuItem = new ToolStripMenuItem();
+            btnChangeProcPrior = new ToolStripMenuItem();
             toolStripDropDownButton3 = new ToolStripDropDownButton();
             btnStartIsleServer = new ToolStripMenuItem();
             btnStopIsleServer = new ToolStripMenuItem();
@@ -68,6 +70,9 @@
             toolStripDropDownButton4 = new ToolStripDropDownButton();
             steamClientWhatGivesToolStripMenuItem = new ToolStripMenuItem();
             aboutToolStripMenuItem = new ToolStripMenuItem();
+            toolStripDropDownButton5 = new ToolStripDropDownButton();
+            configureRCONConnectionToolStripMenuItem = new ToolStripMenuItem();
+            configureRCONTasksToolStripMenuItem = new ToolStripMenuItem();
             groupBox4 = new GroupBox();
             lblPlayerDataCount = new Label();
             label6 = new Label();
@@ -81,7 +86,7 @@
             // 
             // stsStripMain
             // 
-            stsStripMain.Items.AddRange(new ToolStripItem[] { lblServerStatus, lblMemUsage });
+            stsStripMain.Items.AddRange(new ToolStripItem[] { lblServerStatus, lblMemUsage, lblIsAdmin });
             stsStripMain.Location = new Point(0, 464);
             stsStripMain.Name = "stsStripMain";
             stsStripMain.Size = new Size(800, 22);
@@ -99,6 +104,12 @@
             lblMemUsage.Name = "lblMemUsage";
             lblMemUsage.Size = new Size(80, 17);
             lblMemUsage.Text = "RAM Free: 0%";
+            // 
+            // lblIsAdmin
+            // 
+            lblIsAdmin.Name = "lblIsAdmin";
+            lblIsAdmin.Size = new Size(132, 17);
+            lblIsAdmin.Text = "Running as normal user";
             // 
             // groupBox1
             // 
@@ -240,7 +251,7 @@
             // 
             // toolStrip1
             // 
-            toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripDropDownButton1, toolStripDropDownButton2, toolStripDropDownButton3, toolStripSeparator3, toolStripDropDownButton4 });
+            toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripDropDownButton1, toolStripDropDownButton2, toolStripDropDownButton3, toolStripSeparator3, toolStripDropDownButton4, toolStripDropDownButton5 });
             toolStrip1.Location = new Point(0, 0);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Size = new Size(800, 25);
@@ -288,7 +299,7 @@
             // toolStripDropDownButton2
             // 
             toolStripDropDownButton2.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            toolStripDropDownButton2.DropDownItems.AddRange(new ToolStripItem[] { viewLogsToolStripMenuItem, downloadDependenciesToolStripMenuItem });
+            toolStripDropDownButton2.DropDownItems.AddRange(new ToolStripItem[] { viewLogsToolStripMenuItem, downloadDependenciesToolStripMenuItem, btnChangeProcPrior });
             toolStripDropDownButton2.Image = (Image)resources.GetObject("toolStripDropDownButton2.Image");
             toolStripDropDownButton2.ImageTransparentColor = Color.Magenta;
             toolStripDropDownButton2.Name = "toolStripDropDownButton2";
@@ -298,36 +309,42 @@
             // viewLogsToolStripMenuItem
             // 
             viewLogsToolStripMenuItem.Name = "viewLogsToolStripMenuItem";
-            viewLogsToolStripMenuItem.Size = new Size(230, 22);
+            viewLogsToolStripMenuItem.Size = new Size(234, 22);
             viewLogsToolStripMenuItem.Text = "View Logs";
             // 
             // downloadDependenciesToolStripMenuItem
             // 
             downloadDependenciesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { steamCMDToolStripMenuItem, theIsleServerToolStripMenuItem, steamClientToolStripMenuItem });
             downloadDependenciesToolStripMenuItem.Name = "downloadDependenciesToolStripMenuItem";
-            downloadDependenciesToolStripMenuItem.Size = new Size(230, 22);
+            downloadDependenciesToolStripMenuItem.Size = new Size(234, 22);
             downloadDependenciesToolStripMenuItem.Text = "Download Dependencies (All)";
             // 
             // steamCMDToolStripMenuItem
             // 
             steamCMDToolStripMenuItem.Name = "steamCMDToolStripMenuItem";
-            steamCMDToolStripMenuItem.Size = new Size(180, 22);
+            steamCMDToolStripMenuItem.Size = new Size(148, 22);
             steamCMDToolStripMenuItem.Text = "SteamCMD";
             steamCMDToolStripMenuItem.Click += steamCMDToolStripMenuItem_Click;
             // 
             // theIsleServerToolStripMenuItem
             // 
             theIsleServerToolStripMenuItem.Name = "theIsleServerToolStripMenuItem";
-            theIsleServerToolStripMenuItem.Size = new Size(180, 22);
+            theIsleServerToolStripMenuItem.Size = new Size(148, 22);
             theIsleServerToolStripMenuItem.Text = "The Isle Server";
             theIsleServerToolStripMenuItem.Click += theIsleServerToolStripMenuItem_Click;
             // 
             // steamClientToolStripMenuItem
             // 
             steamClientToolStripMenuItem.Name = "steamClientToolStripMenuItem";
-            steamClientToolStripMenuItem.Size = new Size(180, 22);
+            steamClientToolStripMenuItem.Size = new Size(148, 22);
             steamClientToolStripMenuItem.Text = "Steam DLLs";
             steamClientToolStripMenuItem.Click += steamClientToolStripMenuItem_Click;
+            // 
+            // btnChangeProcPrior
+            // 
+            btnChangeProcPrior.Name = "btnChangeProcPrior";
+            btnChangeProcPrior.Size = new Size(234, 22);
+            btnChangeProcPrior.Text = "Change Server Process Priority";
             // 
             // toolStripDropDownButton3
             // 
@@ -399,6 +416,30 @@
             aboutToolStripMenuItem.Size = new Size(225, 22);
             aboutToolStripMenuItem.Text = "About";
             aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
+            // 
+            // toolStripDropDownButton5
+            // 
+            toolStripDropDownButton5.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            toolStripDropDownButton5.DropDownItems.AddRange(new ToolStripItem[] { configureRCONConnectionToolStripMenuItem, configureRCONTasksToolStripMenuItem });
+            toolStripDropDownButton5.Image = (Image)resources.GetObject("toolStripDropDownButton5.Image");
+            toolStripDropDownButton5.ImageTransparentColor = Color.Magenta;
+            toolStripDropDownButton5.Name = "toolStripDropDownButton5";
+            toolStripDropDownButton5.Size = new Size(53, 22);
+            toolStripDropDownButton5.Text = "RCON";
+            // 
+            // configureRCONConnectionToolStripMenuItem
+            // 
+            configureRCONConnectionToolStripMenuItem.Name = "configureRCONConnectionToolStripMenuItem";
+            configureRCONConnectionToolStripMenuItem.Size = new Size(228, 22);
+            configureRCONConnectionToolStripMenuItem.Text = "Configure RCON Connection";
+            configureRCONConnectionToolStripMenuItem.Click += configureRCONConnectionToolStripMenuItem_Click;
+            // 
+            // configureRCONTasksToolStripMenuItem
+            // 
+            configureRCONTasksToolStripMenuItem.Name = "configureRCONTasksToolStripMenuItem";
+            configureRCONTasksToolStripMenuItem.Size = new Size(228, 22);
+            configureRCONTasksToolStripMenuItem.Text = "Configure RCON Tasks";
+            configureRCONTasksToolStripMenuItem.Click += configureRCONTasksToolStripMenuItem_Click;
             // 
             // groupBox4
             // 
@@ -502,5 +543,10 @@
         private ToolStripSeparator toolStripSeparator3;
         private ToolStripMenuItem steamClientWhatGivesToolStripMenuItem;
         private ToolStripMenuItem aboutToolStripMenuItem;
+        private ToolStripMenuItem btnChangeProcPrior;
+        private ToolStripStatusLabel lblIsAdmin;
+        private ToolStripDropDownButton toolStripDropDownButton5;
+        private ToolStripMenuItem configureRCONConnectionToolStripMenuItem;
+        private ToolStripMenuItem configureRCONTasksToolStripMenuItem;
     }
 }

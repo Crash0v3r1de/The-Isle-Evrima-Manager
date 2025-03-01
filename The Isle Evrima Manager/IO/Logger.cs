@@ -31,14 +31,14 @@ namespace The_Isle_Evrima_Manager.IO
         }
         private static void WriteLog(string msg) {
             Form1.AppendConsoleEntry(msg);
-            using (StreamWriter sw = File.AppendText($"{ManagerStatusTracker.logDir}\\{DateTime.Today.ToString("MM-dd-yyyy")}.txt")) { 
+            using (StreamWriter sw = File.AppendText($"{ManagerGlobalTracker.logDir}\\{DateTime.Today.ToString("MM-dd-yyyy")}.txt")) { 
                 sw.WriteLine(msg);
             }
         }
         private static void WritErrorLog(string msg)
         {
             Form1.AppendConsoleEntry(msg);
-            using (StreamWriter sw = File.AppendText($"{ManagerStatusTracker.logDir}\\Errors-{DateTime.Today.ToString("MM-dd-yyyy")}.txt"))
+            using (StreamWriter sw = File.AppendText($"{ManagerGlobalTracker.logDir}\\Errors-{DateTime.Today.ToString("MM-dd-yyyy")}.txt"))
             {
                 sw.WriteLine(msg);
             }

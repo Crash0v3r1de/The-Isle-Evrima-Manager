@@ -30,7 +30,7 @@ namespace The_Isle_Evrima_Manager.Tools
 
                         if (Regex.IsMatch(value, @"C\+\+ 2015\-2022.*\(x64\)")) 
                         {
-                            ManagerStatusTracker.cplusplusInstalled = true;
+                            ManagerGlobalTracker.cplusplusInstalled = true;
                             return true;
                         }
                     }
@@ -43,7 +43,7 @@ namespace The_Isle_Evrima_Manager.Tools
             if (File.Exists("C:\\Program Files (x86)\\Steam\\steam.exe")) return true; // lazy check for steam binary installed in default location
             RegistryKey steamKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Valve\Steam", false);
             if (steamKey != null) {
-                ManagerStatusTracker.steamClientInstalled = true;                
+                ManagerGlobalTracker.steamClientInstalled = true;                
                 return steamKey.SubKeyCount > 0;
             }
             else return false;

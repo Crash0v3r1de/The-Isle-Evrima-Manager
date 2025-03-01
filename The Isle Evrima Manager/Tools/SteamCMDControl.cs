@@ -24,28 +24,28 @@ namespace The_Isle_Evrima_Manager.Tools
                     args.UseShellExecute = false;
                     args.RedirectStandardOutput = true;
                     args.WindowStyle = ProcessWindowStyle.Hidden;
-                    args.FileName = ManagerStatusTracker.steamCMDexe;
+                    args.FileName = ManagerGlobalTracker.steamCMDexe;
                     break;
                 case SteamCMDAction.InstallEvirma:
-                    args.Arguments = $"+force_install_dir \"{ManagerStatusTracker.serverPath}\" +login anonymous +app_update 412680 -beta evrima +quit";
+                    args.Arguments = $"+force_install_dir \"{ManagerGlobalTracker.serverPath}\" +login anonymous +app_update 412680 -beta evrima +quit";
                     args.UseShellExecute = false;
                     args.RedirectStandardOutput = true;
                     args.WindowStyle = ProcessWindowStyle.Hidden;
-                    args.FileName = ManagerStatusTracker.steamCMDexe;
+                    args.FileName = ManagerGlobalTracker.steamCMDexe;
                     break;
                 case SteamCMDAction.VerifyEvrima:
-                    args.Arguments = $"+force_install_dir \"{ManagerStatusTracker.serverPath}\" +login anonymous +app_update 412680 -beta evrima validate +quit";
+                    args.Arguments = $"+force_install_dir \"{ManagerGlobalTracker.serverPath}\" +login anonymous +app_update 412680 -beta evrima validate +quit";
                     args.UseShellExecute = false;
                     args.RedirectStandardOutput = true;
                     args.WindowStyle = ProcessWindowStyle.Hidden;
-                    args.FileName = ManagerStatusTracker.steamCMDexe;
+                    args.FileName = ManagerGlobalTracker.steamCMDexe;
                     break;
                 case SteamCMDAction.UpdateEvrima:
-                    args.Arguments = $"+force_install_dir \"{ManagerStatusTracker.serverPath}\" +login anonymous +app_update 412680 -beta evrima +quit";
+                    args.Arguments = $"+force_install_dir \"{ManagerGlobalTracker.serverPath}\" +login anonymous +app_update 412680 -beta evrima +quit";
                     args.UseShellExecute = false;
                     args.RedirectStandardOutput = true;
                     args.WindowStyle = ProcessWindowStyle.Hidden;
-                    args.FileName = ManagerStatusTracker.steamCMDexe;
+                    args.FileName = ManagerGlobalTracker.steamCMDexe;
                     break;
             }
             return args;
@@ -86,8 +86,8 @@ namespace The_Isle_Evrima_Manager.Tools
             proc.Start();
             proc.BeginOutputReadLine();
             proc.WaitForExit();
-            GameSettings.PrepFolder();
-            ManagerStatusTracker.isleServerInstalled = true;
+            ServerSettings.PrepFolder();
+            ManagerGlobalTracker.isleServerInstalled = true;
             Logger.Log("The Isle EVIRMA Dedicated Server installed!.", LogType.Info);
         }
     }

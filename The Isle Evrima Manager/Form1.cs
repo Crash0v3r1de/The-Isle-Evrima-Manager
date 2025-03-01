@@ -5,6 +5,7 @@ using System.Management;
 using System.Net;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
+using System.Security.Principal;
 using System.Text;
 using The_Isle_Evrima_Manager.Enums;
 using The_Isle_Evrima_Manager.Forms;
@@ -27,7 +28,12 @@ namespace The_Isle_Evrima_Manager
         }
         private void SysPrep()
         {
-            if (InvokeRequired) {
+            // TODO: Once github is public, finish this method and add one for EVIRMA steam releases
+            //var updates = new UpdateChecker();
+            //updates.ManagerUpdate();
+
+            if (InvokeRequired)
+            {
                 Invoke(SysPrep);
                 return;
             }
@@ -150,13 +156,37 @@ namespace The_Isle_Evrima_Manager
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            SysPrep(); // Need to run this first to setup folders for logs
+            ManagerSettingsIO manSet = new ManagerSettingsIO();
+            CheckRunningPriv();
+            if (manSet.FirstRun()) SysPrep(); // Need to run this first to setup folders for logs
             UpdateTitle();
             Logger.Log($"Tool Started | Current Dir: {Environment.CurrentDirectory}", LogType.Info);
 
         }
-        private void UpdateTitle() {
-            if (InvokeRequired) {
+        private void CheckRunningPriv()
+        {
+            // TODO: currently only can check if user is admin NOT if the program was ran withadmin rights
+            // I'll come back to this eventually for a new method to test if running with elevated privs
+            if (new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator))
+            {
+                // running as admin - process priority can be changed
+                lblIsAdmin.Text = "Running as admin - able to update process priority";
+                btnChangeProcPrior.Enabled = true;
+
+            }
+            else
+            {
+                // running as normal priv - process priority cannot be changed
+                lblIsAdmin.ForeColor = Color.Green;
+                lblIsAdmin.Text = "Running as normal user - change proccess priority disabled";
+                btnChangeProcPrior.Enabled = false;
+                btnChangeProcPrior.Text = "Change Server Process Priority (NOT ADMIN)";
+            }
+        }
+        private void UpdateTitle()
+        {
+            if (InvokeRequired)
+            {
                 Invoke(UpdateTitle);
                 return;
             }
@@ -173,12 +203,12 @@ namespace The_Isle_Evrima_Manager
         }
         private void StatusTracker()
         {
-            while (ManagerStatusTracker.IsRunning)
+            while (ManagerGlobalTracker.IsRunning)
             {
                 //UpdateStatusLabel();
                 lblServerStatus.ForeColor = Color.Black;
 
-                switch (ManagerStatusTracker.CurrentStatus)
+                switch (ManagerGlobalTracker.CurrentStatus)
                 {
                     case ManagerStatus.idle:
                         if (lblServerStatus.Text != "Server idle...") lblServerStatus.Text = "Server idle...";
@@ -228,10 +258,10 @@ namespace The_Isle_Evrima_Manager
         {
             new Thread(() =>
             {
-                ManagerStatusTracker.CurrentStatus = ManagerStatus.downloadingSteamCMD;
+                ManagerGlobalTracker.CurrentStatus = ManagerStatus.downloadingSteamCMD;
                 new BinaryDownloader().DownloadSteamCMD();
                 new SteamCMDControl().InitializeTool();
-                ManagerStatusTracker.CurrentStatus = Enums.ManagerStatus.idle;
+                ManagerGlobalTracker.CurrentStatus = Enums.ManagerStatus.idle;
             }).Start();
         }
 
@@ -266,9 +296,9 @@ namespace The_Isle_Evrima_Manager
         {
             new Thread(() =>
             {
-                ManagerStatusTracker.CurrentStatus = ManagerStatus.downloadingServerFiles;
+                ManagerGlobalTracker.CurrentStatus = ManagerStatus.downloadingServerFiles;
                 new SteamCMDControl().InstallIsleServer();
-                ManagerStatusTracker.CurrentStatus = ManagerStatus.idle;
+                ManagerGlobalTracker.CurrentStatus = ManagerStatus.idle;
             }).Start();
 
         }
@@ -286,7 +316,7 @@ namespace The_Isle_Evrima_Manager
             while (refreshResourcesToolStripMenuItem.Checked)
             {
                 UpdateMemLabel(HardwareData.FreeCompMemory(), HardwareData.RamFree(), Math.Round(HardwareData.CompCPUUsage(), 1));
-                Thread.Sleep(ManagerStatusTracker.resourceRefreshInt);
+                Thread.Sleep(ManagerGlobalTracker.resourceRefreshInt);
             }
         }
 
@@ -325,7 +355,7 @@ namespace The_Isle_Evrima_Manager
             {
 
 
-                Thread.Sleep(ManagerStatusTracker.serverStatsRefreshInt);
+                Thread.Sleep(ManagerGlobalTracker.serverStatsRefreshInt);
             }
         }
         private void UpdateServerStatLabels(string plrDataCnt)
@@ -349,8 +379,8 @@ namespace The_Isle_Evrima_Manager
             new Thread(() =>
             {
                 Logger.Log("Downloading Steam Client...", LogType.Info);
-                new WebClient().DownloadFile("https://cdn.fastly.steamstatic.com/client/installer/SteamSetup.exe", $"{ManagerStatusTracker.tmpPath}\\SteamSetup.exe");
-                ProcessStartInfo args = new ProcessStartInfo($"{ManagerStatusTracker.tmpPath}\\SteamSetup.exe");
+                new WebClient().DownloadFile("https://cdn.fastly.steamstatic.com/client/installer/SteamSetup.exe", $"{ManagerGlobalTracker.tmpPath}\\SteamSetup.exe");
+                ProcessStartInfo args = new ProcessStartInfo($"{ManagerGlobalTracker.tmpPath}\\SteamSetup.exe");
                 args.Arguments = "/S"; // add silent install option
                 Process installer = new Process();
                 installer.StartInfo = args;
@@ -358,8 +388,8 @@ namespace The_Isle_Evrima_Manager
                 installer.Start();
                 installer.WaitForExit(); // Unsure of exit code indicating installed correctly - I'll log it
                 Logger.Log($"Steam Client installed(?) - Exit code {installer.ExitCode}", LogType.Info);
-                ManagerStatusTracker.steamClientInstalled = true;
-                File.Delete($"{ManagerStatusTracker.tmpPath}\\SteamSetup.exe");
+                ManagerGlobalTracker.steamClientInstalled = true;
+                File.Delete($"{ManagerGlobalTracker.tmpPath}\\SteamSetup.exe");
             }).Start();
         }
 
@@ -371,6 +401,36 @@ namespace The_Isle_Evrima_Manager
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Process.Start("explorer.exe", "https://github.com/Crash0v3r1de/the-isle-evrima-manager");
+        }
+        public static void UpdateManagerStatus(ManagerStatus status)
+        {
+            switch (status)
+            {
+                case ManagerStatus.idle:
+                    break;
+                case ManagerStatus.downloadingSteamCMD:
+                    break;
+                case ManagerStatus.downloadingServerFiles:
+                    break;
+                case ManagerStatus.startingServer:
+                    break;
+                case ManagerStatus.stoppingServer:
+                    break;
+                case ManagerStatus.error:
+                    break;
+            }
+        }
+
+        private void configureRCONTasksToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmRCONTasks rTasks = new frmRCONTasks();
+            rTasks.ShowDialog();
+        }
+
+        private void configureRCONConnectionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmRCONSettings rconSettings = new frmRCONSettings();
+            rconSettings.ShowDialog();
         }
     }
 }

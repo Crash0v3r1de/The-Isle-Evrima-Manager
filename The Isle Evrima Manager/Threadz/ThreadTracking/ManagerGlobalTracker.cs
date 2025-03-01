@@ -7,7 +7,7 @@ using The_Isle_Evrima_Manager.Enums;
 
 namespace The_Isle_Evrima_Manager.Threadz.ThreadTracking
 {
-    public static class ManagerStatusTracker
+    public static class ManagerGlobalTracker
     {
         public static ManagerStatus CurrentStatus { get; set; } = ManagerStatus.idle;
         public static bool IsRunning { get; set; } = true;
@@ -18,6 +18,7 @@ namespace The_Isle_Evrima_Manager.Threadz.ThreadTracking
         public static string serverExe = Environment.CurrentDirectory + @"\server\TheIsleServer.exe";
         public static string gameINI = Environment.CurrentDirectory + @"\server\Game.ini";
         public static string logDir = Environment.CurrentDirectory + @"\logs\";
+        public static string managerConfDir = Environment.CurrentDirectory + @"\conf\";
         public static int resourceRefreshInt = 1200;
         public static int serverStatsRefreshInt = 1200;
         public static bool monitorHardware = true;

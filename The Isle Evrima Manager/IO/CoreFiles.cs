@@ -30,13 +30,16 @@ namespace The_Isle_Evrima_Manager.IO
             {
                 Directory.CreateDirectory(tmpDir);
             }
-            if (!Directory.Exists(ManagerStatusTracker.serverPath))
+            if (!Directory.Exists(ManagerGlobalTracker.serverPath))
             {
-                Directory.CreateDirectory(ManagerStatusTracker.serverPath);
+                Directory.CreateDirectory(ManagerGlobalTracker.serverPath);
             }
-            if (!Directory.Exists(ManagerStatusTracker.logDir))
+            if (!Directory.Exists(ManagerGlobalTracker.logDir))
             {
-                Directory.CreateDirectory(ManagerStatusTracker.logDir);
+                Directory.CreateDirectory(ManagerGlobalTracker.logDir);
+            }
+            if (!Directory.Exists(ManagerGlobalTracker.managerConfDir)) { 
+                Directory.CreateDirectory(ManagerGlobalTracker.managerConfDir);
             }
         }
         public static void SaveAndExtractSteamCMD(string tmpPath) { 

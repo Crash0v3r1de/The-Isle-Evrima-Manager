@@ -69,28 +69,28 @@ namespace The_Isle_Evrima_Manager.Forms
         private void LoadRuntimeSettings()
         {
             // Load current runtime settings - imported on app load
-            txtServerStatRefreshInt.Text = (ManagerStatusTracker.serverStatsRefreshInt / 1000).ToString(); // Parse to second
-            txtHardwareRefreshInt.Text = (ManagerStatusTracker.resourceRefreshInt / 1000).ToString();
-            chkCPURAM.Checked = ManagerStatusTracker.monitorHardware;
+            txtServerStatRefreshInt.Text = (ManagerGlobalTracker.serverStatsRefreshInt / 1000).ToString(); // Parse to second
+            txtHardwareRefreshInt.Text = (ManagerGlobalTracker.resourceRefreshInt / 1000).ToString();
+            chkCPURAM.Checked = ManagerGlobalTracker.monitorHardware;
             chkDiscordNotifyFails.Checked = GameServerStatusTracker.DiscordNotifyOnFail;
             chkRestartServerOnFail.Checked = GameServerStatusTracker.RestartProcessOnFail;
-            chkServerMonitoring.Checked = ManagerStatusTracker.monitorServer;
-            chkForUpdates.Checked = ManagerStatusTracker.checkForManagerUpdates;
-            if (!String.IsNullOrWhiteSpace(ManagerStatusTracker.discordWebhookURL)) txtDiscordWebhoolURL.Text = ManagerStatusTracker.discordWebhookURL;
-            chkDiscordNotifications.Checked = ManagerStatusTracker.enableDiscordNotifications;
+            chkServerMonitoring.Checked = ManagerGlobalTracker.monitorServer;
+            chkForUpdates.Checked = ManagerGlobalTracker.checkForManagerUpdates;
+            if (!String.IsNullOrWhiteSpace(ManagerGlobalTracker.discordWebhookURL)) txtDiscordWebhoolURL.Text = ManagerGlobalTracker.discordWebhookURL;
+            chkDiscordNotifications.Checked = ManagerGlobalTracker.enableDiscordNotifications;
         }
         private void SaveRuntimeSettings()
         {
             // Also will eventually save the manager config to settings.json - when implimented
-            ManagerStatusTracker.serverStatsRefreshInt = int.Parse(txtServerStatRefreshInt.Text) * 1000;
-            ManagerStatusTracker.resourceRefreshInt = int.Parse(txtHardwareRefreshInt.Text) * 1000;
-            ManagerStatusTracker.monitorHardware = chkCPURAM.Checked;
-            ManagerStatusTracker.monitorServer = chkServerMonitoring.Checked;
-            ManagerStatusTracker.checkForManagerUpdates = chkForUpdates.Checked;
+            ManagerGlobalTracker.serverStatsRefreshInt = int.Parse(txtServerStatRefreshInt.Text) * 1000;
+            ManagerGlobalTracker.resourceRefreshInt = int.Parse(txtHardwareRefreshInt.Text) * 1000;
+            ManagerGlobalTracker.monitorHardware = chkCPURAM.Checked;
+            ManagerGlobalTracker.monitorServer = chkServerMonitoring.Checked;
+            ManagerGlobalTracker.checkForManagerUpdates = chkForUpdates.Checked;
             GameServerStatusTracker.DiscordNotifyOnFail = chkDiscordNotifyFails.Checked;
             GameServerStatusTracker.RestartProcessOnFail = chkRestartServerOnFail.Checked;
-            if (!String.IsNullOrWhiteSpace(txtDiscordWebhoolURL.Text)) ManagerStatusTracker.discordWebhookURL = txtDiscordWebhoolURL.Text;
-            ManagerStatusTracker.enableDiscordNotifications = chkDiscordNotifications.Checked;
+            if (!String.IsNullOrWhiteSpace(txtDiscordWebhoolURL.Text)) ManagerGlobalTracker.discordWebhookURL = txtDiscordWebhoolURL.Text;
+            ManagerGlobalTracker.enableDiscordNotifications = chkDiscordNotifications.Checked;
 
         }
 
