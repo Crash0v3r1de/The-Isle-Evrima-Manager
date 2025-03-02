@@ -1,3 +1,4 @@
+![banner](https://github.com/user-attachments/assets/1ed4874f-51bc-455d-b8cf-64251c292669)
 # The Isle | EVRIMA Server Manager
 Windows based server manager for running the isle evrima servers and managing them as you wish. Unfortunatekly the dev's of this game seem to have no care in the world for people spinning up unoffical servers and wanting to maintain and enjoy them. I made this tool for folks that want to do exactly that.
 ## Features
