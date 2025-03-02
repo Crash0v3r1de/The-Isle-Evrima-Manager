@@ -46,6 +46,8 @@
             chkDiscordNotifications = new CheckBox();
             btnCancel = new Button();
             btnSave = new Button();
+            chkDiscordLogAlerts = new CheckBox();
+            btnConsoleLogAlertSetup = new Button();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
@@ -143,6 +145,8 @@
             // 
             // groupBox3
             // 
+            groupBox3.Controls.Add(btnConsoleLogAlertSetup);
+            groupBox3.Controls.Add(chkDiscordLogAlerts);
             groupBox3.Controls.Add(chkDiscordNotifyFails);
             groupBox3.Controls.Add(chkRestartServerOnFail);
             groupBox3.Location = new Point(271, 12);
@@ -230,6 +234,27 @@
             btnSave.UseVisualStyleBackColor = true;
             btnSave.Click += btnSave_Click;
             // 
+            // chkDiscordLogAlerts
+            // 
+            chkDiscordLogAlerts.AutoSize = true;
+            chkDiscordLogAlerts.Enabled = false;
+            chkDiscordLogAlerts.Location = new Point(6, 72);
+            chkDiscordLogAlerts.Name = "chkDiscordLogAlerts";
+            chkDiscordLogAlerts.Size = new Size(233, 19);
+            chkDiscordLogAlerts.TabIndex = 2;
+            chkDiscordLogAlerts.Text = "Discord Notification on monitored logs";
+            chkDiscordLogAlerts.UseVisualStyleBackColor = true;
+            // 
+            // btnConsoleLogAlertSetup
+            // 
+            btnConsoleLogAlertSetup.Enabled = false;
+            btnConsoleLogAlertSetup.Location = new Point(6, 89);
+            btnConsoleLogAlertSetup.Name = "btnConsoleLogAlertSetup";
+            btnConsoleLogAlertSetup.Size = new Size(229, 23);
+            btnConsoleLogAlertSetup.TabIndex = 3;
+            btnConsoleLogAlertSetup.Text = "Console Log Alert Settings";
+            btnConsoleLogAlertSetup.UseVisualStyleBackColor = true;
+            // 
             // ManagerSettings
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -275,5 +300,7 @@
         private CheckBox chkDiscordNotifications;
         private Button btnCancel;
         private Button btnSave;
+        private Button btnConsoleLogAlertSetup;
+        private CheckBox chkDiscordLogAlerts;
     }
 }

@@ -73,6 +73,8 @@ namespace The_Isle_Evrima_Manager.Tools
                 Thread.Sleep(1000); // Wait for the process to finish so UI can load entries
             }
             Logger.Log("SteamCMD initialized.",LogType.Info);
+            ManagerGlobalTracker.steamCMDInitialized = true;
+            CoreFiles.SaveManagerSettings();
         }
         public void InstallIsleServer() {
             Logger.Log("Downloading The Isle EVIRMA Dedicated Server...", LogType.Info);
@@ -96,6 +98,7 @@ namespace The_Isle_Evrima_Manager.Tools
             ServerSettings.PrepFolder();
             ManagerGlobalTracker.isleServerInstalled = true;
             Logger.Log("The Isle EVIRMA Dedicated Server installed!.", LogType.Info);
+            CoreFiles.SaveManagerSettings();
         }
     }
 }

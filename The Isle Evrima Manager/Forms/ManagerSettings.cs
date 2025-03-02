@@ -78,6 +78,7 @@ namespace The_Isle_Evrima_Manager.Forms
             chkForUpdates.Checked = ManagerGlobalTracker.checkForManagerUpdates;
             if (!String.IsNullOrWhiteSpace(ManagerGlobalTracker.discordWebhookURL)) txtDiscordWebhoolURL.Text = ManagerGlobalTracker.discordWebhookURL;
             chkDiscordNotifications.Checked = ManagerGlobalTracker.enableDiscordNotifications;
+
         }
         private void SaveRuntimeSettings()
         {

@@ -118,12 +118,12 @@
             chkHypsilophodon = new CheckBox();
             chkDryosaurus = new CheckBox();
             groupBox7 = new GroupBox();
-            chkCompsoAI = new CheckBox();
-            chkPteroAI = new CheckBox();
-            chkBoarAI = new CheckBox();
-            chkSeaturtleAI = new CheckBox();
-            chkDeerAI = new CheckBox();
             chkGoatAI = new CheckBox();
+            chkDeerAI = new CheckBox();
+            chkSeaturtleAI = new CheckBox();
+            chkBoarAI = new CheckBox();
+            chkPteroAI = new CheckBox();
+            chkCompsoAI = new CheckBox();
             txtMapName.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numCorpseDecay).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtGrowthRate).BeginInit();
@@ -458,6 +458,7 @@
             txtServerName.Name = "txtServerName";
             txtServerName.Size = new Size(510, 23);
             txtServerName.TabIndex = 1;
+            txtServerName.Text = "The Isle";
             // 
             // label1
             // 
@@ -518,6 +519,7 @@
             txtRCONPass.Name = "txtRCONPass";
             txtRCONPass.Size = new Size(180, 23);
             txtRCONPass.TabIndex = 4;
+            txtRCONPass.Text = "CHANGEME";
             // 
             // label8
             // 
@@ -1151,53 +1153,17 @@
             groupBox7.TabStop = false;
             groupBox7.Text = "Enabled AI Classes";
             // 
-            // chkCompsoAI
+            // chkGoatAI
             // 
-            chkCompsoAI.AutoSize = true;
-            chkCompsoAI.Checked = true;
-            chkCompsoAI.CheckState = CheckState.Checked;
-            chkCompsoAI.Location = new Point(18, 22);
-            chkCompsoAI.Name = "chkCompsoAI";
-            chkCompsoAI.Size = new Size(114, 19);
-            chkCompsoAI.TabIndex = 0;
-            chkCompsoAI.Text = "Compsognathus";
-            chkCompsoAI.UseVisualStyleBackColor = true;
-            // 
-            // chkPteroAI
-            // 
-            chkPteroAI.AutoSize = true;
-            chkPteroAI.Checked = true;
-            chkPteroAI.CheckState = CheckState.Checked;
-            chkPteroAI.Location = new Point(18, 47);
-            chkPteroAI.Name = "chkPteroAI";
-            chkPteroAI.Size = new Size(98, 19);
-            chkPteroAI.TabIndex = 1;
-            chkPteroAI.Text = "Pterodactylus";
-            chkPteroAI.UseVisualStyleBackColor = true;
-            // 
-            // chkBoarAI
-            // 
-            chkBoarAI.AutoSize = true;
-            chkBoarAI.Checked = true;
-            chkBoarAI.CheckState = CheckState.Checked;
-            chkBoarAI.Location = new Point(18, 72);
-            chkBoarAI.Name = "chkBoarAI";
-            chkBoarAI.Size = new Size(50, 19);
-            chkBoarAI.TabIndex = 2;
-            chkBoarAI.Text = "Boar";
-            chkBoarAI.UseVisualStyleBackColor = true;
-            // 
-            // chkSeaturtleAI
-            // 
-            chkSeaturtleAI.AutoSize = true;
-            chkSeaturtleAI.Checked = true;
-            chkSeaturtleAI.CheckState = CheckState.Checked;
-            chkSeaturtleAI.Location = new Point(138, 72);
-            chkSeaturtleAI.Name = "chkSeaturtleAI";
-            chkSeaturtleAI.Size = new Size(72, 19);
-            chkSeaturtleAI.TabIndex = 3;
-            chkSeaturtleAI.Text = "Seaturtle";
-            chkSeaturtleAI.UseVisualStyleBackColor = true;
+            chkGoatAI.AutoSize = true;
+            chkGoatAI.Checked = true;
+            chkGoatAI.CheckState = CheckState.Checked;
+            chkGoatAI.Location = new Point(138, 48);
+            chkGoatAI.Name = "chkGoatAI";
+            chkGoatAI.Size = new Size(51, 19);
+            chkGoatAI.TabIndex = 5;
+            chkGoatAI.Text = "Goat";
+            chkGoatAI.UseVisualStyleBackColor = true;
             // 
             // chkDeerAI
             // 
@@ -1211,17 +1177,53 @@
             chkDeerAI.Text = "Deer";
             chkDeerAI.UseVisualStyleBackColor = true;
             // 
-            // chkGoatAI
+            // chkSeaturtleAI
             // 
-            chkGoatAI.AutoSize = true;
-            chkGoatAI.Checked = true;
-            chkGoatAI.CheckState = CheckState.Checked;
-            chkGoatAI.Location = new Point(138, 48);
-            chkGoatAI.Name = "chkGoatAI";
-            chkGoatAI.Size = new Size(51, 19);
-            chkGoatAI.TabIndex = 5;
-            chkGoatAI.Text = "Goat";
-            chkGoatAI.UseVisualStyleBackColor = true;
+            chkSeaturtleAI.AutoSize = true;
+            chkSeaturtleAI.Checked = true;
+            chkSeaturtleAI.CheckState = CheckState.Checked;
+            chkSeaturtleAI.Location = new Point(138, 72);
+            chkSeaturtleAI.Name = "chkSeaturtleAI";
+            chkSeaturtleAI.Size = new Size(72, 19);
+            chkSeaturtleAI.TabIndex = 3;
+            chkSeaturtleAI.Text = "Seaturtle";
+            chkSeaturtleAI.UseVisualStyleBackColor = true;
+            // 
+            // chkBoarAI
+            // 
+            chkBoarAI.AutoSize = true;
+            chkBoarAI.Checked = true;
+            chkBoarAI.CheckState = CheckState.Checked;
+            chkBoarAI.Location = new Point(18, 72);
+            chkBoarAI.Name = "chkBoarAI";
+            chkBoarAI.Size = new Size(50, 19);
+            chkBoarAI.TabIndex = 2;
+            chkBoarAI.Text = "Boar";
+            chkBoarAI.UseVisualStyleBackColor = true;
+            // 
+            // chkPteroAI
+            // 
+            chkPteroAI.AutoSize = true;
+            chkPteroAI.Checked = true;
+            chkPteroAI.CheckState = CheckState.Checked;
+            chkPteroAI.Location = new Point(18, 47);
+            chkPteroAI.Name = "chkPteroAI";
+            chkPteroAI.Size = new Size(98, 19);
+            chkPteroAI.TabIndex = 1;
+            chkPteroAI.Text = "Pterodactylus";
+            chkPteroAI.UseVisualStyleBackColor = true;
+            // 
+            // chkCompsoAI
+            // 
+            chkCompsoAI.AutoSize = true;
+            chkCompsoAI.Checked = true;
+            chkCompsoAI.CheckState = CheckState.Checked;
+            chkCompsoAI.Location = new Point(18, 22);
+            chkCompsoAI.Name = "chkCompsoAI";
+            chkCompsoAI.Size = new Size(114, 19);
+            chkCompsoAI.TabIndex = 0;
+            chkCompsoAI.Text = "Compsognathus";
+            chkCompsoAI.UseVisualStyleBackColor = true;
             // 
             // frmGameServerSettings
             // 
