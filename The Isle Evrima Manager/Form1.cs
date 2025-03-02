@@ -166,6 +166,7 @@ namespace The_Isle_Evrima_Manager
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            btnPendingSettingsChange.Visible = false;
             CheckRunningPriv();
             if (manSet.FirstRun()) SysPrep(); // Need to run this first to setup folders for logs
             else manSet.LoadManagerSettings();
@@ -498,6 +499,12 @@ namespace The_Isle_Evrima_Manager
         {
             ServerAdmins admins = new ServerAdmins();
             admins.Show();
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            // Gracefully exit server, save settings to Game.ini in ini format, save settings into our own JSON and start the server again
+
         }
     }
 }

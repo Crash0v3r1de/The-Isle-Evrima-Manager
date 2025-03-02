@@ -81,18 +81,19 @@
             toolStripSeparator3 = new ToolStripSeparator();
             toolStripDropDownButton4 = new ToolStripDropDownButton();
             aboutToolStripMenuItem = new ToolStripMenuItem();
+            btnPendingSettingsChange = new ToolStripButton();
             groupBox4 = new GroupBox();
+            lblWhitelistCount = new Label();
+            lblVIPCount = new Label();
+            lblAdminCount = new Label();
+            label9 = new Label();
+            label8 = new Label();
+            label7 = new Label();
             lblPlayerDataCount = new Label();
             label6 = new Label();
             btnStartServerUI = new Button();
             btnUIStopServerGraceful = new Button();
             btnForceStopUI = new Button();
-            label7 = new Label();
-            label8 = new Label();
-            label9 = new Label();
-            lblAdminCount = new Label();
-            lblVIPCount = new Label();
-            lblWhitelistCount = new Label();
             stsStripMain.SuspendLayout();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
@@ -268,7 +269,7 @@
             // 
             // toolStrip1
             // 
-            toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripDropDownButton1, toolStripDropDownButton2, toolStripDropDownButton3, toolStripDropDownButton5, toolStripSeparator3, toolStripDropDownButton4 });
+            toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripDropDownButton1, toolStripDropDownButton2, toolStripDropDownButton3, toolStripDropDownButton5, toolStripSeparator3, toolStripDropDownButton4, btnPendingSettingsChange });
             toolStrip1.Location = new Point(0, 0);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Size = new Size(800, 25);
@@ -513,6 +514,18 @@
             aboutToolStripMenuItem.Text = "About";
             aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
             // 
+            // btnPendingSettingsChange
+            // 
+            btnPendingSettingsChange.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            btnPendingSettingsChange.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnPendingSettingsChange.ForeColor = Color.Teal;
+            btnPendingSettingsChange.Image = (Image)resources.GetObject("btnPendingSettingsChange.Image");
+            btnPendingSettingsChange.ImageTransparentColor = Color.Magenta;
+            btnPendingSettingsChange.Name = "btnPendingSettingsChange";
+            btnPendingSettingsChange.Size = new Size(329, 22);
+            btnPendingSettingsChange.Text = "SERVER IS RUNNING WITH PENDING SETTING CHANGES";
+            btnPendingSettingsChange.Click += toolStripButton1_Click;
+            // 
             // groupBox4
             // 
             groupBox4.Controls.Add(lblWhitelistCount);
@@ -530,10 +543,64 @@
             groupBox4.TabStop = false;
             groupBox4.Text = "Server Info";
             // 
+            // lblWhitelistCount
+            // 
+            lblWhitelistCount.AutoSize = true;
+            lblWhitelistCount.Location = new Point(88, 82);
+            lblWhitelistCount.Name = "lblWhitelistCount";
+            lblWhitelistCount.Size = new Size(13, 15);
+            lblWhitelistCount.TabIndex = 7;
+            lblWhitelistCount.Text = "0";
+            // 
+            // lblVIPCount
+            // 
+            lblVIPCount.AutoSize = true;
+            lblVIPCount.Location = new Point(59, 60);
+            lblVIPCount.Name = "lblVIPCount";
+            lblVIPCount.Size = new Size(13, 15);
+            lblVIPCount.TabIndex = 6;
+            lblVIPCount.Text = "0";
+            // 
+            // lblAdminCount
+            // 
+            lblAdminCount.AutoSize = true;
+            lblAdminCount.Location = new Point(78, 39);
+            lblAdminCount.Name = "lblAdminCount";
+            lblAdminCount.Size = new Size(13, 15);
+            lblAdminCount.TabIndex = 5;
+            lblAdminCount.Text = "0";
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(6, 82);
+            label9.Name = "label9";
+            label9.Size = new Size(85, 15);
+            label9.TabIndex = 4;
+            label9.Text = "# of Whitelists:";
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(6, 60);
+            label8.Name = "label8";
+            label8.Size = new Size(56, 15);
+            label8.TabIndex = 3;
+            label8.Text = "# of VIPs:";
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(6, 39);
+            label7.Name = "label7";
+            label7.Size = new Size(75, 15);
+            label7.TabIndex = 2;
+            label7.Text = "# of Admins:";
+            // 
             // lblPlayerDataCount
             // 
             lblPlayerDataCount.AutoSize = true;
-            lblPlayerDataCount.Location = new Point(139, 19);
+            lblPlayerDataCount.Location = new Point(170, 19);
             lblPlayerDataCount.Name = "lblPlayerDataCount";
             lblPlayerDataCount.Size = new Size(13, 15);
             lblPlayerDataCount.TabIndex = 1;
@@ -544,9 +611,9 @@
             label6.AutoSize = true;
             label6.Location = new Point(6, 19);
             label6.Name = "label6";
-            label6.Size = new Size(135, 15);
+            label6.Size = new Size(169, 15);
             label6.TabIndex = 0;
-            label6.Text = "Total Player Data Entries:";
+            label6.Text = "Total Saved Player Data Entries:";
             // 
             // btnStartServerUI
             // 
@@ -577,60 +644,6 @@
             btnForceStopUI.Text = "Force Exit (NOT Recommended)";
             btnForceStopUI.UseVisualStyleBackColor = true;
             btnForceStopUI.Click += btnForceStopUI_Click;
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Location = new Point(6, 39);
-            label7.Name = "label7";
-            label7.Size = new Size(75, 15);
-            label7.TabIndex = 2;
-            label7.Text = "# of Admins:";
-            // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.Location = new Point(6, 60);
-            label8.Name = "label8";
-            label8.Size = new Size(56, 15);
-            label8.TabIndex = 3;
-            label8.Text = "# of VIPs:";
-            // 
-            // label9
-            // 
-            label9.AutoSize = true;
-            label9.Location = new Point(6, 82);
-            label9.Name = "label9";
-            label9.Size = new Size(85, 15);
-            label9.TabIndex = 4;
-            label9.Text = "# of Whitelists:";
-            // 
-            // lblAdminCount
-            // 
-            lblAdminCount.AutoSize = true;
-            lblAdminCount.Location = new Point(78, 39);
-            lblAdminCount.Name = "lblAdminCount";
-            lblAdminCount.Size = new Size(13, 15);
-            lblAdminCount.TabIndex = 5;
-            lblAdminCount.Text = "0";
-            // 
-            // lblVIPCount
-            // 
-            lblVIPCount.AutoSize = true;
-            lblVIPCount.Location = new Point(59, 60);
-            lblVIPCount.Name = "lblVIPCount";
-            lblVIPCount.Size = new Size(13, 15);
-            lblVIPCount.TabIndex = 6;
-            lblVIPCount.Text = "0";
-            // 
-            // lblWhitelistCount
-            // 
-            lblWhitelistCount.AutoSize = true;
-            lblWhitelistCount.Location = new Point(88, 82);
-            lblWhitelistCount.Name = "lblWhitelistCount";
-            lblWhitelistCount.Size = new Size(13, 15);
-            lblWhitelistCount.TabIndex = 7;
-            lblWhitelistCount.Text = "0";
             // 
             // Form1
             // 
@@ -730,5 +743,6 @@
         private Label label9;
         private Label label8;
         private Label label7;
+        private ToolStripButton btnPendingSettingsChange;
     }
 }

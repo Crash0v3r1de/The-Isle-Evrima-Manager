@@ -107,8 +107,8 @@
             // saveAndCloseToolStripMenuItem
             // 
             saveAndCloseToolStripMenuItem.Name = "saveAndCloseToolStripMenuItem";
-            saveAndCloseToolStripMenuItem.Size = new Size(98, 20);
-            saveAndCloseToolStripMenuItem.Text = "Save and Close";
+            saveAndCloseToolStripMenuItem.Size = new Size(48, 20);
+            saveAndCloseToolStripMenuItem.Text = "Close";
             saveAndCloseToolStripMenuItem.Click += saveAndCloseToolStripMenuItem_Click;
             // 
             // exitAndDiscardToolStripMenuItem

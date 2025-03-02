@@ -1,6 +1,6 @@
 ﻿namespace The_Isle_Evrima_Manager.Forms
 {
-    partial class frmServerSettings
+    partial class frmGameServerSettings
     {
         /// <summary>
         /// Required designer variable.
@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             txtMapName = new GroupBox();
+            numCorpseDecay = new NumericUpDown();
+            label21 = new Label();
             btnAdmins = new Button();
             btnVIPs = new Button();
             btnMutations = new Button();
@@ -115,9 +117,15 @@
             chkPachycephalosaurus = new CheckBox();
             chkHypsilophodon = new CheckBox();
             chkDryosaurus = new CheckBox();
-            label21 = new Label();
-            numCorpseDecay = new NumericUpDown();
+            groupBox7 = new GroupBox();
+            chkCompsoAI = new CheckBox();
+            chkPteroAI = new CheckBox();
+            chkBoarAI = new CheckBox();
+            chkSeaturtleAI = new CheckBox();
+            chkDeerAI = new CheckBox();
+            chkGoatAI = new CheckBox();
             txtMapName.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numCorpseDecay).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtGrowthRate).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtQueuePort).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtMaxPlayers).BeginInit();
@@ -140,7 +148,7 @@
             ((System.ComponentModel.ISupportInitialize)txtMaxMigrationTime).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtSpeciesMigrationTime).BeginInit();
             groupBox6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)numCorpseDecay).BeginInit();
+            groupBox7.SuspendLayout();
             SuspendLayout();
             // 
             // txtMapName
@@ -179,6 +187,24 @@
             txtMapName.TabIndex = 0;
             txtMapName.TabStop = false;
             txtMapName.Text = "General Server Settings";
+            // 
+            // numCorpseDecay
+            // 
+            numCorpseDecay.DecimalPlaces = 1;
+            numCorpseDecay.Location = new Point(142, 292);
+            numCorpseDecay.Name = "numCorpseDecay";
+            numCorpseDecay.Size = new Size(79, 23);
+            numCorpseDecay.TabIndex = 28;
+            numCorpseDecay.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            // 
+            // label21
+            // 
+            label21.AutoSize = true;
+            label21.Location = new Point(6, 295);
+            label21.Name = "label21";
+            label21.Size = new Size(133, 15);
+            label21.TabIndex = 27;
+            label21.Text = "Corpse Decay Multiplier";
             // 
             // btnAdmins
             // 
@@ -648,7 +674,7 @@
             groupBox3.Controls.Add(txtAIInt);
             groupBox3.Controls.Add(label13);
             groupBox3.Controls.Add(chkAI);
-            groupBox3.Location = new Point(385, 371);
+            groupBox3.Location = new Point(385, 361);
             groupBox3.Name = "groupBox3";
             groupBox3.Size = new Size(238, 158);
             groupBox3.TabIndex = 4;
@@ -1110,29 +1136,99 @@
             chkDryosaurus.Text = "Dryosaurus";
             chkDryosaurus.UseVisualStyleBackColor = true;
             // 
-            // label21
+            // groupBox7
             // 
-            label21.AutoSize = true;
-            label21.Location = new Point(6, 295);
-            label21.Name = "label21";
-            label21.Size = new Size(133, 15);
-            label21.TabIndex = 27;
-            label21.Text = "Corpse Decay Multiplier";
+            groupBox7.Controls.Add(chkGoatAI);
+            groupBox7.Controls.Add(chkDeerAI);
+            groupBox7.Controls.Add(chkSeaturtleAI);
+            groupBox7.Controls.Add(chkBoarAI);
+            groupBox7.Controls.Add(chkPteroAI);
+            groupBox7.Controls.Add(chkCompsoAI);
+            groupBox7.Location = new Point(385, 526);
+            groupBox7.Name = "groupBox7";
+            groupBox7.Size = new Size(238, 96);
+            groupBox7.TabIndex = 7;
+            groupBox7.TabStop = false;
+            groupBox7.Text = "Enabled AI Classes";
             // 
-            // numCorpseDecay
+            // chkCompsoAI
             // 
-            numCorpseDecay.DecimalPlaces = 1;
-            numCorpseDecay.Location = new Point(142, 292);
-            numCorpseDecay.Name = "numCorpseDecay";
-            numCorpseDecay.Size = new Size(79, 23);
-            numCorpseDecay.TabIndex = 28;
-            numCorpseDecay.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            chkCompsoAI.AutoSize = true;
+            chkCompsoAI.Checked = true;
+            chkCompsoAI.CheckState = CheckState.Checked;
+            chkCompsoAI.Location = new Point(18, 22);
+            chkCompsoAI.Name = "chkCompsoAI";
+            chkCompsoAI.Size = new Size(114, 19);
+            chkCompsoAI.TabIndex = 0;
+            chkCompsoAI.Text = "Compsognathus";
+            chkCompsoAI.UseVisualStyleBackColor = true;
             // 
-            // frmServerSettings
+            // chkPteroAI
+            // 
+            chkPteroAI.AutoSize = true;
+            chkPteroAI.Checked = true;
+            chkPteroAI.CheckState = CheckState.Checked;
+            chkPteroAI.Location = new Point(18, 47);
+            chkPteroAI.Name = "chkPteroAI";
+            chkPteroAI.Size = new Size(98, 19);
+            chkPteroAI.TabIndex = 1;
+            chkPteroAI.Text = "Pterodactylus";
+            chkPteroAI.UseVisualStyleBackColor = true;
+            // 
+            // chkBoarAI
+            // 
+            chkBoarAI.AutoSize = true;
+            chkBoarAI.Checked = true;
+            chkBoarAI.CheckState = CheckState.Checked;
+            chkBoarAI.Location = new Point(18, 72);
+            chkBoarAI.Name = "chkBoarAI";
+            chkBoarAI.Size = new Size(50, 19);
+            chkBoarAI.TabIndex = 2;
+            chkBoarAI.Text = "Boar";
+            chkBoarAI.UseVisualStyleBackColor = true;
+            // 
+            // chkSeaturtleAI
+            // 
+            chkSeaturtleAI.AutoSize = true;
+            chkSeaturtleAI.Checked = true;
+            chkSeaturtleAI.CheckState = CheckState.Checked;
+            chkSeaturtleAI.Location = new Point(138, 72);
+            chkSeaturtleAI.Name = "chkSeaturtleAI";
+            chkSeaturtleAI.Size = new Size(72, 19);
+            chkSeaturtleAI.TabIndex = 3;
+            chkSeaturtleAI.Text = "Seaturtle";
+            chkSeaturtleAI.UseVisualStyleBackColor = true;
+            // 
+            // chkDeerAI
+            // 
+            chkDeerAI.AutoSize = true;
+            chkDeerAI.Checked = true;
+            chkDeerAI.CheckState = CheckState.Checked;
+            chkDeerAI.Location = new Point(138, 22);
+            chkDeerAI.Name = "chkDeerAI";
+            chkDeerAI.Size = new Size(50, 19);
+            chkDeerAI.TabIndex = 4;
+            chkDeerAI.Text = "Deer";
+            chkDeerAI.UseVisualStyleBackColor = true;
+            // 
+            // chkGoatAI
+            // 
+            chkGoatAI.AutoSize = true;
+            chkGoatAI.Checked = true;
+            chkGoatAI.CheckState = CheckState.Checked;
+            chkGoatAI.Location = new Point(138, 48);
+            chkGoatAI.Name = "chkGoatAI";
+            chkGoatAI.Size = new Size(51, 19);
+            chkGoatAI.TabIndex = 5;
+            chkGoatAI.Text = "Goat";
+            chkGoatAI.UseVisualStyleBackColor = true;
+            // 
+            // frmGameServerSettings
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(979, 609);
+            ClientSize = new Size(979, 625);
+            Controls.Add(groupBox7);
             Controls.Add(groupBox6);
             Controls.Add(groupBox4);
             Controls.Add(groupBox3);
@@ -1141,10 +1237,12 @@
             Controls.Add(txtMapName);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
-            Name = "frmServerSettings";
-            Text = "Main Server Settings";
+            Name = "frmGameServerSettings";
+            Text = "Main Game Server Settings";
+            Load += frmServerSettings_Load;
             txtMapName.ResumeLayout(false);
             txtMapName.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)numCorpseDecay).EndInit();
             ((System.ComponentModel.ISupportInitialize)txtGrowthRate).EndInit();
             ((System.ComponentModel.ISupportInitialize)txtQueuePort).EndInit();
             ((System.ComponentModel.ISupportInitialize)txtMaxPlayers).EndInit();
@@ -1174,7 +1272,8 @@
             ((System.ComponentModel.ISupportInitialize)txtSpeciesMigrationTime).EndInit();
             groupBox6.ResumeLayout(false);
             groupBox6.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)numCorpseDecay).EndInit();
+            groupBox7.ResumeLayout(false);
+            groupBox7.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1270,5 +1369,12 @@
         private CheckBox chkDilophosaurus;
         private NumericUpDown numCorpseDecay;
         private Label label21;
+        private GroupBox groupBox7;
+        private CheckBox chkGoatAI;
+        private CheckBox chkDeerAI;
+        private CheckBox chkSeaturtleAI;
+        private CheckBox chkBoarAI;
+        private CheckBox chkPteroAI;
+        private CheckBox chkCompsoAI;
     }
 }

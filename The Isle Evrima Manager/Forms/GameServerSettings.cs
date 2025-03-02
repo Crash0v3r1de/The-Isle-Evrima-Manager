@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace The_Isle_Evrima_Manager.Forms
 {
-    public partial class frmServerSettings : Form
+    public partial class frmGameServerSettings : Form
     {
         public string ServerName { get; set; } // Name of the server - ASCII only to my knowledge
         public int MaxPlayers { get; set; } // max players allowed into server
@@ -55,9 +55,12 @@ namespace The_Isle_Evrima_Manager.Forms
         public int CorpseDecayMultiplier { get; set; } // greater than 1 is faster decomp, less than 1 is slower decomp
 
 
-        public frmServerSettings()
+        public frmGameServerSettings()
         {
             InitializeComponent();
+        }
+        private void frmServerSettings_Load(object sender, EventArgs e) { 
+        
         }
 
         private void exitAndDiscardToolStripMenuItem_Click(object sender, EventArgs e)
