@@ -38,16 +38,15 @@
             chkServerMonitoring = new CheckBox();
             chkCPURAM = new CheckBox();
             groupBox3 = new GroupBox();
+            btnConsoleLogAlertSetup = new Button();
+            chkDiscordLogAlerts = new CheckBox();
             chkDiscordNotifyFails = new CheckBox();
             chkRestartServerOnFail = new CheckBox();
             groupBox4 = new GroupBox();
             txtDiscordWebhoolURL = new TextBox();
             label3 = new Label();
             chkDiscordNotifications = new CheckBox();
-            btnCancel = new Button();
             btnSave = new Button();
-            chkDiscordLogAlerts = new CheckBox();
-            btnConsoleLogAlertSetup = new Button();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
@@ -156,6 +155,27 @@
             groupBox3.TabStop = false;
             groupBox3.Text = "Game Server Proccess Handling";
             // 
+            // btnConsoleLogAlertSetup
+            // 
+            btnConsoleLogAlertSetup.Enabled = false;
+            btnConsoleLogAlertSetup.Location = new Point(6, 89);
+            btnConsoleLogAlertSetup.Name = "btnConsoleLogAlertSetup";
+            btnConsoleLogAlertSetup.Size = new Size(229, 23);
+            btnConsoleLogAlertSetup.TabIndex = 3;
+            btnConsoleLogAlertSetup.Text = "Console Log Alert Settings";
+            btnConsoleLogAlertSetup.UseVisualStyleBackColor = true;
+            // 
+            // chkDiscordLogAlerts
+            // 
+            chkDiscordLogAlerts.AutoSize = true;
+            chkDiscordLogAlerts.Enabled = false;
+            chkDiscordLogAlerts.Location = new Point(6, 72);
+            chkDiscordLogAlerts.Name = "chkDiscordLogAlerts";
+            chkDiscordLogAlerts.Size = new Size(233, 19);
+            chkDiscordLogAlerts.TabIndex = 2;
+            chkDiscordLogAlerts.Text = "Discord Notification on monitored logs";
+            chkDiscordLogAlerts.UseVisualStyleBackColor = true;
+            // 
             // chkDiscordNotifyFails
             // 
             chkDiscordNotifyFails.AutoSize = true;
@@ -214,19 +234,9 @@
             chkDiscordNotifications.Text = "Globally Enabled Discord Notifications";
             chkDiscordNotifications.UseVisualStyleBackColor = true;
             // 
-            // btnCancel
-            // 
-            btnCancel.Location = new Point(18, 334);
-            btnCancel.Name = "btnCancel";
-            btnCancel.Size = new Size(790, 23);
-            btnCancel.TabIndex = 4;
-            btnCancel.Text = "Cancel";
-            btnCancel.UseVisualStyleBackColor = true;
-            btnCancel.Click += btnCancel_Click;
-            // 
             // btnSave
             // 
-            btnSave.Location = new Point(18, 305);
+            btnSave.Location = new Point(18, 272);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(790, 23);
             btnSave.TabIndex = 5;
@@ -234,34 +244,12 @@
             btnSave.UseVisualStyleBackColor = true;
             btnSave.Click += btnSave_Click;
             // 
-            // chkDiscordLogAlerts
-            // 
-            chkDiscordLogAlerts.AutoSize = true;
-            chkDiscordLogAlerts.Enabled = false;
-            chkDiscordLogAlerts.Location = new Point(6, 72);
-            chkDiscordLogAlerts.Name = "chkDiscordLogAlerts";
-            chkDiscordLogAlerts.Size = new Size(233, 19);
-            chkDiscordLogAlerts.TabIndex = 2;
-            chkDiscordLogAlerts.Text = "Discord Notification on monitored logs";
-            chkDiscordLogAlerts.UseVisualStyleBackColor = true;
-            // 
-            // btnConsoleLogAlertSetup
-            // 
-            btnConsoleLogAlertSetup.Enabled = false;
-            btnConsoleLogAlertSetup.Location = new Point(6, 89);
-            btnConsoleLogAlertSetup.Name = "btnConsoleLogAlertSetup";
-            btnConsoleLogAlertSetup.Size = new Size(229, 23);
-            btnConsoleLogAlertSetup.TabIndex = 3;
-            btnConsoleLogAlertSetup.Text = "Console Log Alert Settings";
-            btnConsoleLogAlertSetup.UseVisualStyleBackColor = true;
-            // 
             // ManagerSettings
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(827, 358);
+            ClientSize = new Size(827, 304);
             Controls.Add(btnSave);
-            Controls.Add(btnCancel);
             Controls.Add(groupBox4);
             Controls.Add(groupBox3);
             Controls.Add(groupBox2);
@@ -298,7 +286,6 @@
         private TextBox txtDiscordWebhoolURL;
         private Label label3;
         private CheckBox chkDiscordNotifications;
-        private Button btnCancel;
         private Button btnSave;
         private Button btnConsoleLogAlertSetup;
         private CheckBox chkDiscordLogAlerts;

@@ -27,6 +27,10 @@ namespace The_Isle_Evrima_Manager.IO
                     Console.ForegroundColor = ConsoleColor.Red;
                     WritErrorLog($"{currTime} - [ERROR] {message}");
                     break;
+                case LogType.Debug:
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    WritDebugLog($"{currTime} - [DEBUG] {message}");
+                    break;
             }
         }
         private static void WriteLog(string msg) {
@@ -43,11 +47,24 @@ namespace The_Isle_Evrima_Manager.IO
                 sw.WriteLine(msg);
             }
         }
+        private static void WritDebugLog(string msg)
+        {
+            // TODO: Impliment debug argument when starting app and enable in manager runtime settings
+            //if (ManagerGlobalTracker.debug) {
+            //    // print debug log to UI console while in debug mode and write to file
+            //    Form1.AppendConsoleEntry(msg);
+            //    using (StreamWriter sw = File.AppendText($"{ManagerGlobalTracker.logDir}\\Debug-{DateTime.Today.ToString("MM-dd-yyyy")}.txt"))
+            //    {
+            //        sw.WriteLine(msg);
+            //    }
+            //}            
+        }
     }
     public enum LogType
     {
         Info,
         Warning,
-        Error
+        Error,
+        Debug
     }
 }

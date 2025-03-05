@@ -29,6 +29,14 @@
         private void InitializeComponent()
         {
             txtMapName = new GroupBox();
+            lblCooldownNoticeExpanded = new LinkLabel();
+            lblRegionCooldownNotice = new LinkLabel();
+            txtRegionCooldownSecs = new NumericUpDown();
+            label23 = new Label();
+            chkRegionSpawnCooldown = new CheckBox();
+            chkRegionSpawn = new CheckBox();
+            txtDiscordInvite = new TextBox();
+            label22 = new Label();
             numCorpseDecay = new NumericUpDown();
             label21 = new Label();
             btnAdmins = new Button();
@@ -58,7 +66,6 @@
             txtServerName = new TextBox();
             label1 = new Label();
             menuStrip1 = new MenuStrip();
-            exitAndDiscardToolStripMenuItem = new ToolStripMenuItem();
             saveAndCloseToolStripMenuItem = new ToolStripMenuItem();
             toolStripMenuItem1 = new ToolStripMenuItem();
             groupBox1 = new GroupBox();
@@ -68,7 +75,7 @@
             label7 = new Label();
             chkRCON = new CheckBox();
             groupBox2 = new GroupBox();
-            numericUpDown1 = new NumericUpDown();
+            txtNightLength = new NumericUpDown();
             txtDayMins = new NumericUpDown();
             label12 = new Label();
             label11 = new Label();
@@ -76,11 +83,11 @@
             txtMinWeatherVariation = new NumericUpDown();
             label10 = new Label();
             label9 = new Label();
-            checkBox1 = new CheckBox();
+            chkDynamicWeather = new CheckBox();
             groupBox3 = new GroupBox();
             txtPlantDensity = new NumericUpDown();
             label15 = new Label();
-            checkBox2 = new CheckBox();
+            chkSpawnPlants = new CheckBox();
             txtAIDensity = new NumericUpDown();
             label14 = new Label();
             txtAIInt = new NumericUpDown();
@@ -89,7 +96,7 @@
             groupBox4 = new GroupBox();
             chkPatrolZones = new CheckBox();
             groupBox5 = new GroupBox();
-            numericUpDown2 = new NumericUpDown();
+            txtMassMigrationCooldown = new NumericUpDown();
             label19 = new Label();
             txtMassMigrationTime = new NumericUpDown();
             label18 = new Label();
@@ -125,6 +132,7 @@
             chkPteroAI = new CheckBox();
             chkCompsoAI = new CheckBox();
             txtMapName.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)txtRegionCooldownSecs).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numCorpseDecay).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtGrowthRate).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtQueuePort).BeginInit();
@@ -133,7 +141,7 @@
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)txtRCONPort).BeginInit();
             groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)txtNightLength).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtDayMins).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtMaxWeatherVariation).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtMinWeatherVariation).BeginInit();
@@ -143,7 +151,7 @@
             ((System.ComponentModel.ISupportInitialize)txtAIInt).BeginInit();
             groupBox4.SuspendLayout();
             groupBox5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)txtMassMigrationCooldown).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtMassMigrationTime).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtMaxMigrationTime).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtSpeciesMigrationTime).BeginInit();
@@ -153,6 +161,14 @@
             // 
             // txtMapName
             // 
+            txtMapName.Controls.Add(lblCooldownNoticeExpanded);
+            txtMapName.Controls.Add(lblRegionCooldownNotice);
+            txtMapName.Controls.Add(txtRegionCooldownSecs);
+            txtMapName.Controls.Add(label23);
+            txtMapName.Controls.Add(chkRegionSpawnCooldown);
+            txtMapName.Controls.Add(chkRegionSpawn);
+            txtMapName.Controls.Add(txtDiscordInvite);
+            txtMapName.Controls.Add(label22);
             txtMapName.Controls.Add(numCorpseDecay);
             txtMapName.Controls.Add(label21);
             txtMapName.Controls.Add(btnAdmins);
@@ -183,15 +199,93 @@
             txtMapName.Controls.Add(label1);
             txtMapName.Location = new Point(12, 27);
             txtMapName.Name = "txtMapName";
-            txtMapName.Size = new Size(660, 321);
+            txtMapName.Size = new Size(660, 328);
             txtMapName.TabIndex = 0;
             txtMapName.TabStop = false;
             txtMapName.Text = "General Server Settings";
             // 
+            // lblCooldownNoticeExpanded
+            // 
+            lblCooldownNoticeExpanded.AutoSize = true;
+            lblCooldownNoticeExpanded.Location = new Point(467, 140);
+            lblCooldownNoticeExpanded.Name = "lblCooldownNoticeExpanded";
+            lblCooldownNoticeExpanded.Size = new Size(155, 15);
+            lblCooldownNoticeExpanded.TabIndex = 36;
+            lblCooldownNoticeExpanded.TabStop = true;
+            lblCooldownNoticeExpanded.Text = "IF COOLDOWN IS DISABLED";
+            lblCooldownNoticeExpanded.LinkClicked += lblCooldownNoticeExpanded_LinkClicked;
+            // 
+            // lblRegionCooldownNotice
+            // 
+            lblRegionCooldownNotice.AutoSize = true;
+            lblRegionCooldownNotice.Location = new Point(329, 126);
+            lblRegionCooldownNotice.Name = "lblRegionCooldownNotice";
+            lblRegionCooldownNotice.Size = new Size(319, 15);
+            lblRegionCooldownNotice.TabIndex = 35;
+            lblRegionCooldownNotice.TabStop = true;
+            lblRegionCooldownNotice.Text = "THIS NEEDS TO BE THE SECONDS FROM UTC THE SERVER IS";
+            lblRegionCooldownNotice.LinkClicked += lblRegionCooldownNotice_LinkClicked;
+            // 
+            // txtRegionCooldownSecs
+            // 
+            txtRegionCooldownSecs.Location = new Point(343, 102);
+            txtRegionCooldownSecs.Maximum = new decimal(new int[] { 999999999, 0, 0, 0 });
+            txtRegionCooldownSecs.Name = "txtRegionCooldownSecs";
+            txtRegionCooldownSecs.Size = new Size(120, 23);
+            txtRegionCooldownSecs.TabIndex = 34;
+            txtRegionCooldownSecs.Value = new decimal(new int[] { 30, 0, 0, 0 });
+            // 
+            // label23
+            // 
+            label23.AutoSize = true;
+            label23.Location = new Point(338, 87);
+            label23.Name = "label23";
+            label23.Size = new Size(109, 15);
+            label23.TabIndex = 33;
+            label23.Text = "Cooldown Seconds";
+            // 
+            // chkRegionSpawnCooldown
+            // 
+            chkRegionSpawnCooldown.AutoSize = true;
+            chkRegionSpawnCooldown.Location = new Point(395, 72);
+            chkRegionSpawnCooldown.Name = "chkRegionSpawnCooldown";
+            chkRegionSpawnCooldown.Size = new Size(159, 19);
+            chkRegionSpawnCooldown.TabIndex = 32;
+            chkRegionSpawnCooldown.Text = "Region Spawn Cooldown";
+            chkRegionSpawnCooldown.UseVisualStyleBackColor = true;
+            // 
+            // chkRegionSpawn
+            // 
+            chkRegionSpawn.AutoSize = true;
+            chkRegionSpawn.Checked = true;
+            chkRegionSpawn.CheckState = CheckState.Checked;
+            chkRegionSpawn.Location = new Point(395, 55);
+            chkRegionSpawn.Name = "chkRegionSpawn";
+            chkRegionSpawn.Size = new Size(139, 19);
+            chkRegionSpawn.TabIndex = 31;
+            chkRegionSpawn.Text = "Enable Region Spawn";
+            chkRegionSpawn.UseVisualStyleBackColor = true;
+            // 
+            // txtDiscordInvite
+            // 
+            txtDiscordInvite.Location = new Point(6, 303);
+            txtDiscordInvite.Name = "txtDiscordInvite";
+            txtDiscordInvite.Size = new Size(521, 23);
+            txtDiscordInvite.TabIndex = 30;
+            // 
+            // label22
+            // 
+            label22.AutoSize = true;
+            label22.Location = new Point(6, 285);
+            label22.Name = "label22";
+            label22.Size = new Size(190, 15);
+            label22.TabIndex = 29;
+            label22.Text = "Discord Server Invite URL (full URL)";
+            // 
             // numCorpseDecay
             // 
             numCorpseDecay.DecimalPlaces = 1;
-            numCorpseDecay.Location = new Point(142, 292);
+            numCorpseDecay.Location = new Point(565, 196);
             numCorpseDecay.Name = "numCorpseDecay";
             numCorpseDecay.Size = new Size(79, 23);
             numCorpseDecay.TabIndex = 28;
@@ -200,7 +294,7 @@
             // label21
             // 
             label21.AutoSize = true;
-            label21.Location = new Point(6, 295);
+            label21.Location = new Point(429, 199);
             label21.Name = "label21";
             label21.Size = new Size(133, 15);
             label21.TabIndex = 27;
@@ -471,19 +565,12 @@
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { exitAndDiscardToolStripMenuItem, saveAndCloseToolStripMenuItem, toolStripMenuItem1 });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { saveAndCloseToolStripMenuItem, toolStripMenuItem1 });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(979, 24);
             menuStrip1.TabIndex = 1;
             menuStrip1.Text = "menuStrip1";
-            // 
-            // exitAndDiscardToolStripMenuItem
-            // 
-            exitAndDiscardToolStripMenuItem.Name = "exitAndDiscardToolStripMenuItem";
-            exitAndDiscardToolStripMenuItem.Size = new Size(103, 20);
-            exitAndDiscardToolStripMenuItem.Text = "Exit and Discard";
-            exitAndDiscardToolStripMenuItem.Click += exitAndDiscardToolStripMenuItem_Click;
             // 
             // saveAndCloseToolStripMenuItem
             // 
@@ -562,7 +649,7 @@
             // 
             // groupBox2
             // 
-            groupBox2.Controls.Add(numericUpDown1);
+            groupBox2.Controls.Add(txtNightLength);
             groupBox2.Controls.Add(txtDayMins);
             groupBox2.Controls.Add(label12);
             groupBox2.Controls.Add(label11);
@@ -570,7 +657,7 @@
             groupBox2.Controls.Add(txtMinWeatherVariation);
             groupBox2.Controls.Add(label10);
             groupBox2.Controls.Add(label9);
-            groupBox2.Controls.Add(checkBox1);
+            groupBox2.Controls.Add(chkDynamicWeather);
             groupBox2.Location = new Point(639, 434);
             groupBox2.Name = "groupBox2";
             groupBox2.Size = new Size(238, 166);
@@ -578,15 +665,15 @@
             groupBox2.TabStop = false;
             groupBox2.Text = "Weather and Day Settings";
             // 
-            // numericUpDown1
+            // txtNightLength
             // 
-            numericUpDown1.Location = new Point(140, 136);
-            numericUpDown1.Maximum = new decimal(new int[] { 3200, 0, 0, 0 });
-            numericUpDown1.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-            numericUpDown1.Name = "numericUpDown1";
-            numericUpDown1.Size = new Size(80, 23);
-            numericUpDown1.TabIndex = 8;
-            numericUpDown1.Value = new decimal(new int[] { 20, 0, 0, 0 });
+            txtNightLength.Location = new Point(140, 136);
+            txtNightLength.Maximum = new decimal(new int[] { 3200, 0, 0, 0 });
+            txtNightLength.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            txtNightLength.Name = "txtNightLength";
+            txtNightLength.Size = new Size(80, 23);
+            txtNightLength.TabIndex = 8;
+            txtNightLength.Value = new decimal(new int[] { 20, 0, 0, 0 });
             // 
             // txtDayMins
             // 
@@ -654,23 +741,23 @@
             label9.TabIndex = 1;
             label9.Text = "Minimum Variation";
             // 
-            // checkBox1
+            // chkDynamicWeather
             // 
-            checkBox1.AutoSize = true;
-            checkBox1.Checked = true;
-            checkBox1.CheckState = CheckState.Checked;
-            checkBox1.Location = new Point(16, 22);
-            checkBox1.Name = "checkBox1";
-            checkBox1.Size = new Size(158, 19);
-            checkBox1.TabIndex = 0;
-            checkBox1.Text = "Enable Dynamic Weather";
-            checkBox1.UseVisualStyleBackColor = true;
+            chkDynamicWeather.AutoSize = true;
+            chkDynamicWeather.Checked = true;
+            chkDynamicWeather.CheckState = CheckState.Checked;
+            chkDynamicWeather.Location = new Point(16, 22);
+            chkDynamicWeather.Name = "chkDynamicWeather";
+            chkDynamicWeather.Size = new Size(158, 19);
+            chkDynamicWeather.TabIndex = 0;
+            chkDynamicWeather.Text = "Enable Dynamic Weather";
+            chkDynamicWeather.UseVisualStyleBackColor = true;
             // 
             // groupBox3
             // 
             groupBox3.Controls.Add(txtPlantDensity);
             groupBox3.Controls.Add(label15);
-            groupBox3.Controls.Add(checkBox2);
+            groupBox3.Controls.Add(chkSpawnPlants);
             groupBox3.Controls.Add(txtAIDensity);
             groupBox3.Controls.Add(label14);
             groupBox3.Controls.Add(txtAIInt);
@@ -703,17 +790,17 @@
             label15.TabIndex = 6;
             label15.Text = "Plant Density";
             // 
-            // checkBox2
+            // chkSpawnPlants
             // 
-            checkBox2.AutoSize = true;
-            checkBox2.Checked = true;
-            checkBox2.CheckState = CheckState.Checked;
-            checkBox2.Location = new Point(6, 100);
-            checkBox2.Name = "checkBox2";
-            checkBox2.Size = new Size(224, 19);
-            checkBox2.TabIndex = 5;
-            checkBox2.Text = "Spawn Plants - Don't hate the herbo's";
-            checkBox2.UseVisualStyleBackColor = true;
+            chkSpawnPlants.AutoSize = true;
+            chkSpawnPlants.Checked = true;
+            chkSpawnPlants.CheckState = CheckState.Checked;
+            chkSpawnPlants.Location = new Point(6, 100);
+            chkSpawnPlants.Name = "chkSpawnPlants";
+            chkSpawnPlants.Size = new Size(224, 19);
+            chkSpawnPlants.TabIndex = 5;
+            chkSpawnPlants.Text = "Spawn Plants - Don't hate the herbo's";
+            chkSpawnPlants.UseVisualStyleBackColor = true;
             // 
             // txtAIDensity
             // 
@@ -793,7 +880,7 @@
             // 
             // groupBox5
             // 
-            groupBox5.Controls.Add(numericUpDown2);
+            groupBox5.Controls.Add(txtMassMigrationCooldown);
             groupBox5.Controls.Add(label19);
             groupBox5.Controls.Add(txtMassMigrationTime);
             groupBox5.Controls.Add(label18);
@@ -808,15 +895,15 @@
             groupBox5.TabStop = false;
             groupBox5.Text = "Timers - IN SECONDS";
             // 
-            // numericUpDown2
+            // txtMassMigrationCooldown
             // 
-            numericUpDown2.Location = new Point(159, 107);
-            numericUpDown2.Maximum = new decimal(new int[] { 99999, 0, 0, 0 });
-            numericUpDown2.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-            numericUpDown2.Name = "numericUpDown2";
-            numericUpDown2.Size = new Size(120, 23);
-            numericUpDown2.TabIndex = 9;
-            numericUpDown2.Value = new decimal(new int[] { 7200, 0, 0, 0 });
+            txtMassMigrationCooldown.Location = new Point(159, 107);
+            txtMassMigrationCooldown.Maximum = new decimal(new int[] { 99999, 0, 0, 0 });
+            txtMassMigrationCooldown.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            txtMassMigrationCooldown.Name = "txtMassMigrationCooldown";
+            txtMassMigrationCooldown.Size = new Size(120, 23);
+            txtMassMigrationCooldown.TabIndex = 9;
+            txtMassMigrationCooldown.Value = new decimal(new int[] { 7200, 0, 0, 0 });
             // 
             // label19
             // 
@@ -1240,10 +1327,11 @@
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
             Name = "frmGameServerSettings";
-            Text = "Main Game Server Settings";
+            Text = "Main Game Server Settings - It's ALOT in one window, I know...";
             Load += frmServerSettings_Load;
             txtMapName.ResumeLayout(false);
             txtMapName.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)txtRegionCooldownSecs).EndInit();
             ((System.ComponentModel.ISupportInitialize)numCorpseDecay).EndInit();
             ((System.ComponentModel.ISupportInitialize)txtGrowthRate).EndInit();
             ((System.ComponentModel.ISupportInitialize)txtQueuePort).EndInit();
@@ -1255,7 +1343,7 @@
             ((System.ComponentModel.ISupportInitialize)txtRCONPort).EndInit();
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)txtNightLength).EndInit();
             ((System.ComponentModel.ISupportInitialize)txtDayMins).EndInit();
             ((System.ComponentModel.ISupportInitialize)txtMaxWeatherVariation).EndInit();
             ((System.ComponentModel.ISupportInitialize)txtMinWeatherVariation).EndInit();
@@ -1268,7 +1356,7 @@
             groupBox4.PerformLayout();
             groupBox5.ResumeLayout(false);
             groupBox5.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)txtMassMigrationCooldown).EndInit();
             ((System.ComponentModel.ISupportInitialize)txtMassMigrationTime).EndInit();
             ((System.ComponentModel.ISupportInitialize)txtMaxMigrationTime).EndInit();
             ((System.ComponentModel.ISupportInitialize)txtSpeciesMigrationTime).EndInit();
@@ -1284,7 +1372,6 @@
 
         private GroupBox txtMapName;
         private MenuStrip menuStrip1;
-        private ToolStripMenuItem exitAndDiscardToolStripMenuItem;
         private ToolStripMenuItem saveAndCloseToolStripMenuItem;
         private TextBox txtServerName;
         private Label label1;
@@ -1308,14 +1395,14 @@
         private Label label7;
         private GroupBox groupBox2;
         private Label label9;
-        private CheckBox checkBox1;
+        private CheckBox chkDynamicWeather;
         private NumericUpDown txtMaxWeatherVariation;
         private NumericUpDown txtMinWeatherVariation;
         private Label label10;
         private NumericUpDown txtDayMins;
         private Label label12;
         private Label label11;
-        private NumericUpDown numericUpDown1;
+        private NumericUpDown txtNightLength;
         private CheckBox chkWhitelist;
         private Button btnWhitelistFrm;
         private CheckBox chkGlobalChat;
@@ -1325,7 +1412,7 @@
         private Label label13;
         private Label label14;
         private NumericUpDown txtAIDensity;
-        private CheckBox checkBox2;
+        private CheckBox chkSpawnPlants;
         private Label label15;
         private NumericUpDown txtPlantDensity;
         private GroupBox groupBox4;
@@ -1339,7 +1426,7 @@
         private Label label18;
         private NumericUpDown txtMassMigrationTime;
         private Label label19;
-        private NumericUpDown numericUpDown2;
+        private NumericUpDown txtMassMigrationCooldown;
         private CheckBox chkPatrolZones;
         private CheckBox chkDiets;
         private NumericUpDown txtGrowthRate;
@@ -1378,5 +1465,13 @@
         private CheckBox chkBoarAI;
         private CheckBox chkPteroAI;
         private CheckBox chkCompsoAI;
+        private TextBox txtDiscordInvite;
+        private Label label22;
+        private CheckBox chkRegionSpawn;
+        private CheckBox chkRegionSpawnCooldown;
+        private NumericUpDown txtRegionCooldownSecs;
+        private Label label23;
+        private LinkLabel lblCooldownNoticeExpanded;
+        private LinkLabel lblRegionCooldownNotice;
     }
 }

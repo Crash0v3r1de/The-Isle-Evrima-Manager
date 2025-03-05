@@ -42,7 +42,7 @@ namespace The_Isle_Evrima_Manager.Tools
                     steam.InitializeTool();
                     steam.InstallIsleServer();
                     CoreFiles.CopyDLLs();
-                    CoreFiles.WriteEngineINI(); // This doesn't change, it's The Isle's API keys to use Epic Online servers
+                    CoreFiles.SaveEngineINI(); // This doesn't change, it's The Isle's API keys to use Epic Online servers
                 }
                 if (ManagerGlobalTracker.isleServerInstalled)
                 {
@@ -89,12 +89,13 @@ namespace The_Isle_Evrima_Manager.Tools
             // Is what it is for now unless someone has a better code to handle it realtime
             ServerThread.server.Start();
             ServerThread.server.BeginOutputReadLine();
+            // TODO: Add validation to verify it's starting properly
             new Thread(() =>
             {
                 ServerThread.ServerThreadManager(); // Start watchdog thread
             }).Start();
-            
-            ManagerGlobalTracker.CurrentStatus = ManagerStatus.serverRunning;
+
+            ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.serverRunning);
             Logger.Log("Server started!", LogType.Info);
         }
         private static ProcessStartInfo StartArgs() {

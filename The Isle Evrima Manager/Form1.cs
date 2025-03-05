@@ -398,6 +398,10 @@ namespace The_Isle_Evrima_Manager
 
         private void btnStartServerUI_Click(object sender, EventArgs e)
         {
+            if (String.IsNullOrEmpty(GameServerSettings.GameIniSession.ServerName)) { 
+                // Fresh start
+
+            }
             GameServer.StartServer();
         }
 
@@ -504,7 +508,34 @@ namespace The_Isle_Evrima_Manager
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             // Gracefully exit server, save settings to Game.ini in ini format, save settings into our own JSON and start the server again
+            GameServer.StopGracefully();
+            GameServerStatusTracker.AllowServerRunning = false; // wait for thread to start closing in it's loop
+            new Thread(() => {
+                // this is where we wait and then process the changes
+                while (ManagerGlobalTracker.CurrentStatus != ManagerStatus.idle & GameServerSettings.PendingSettingsApply) {
+                    // wait on runtime status to change AND pending settings is true - additonal validation for bool check
+                    Thread.Sleep(1200);
+                }
+                // Server should be stopped now
+                ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.savingSettings);
+                CoreFiles.SaveGameINI();
+                ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.startingServer);
+                GameServer.StartServer();
+            }).Start();
+        }
 
+        private void troubleshootingIssuesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Load wiki page with random tips people find and report on Discord as well as my findings
+            // weird issue that I think is specific to Windows Server OS environments - https://discord.com/channels/401464048610312193/401466217744957460/1343858327012118548
+
+        }
+
+        private void PromptForSetup() { 
+            new ManagerSettings().ShowDialog(this);
+            CoreFiles.SaveManagerSettings();
+
+            new frmGameServerSettings().ShowDialog(this);
         }
     }
 }

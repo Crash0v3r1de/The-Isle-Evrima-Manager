@@ -11,5 +11,6 @@ namespace The_Isle_Evrima_Manager.Threadz.ThreadTracking
     {
         public static GameIniSession GameIniSession { get; set; } = new GameIniSession();
         public static GameIniStateBase GameIniState { get; set; } = new GameIniStateBase();
+        public static bool PendingSettingsApply { get; set; } = false; // Also bool in Game Server Status
     }
 }

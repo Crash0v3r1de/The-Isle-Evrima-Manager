@@ -7,6 +7,7 @@ using System.IO.Compression;
 using The_Isle_Evrima_Manager.Threadz.ThreadTracking;
 using Newtonsoft.Json;
 using The_Isle_Evrima_Manager.JSON;
+using static System.Windows.Forms.LinkLabel;
 
 namespace The_Isle_Evrima_Manager.IO
 {
@@ -45,8 +46,9 @@ namespace The_Isle_Evrima_Manager.IO
         public static void SaveAndExtractSteamCMD(string tmpPath) { 
             ZipFile.ExtractToDirectory(tmpPath, steamCMDDir);
         }
-        public static void SaveGameINI(List<string> ini) {
+        public static void SaveGameINI() {
             // Saved\Config\WindowsServer - folder structure needed inside server root directory
+            var ini = ParseGameServerSettingsIntoINI();
             if (!Directory.Exists(ManagerGlobalTracker.serverPath + "Saved")) { 
                 Directory.CreateDirectory(ManagerGlobalTracker.serverPath + "Saved");
             }
@@ -67,7 +69,7 @@ namespace The_Isle_Evrima_Manager.IO
                 }
             }
         }
-        public static void SaveEngineINI(List<string> ini) {
+        public static void SaveEngineINI() {
             // Saved\Config\WindowsServer - folder structure needed inside server root directory
             if (!Directory.Exists(ManagerGlobalTracker.serverPath + "Saved"))
             {
@@ -81,15 +83,7 @@ namespace The_Isle_Evrima_Manager.IO
             {
                 Directory.CreateDirectory(ManagerGlobalTracker.serverPath + @"Saved\Config\WindowsServer");
             }
-            var fullPath = ManagerGlobalTracker.serverPath + ManagerGlobalTracker.engineINI;
-            using (StreamWriter sw = new StreamWriter(fullPath, false))
-            {
-                for (int x = 0; x < ini.Count; x++)
-                {
-                    // Write to file in order
-                    sw.WriteLine(ini[x]);
-                }
-            }
+            WriteEngineINI();
         }
         public static void PrcoessServerPathMove(string newPath) {
             if (Directory.Exists(ManagerGlobalTracker.serverPath+ "TheIsle")) {
@@ -113,23 +107,59 @@ namespace The_Isle_Evrima_Manager.IO
                 return false;
             }            
             return true;
-        }
-        public static void WriteEngineINI() {
-            // The server when ran seems to remove this file and this is used in the run arguments but we'll write it anyway
-            var fullPath = ManagerGlobalTracker.serverPath + ManagerGlobalTracker.engineINI;
-            using (StreamWriter sw = new StreamWriter(fullPath,false)) { 
-                sw.WriteLine("[EpicOnlineServices]");
-                sw.WriteLine("DedicatedServerClientId=xyza7891gk5PRo3J7G9puCJGFJjmEguW");
-                sw.WriteLine("DedicatedServerClientSecret=pKWl6t5i9NJK8gTpVlAxzENZ65P8hYzodV8Dqe5Rlc8");
-            }
-        }
+        }        
         public static void SaveManagerSettings()
         {
             var fullPath = ManagerGlobalTracker.managerConfDir + "manager.json";
             File.WriteAllText(fullPath, JsonConvert.SerializeObject(ParseManagerSettings()));
         }
+        public static void LoadGameServerSettings()
+        {
+            try {
+                using (StreamReader sr = new StreamReader(ManagerGlobalTracker.managerConfDir+"game-settings.json")) {
+                    var parsed = JsonConvert.DeserializeObject<GameServerSettingsJSON>(sr.ReadToEnd());
+                    GameServerSettings.GameIniState = parsed.GameIniState;
+                    GameServerSettings.GameIniSession = parsed.GameIniSession;
+                    GameServerSettings.PendingSettingsApply = parsed.PendingSettingsApply;
+                }
+            }
+            catch (Exception ex) {
+                Logger.Log("Failed to parse game server settings - "+ex.Message,LogType.Debug);
+            }
+        }
+        public static void SaveGameServerSettings()
+        {
+            // This should NOT be called until server stopped, actual ini file is updated and server is started
+            try
+            {
+                using (StreamWriter sw = new StreamWriter(ManagerGlobalTracker.managerConfDir + "game-settings.json", false))
+                {
+                    sw.Write(JsonConvert.SerializeObject(new
+                    {
+                        GameIniState = GameServerSettings.GameIniState,
+                        GameIniSession = GameServerSettings.GameIniSession,
+                        PendingSettingsApply = GameServerSettings.PendingSettingsApply
+                    }));
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Log("Saving game server settings json - " + ex.Message, LogType.Debug);
+            }
+        }
 
         #region Private Methods
+        private static void WriteEngineINI()
+        {
+            // The server when ran seems to remove this file and this is used in the run arguments but we'll write it anyway
+            var fullPath = ManagerGlobalTracker.serverPath + ManagerGlobalTracker.engineINI;
+            using (StreamWriter sw = new StreamWriter(fullPath, false))
+            {
+                sw.WriteLine("[EpicOnlineServices]");
+                sw.WriteLine("DedicatedServerClientId=xyza7891gk5PRo3J7G9puCJGFJjmEguW");
+                sw.WriteLine("DedicatedServerClientSecret=pKWl6t5i9NJK8gTpVlAxzENZ65P8hYzodV8Dqe5Rlc8");
+            }
+        }
         private static ManagerSettingsJSON ParseManagerSettings() {
             ManagerSettingsJSON managerSettings = new ManagerSettingsJSON();
             managerSettings.AutoloadDLLs = ManagerGlobalTracker.autoloadDLLs;
@@ -155,6 +185,77 @@ namespace The_Isle_Evrima_Manager.IO
             managerSettings.tmpPath = ManagerGlobalTracker.tmpPath;
             managerSettings.utilPath = ManagerGlobalTracker.utilPath;
             return managerSettings;
+        }
+        private static List<string> ParseGameServerSettingsIntoINI() { 
+            List<string> rawINI = new List<string>();
+            rawINI.Add("[/script/theisle.tigamesession]"); // Needs added first
+            rawINI.Add("ServerName=" + GameServerSettings.GameIniSession.ServerName);
+            rawINI.Add("MaxPlayers=" + GameServerSettings.GameIniSession.MaxPlayers);
+            rawINI.Add("bEnableHumans=" + GameServerSettings.GameIniSession.EnableHumans);
+            rawINI.Add("MapName=" + GameServerSettings.GameIniSession.MapName);
+            rawINI.Add("bQueueEnable=" + GameServerSettings.GameIniSession.EnableQueue);
+            rawINI.Add("bQueuePort=" + GameServerSettings.GameIniSession.QueuePort);
+            rawINI.Add("bServerPassword=" + GameServerSettings.GameIniSession.ServerPasswordProtected);
+            rawINI.Add("ServerPassword=" + GameServerSettings.GameIniSession.ServerPassword);
+            rawINI.Add("bRconEnable=" + GameServerSettings.GameIniSession.EnableRCON);
+            rawINI.Add("RconPassword=" + GameServerSettings.GameIniSession.RCONPassword);
+            rawINI.Add("RconPort=" + GameServerSettings.GameIniSession.RCONPort);
+            rawINI.Add("bServerDynamicWeather=" + GameServerSettings.GameIniSession.DynamicWeather);
+            rawINI.Add("MinimumWeatherVariationInterval=" + GameServerSettings.GameIniSession.MinimumWeatherVariationInterval);
+            rawINI.Add("MaximumWeatherVariationInterval=" + GameServerSettings.GameIniSession.MaximumWeatherVariationInterval);
+            rawINI.Add("ServerDayLengthMinutes=" + GameServerSettings.GameIniSession.ServerDayLengthMinutes);
+            rawINI.Add("ServerNightLengthMinutes=" + GameServerSettings.GameIniSession.ServerNightLengthMinutes);
+            rawINI.Add("bServerWhitelist=" + GameServerSettings.GameIniSession.ServerWhitelistMode);
+            rawINI.Add("bEnableGlobalChat=" + GameServerSettings.GameIniSession.EnableGlobalChat);
+            rawINI.Add("bSpawnAI=" + GameServerSettings.GameIniSession.SpawnAI);
+            rawINI.Add("AISpawnInterval=" + GameServerSettings.GameIniSession.AISpawnInterval);
+            rawINI.Add("AIDensity=" + GameServerSettings.GameIniSession.AIDensity);
+            rawINI.Add("bEnableMigration=" + GameServerSettings.GameIniSession.EnableMigration);
+            rawINI.Add("MaxMigrationTime=" + GameServerSettings.GameIniSession.MaxMigrationTime);
+            rawINI.Add("SpeciaMigrationTime=" + GameServerSettings.GameIniSession.SpeciaMigrationTime);
+            rawINI.Add("bEnableMassMigration=" + GameServerSettings.GameIniSession.EnableMassMigration);
+            rawINI.Add("MassMigrationTime=" + GameServerSettings.GameIniSession.MassMigrationTime);
+            rawINI.Add("MassMigrationDisableTime=" + GameServerSettings.GameIniSession.MassMigrationDisableTime);
+            rawINI.Add("bEnablePatrolZones=" + GameServerSettings.GameIniSession.EnablePatrolZones);
+            rawINI.Add("bEnableDiets=" + GameServerSettings.GameIniSession.EnableDiets);
+            rawINI.Add("GrowthMultiplier=" + GameServerSettings.GameIniSession.GrowthMultiplier);
+            rawINI.Add("bServerFallDamage=" + GameServerSettings.GameIniSession.FallDamage);
+            rawINI.Add("bAllowRecordingReplays=" + GameServerSettings.GameIniSession.AllowRecordingReplays);
+            rawINI.Add("bSpawnPlants=" + GameServerSettings.GameIniSession.SpawnPlants);
+            rawINI.Add("PlantSpawnMultiplier=" + GameServerSettings.GameIniSession.PlantSpawnMultiplier);
+            rawINI.Add("bEnableMutations=" + GameServerSettings.GameIniSession.EnableMutations);
+            rawINI.Add("bUseRegionSpawning=" + GameServerSettings.GameIniSession.UseRegionSpawning);
+            rawINI.Add("bUseRegionSpawnCooldown=" + GameServerSettings.GameIniSession.RegionSpawnCooldown);
+            rawINI.Add("RegionSpawnCooldownTimeSeconds=" + GameServerSettings.GameIniSession.RegionSpawnCooldownTimeSeconds);
+            rawINI.Add("Discord=" + GameServerSettings.GameIniSession.Discord);
+            rawINI.Add("CorpseDecayMultiplier=" + GameServerSettings.GameIniSession.CorpseDecayMultiplier);
+            // Logical order, now we do IniState
+            rawINI.Add("[/script/theisle.tigamestatebase]"); // Needs to be added first
+            foreach (var id in GameServerSettings.GameIniState.AdminSteamIDs)
+            {
+                rawINI.Add($"AdminSteamIDs={id}");
+            }
+            foreach (var id in GameServerSettings.GameIniState.WhitelistIDs)
+            {
+                rawINI.Add($"WhitelistIDs={id}");
+            }
+            foreach (var id in GameServerSettings.GameIniState.VIPs)
+            {
+                rawINI.Add($"VIPs={id}");
+            }
+            foreach (var id in GameServerSettings.GameIniState.AllowedClasses)
+            {
+                rawINI.Add($"AllowedClasses={id}");
+            }
+            foreach (var id in GameServerSettings.GameIniState.EnabledMutations)
+            {
+                rawINI.Add($"EnabledMutations=(MutationName=”{id.Name}”,EffectValue={id.EffectiveValue})");
+            }
+            foreach (var id in GameServerSettings.GameIniState.DisallowedAIClasses)
+            {
+                rawINI.Add($"DisallowedAIClasses={id}");
+            }
+            return rawINI;
         }
         #endregion
     }

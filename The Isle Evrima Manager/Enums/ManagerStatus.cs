@@ -14,6 +14,7 @@ namespace The_Isle_Evrima_Manager.Enums
         startingServer = 3,
         stoppingServer = 4,
         error = 5,
-        serverRunning = 6
+        serverRunning = 6,
+        savingSettings = 7
     }
 }

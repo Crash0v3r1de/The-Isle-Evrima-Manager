@@ -90,7 +90,7 @@
             btnAddMutation.Name = "btnAddMutation";
             btnAddMutation.Size = new Size(189, 23);
             btnAddMutation.TabIndex = 4;
-            btnAddMutation.Text = "Add";
+            btnAddMutation.Text = "Add/Update";
             btnAddMutation.UseVisualStyleBackColor = true;
             btnAddMutation.Click += btnAddMutation_Click;
             // 
@@ -158,6 +158,7 @@
             button1.TabIndex = 1;
             button1.Text = "Edit Selected";
             button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // lstMutations
             // 

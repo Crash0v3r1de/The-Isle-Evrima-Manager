@@ -80,6 +80,7 @@
             configureRCONTasksToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator3 = new ToolStripSeparator();
             toolStripDropDownButton4 = new ToolStripDropDownButton();
+            troubleshootingIssuesToolStripMenuItem = new ToolStripMenuItem();
             aboutToolStripMenuItem = new ToolStripMenuItem();
             btnPendingSettingsChange = new ToolStripButton();
             groupBox4 = new GroupBox();
@@ -500,17 +501,24 @@
             // toolStripDropDownButton4
             // 
             toolStripDropDownButton4.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            toolStripDropDownButton4.DropDownItems.AddRange(new ToolStripItem[] { aboutToolStripMenuItem });
+            toolStripDropDownButton4.DropDownItems.AddRange(new ToolStripItem[] { troubleshootingIssuesToolStripMenuItem, aboutToolStripMenuItem });
             toolStripDropDownButton4.Image = (Image)resources.GetObject("toolStripDropDownButton4.Image");
             toolStripDropDownButton4.ImageTransparentColor = Color.Magenta;
             toolStripDropDownButton4.Name = "toolStripDropDownButton4";
             toolStripDropDownButton4.Size = new Size(45, 22);
             toolStripDropDownButton4.Text = "Help";
             // 
+            // troubleshootingIssuesToolStripMenuItem
+            // 
+            troubleshootingIssuesToolStripMenuItem.Name = "troubleshootingIssuesToolStripMenuItem";
+            troubleshootingIssuesToolStripMenuItem.Size = new Size(194, 22);
+            troubleshootingIssuesToolStripMenuItem.Text = "Troubleshooting Issues";
+            troubleshootingIssuesToolStripMenuItem.Click += troubleshootingIssuesToolStripMenuItem_Click;
+            // 
             // aboutToolStripMenuItem
             // 
             aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            aboutToolStripMenuItem.Size = new Size(107, 22);
+            aboutToolStripMenuItem.Size = new Size(194, 22);
             aboutToolStripMenuItem.Text = "About";
             aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
             // 
@@ -522,8 +530,8 @@
             btnPendingSettingsChange.Image = (Image)resources.GetObject("btnPendingSettingsChange.Image");
             btnPendingSettingsChange.ImageTransparentColor = Color.Magenta;
             btnPendingSettingsChange.Name = "btnPendingSettingsChange";
-            btnPendingSettingsChange.Size = new Size(329, 22);
-            btnPendingSettingsChange.Text = "SERVER IS RUNNING WITH PENDING SETTING CHANGES";
+            btnPendingSettingsChange.Size = new Size(309, 22);
+            btnPendingSettingsChange.Text = "Game Server Running - Click to shutdown and update";
             btnPendingSettingsChange.Click += toolStripButton1_Click;
             // 
             // groupBox4
@@ -744,5 +752,6 @@
         private Label label8;
         private Label label7;
         private ToolStripButton btnPendingSettingsChange;
+        private ToolStripMenuItem troubleshootingIssuesToolStripMenuItem;
     }
 }

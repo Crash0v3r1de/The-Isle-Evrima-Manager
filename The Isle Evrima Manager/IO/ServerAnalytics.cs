@@ -10,7 +10,7 @@ using The_Isle_Evrima_Manager.Threadz.ThreadTracking;
 
 namespace The_Isle_Evrima_Manager.IO
 {
-    public static class ServerSettings
+    public static class ServerAnalytics
     {
         // \tiserver\TheIsle\Saved\Config\WindowsServer
         private static string iniDir = @"\server\TheIsle\Saved\Config\WindowsServer";
@@ -31,15 +31,6 @@ namespace The_Isle_Evrima_Manager.IO
             var files = Directory.GetFiles(savedPlayerDataDir).Where(f => f.ToLower().EndsWith("sav"));
             return files.Count();
         }
-        public static List<string> GetGameSettings()
-        {
-            List<string> settings = new List<string>();
-            foreach (string line in File.ReadLines(iniFile))
-            {
-                settings.Add(line);
-            }
-            return settings;
-        }
-        
+                
     }
 }

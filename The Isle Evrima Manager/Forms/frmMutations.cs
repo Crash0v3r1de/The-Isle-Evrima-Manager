@@ -14,6 +14,7 @@ namespace The_Isle_Evrima_Manager.Forms
 {
     public partial class frmMutations : Form
     {
+        private int currentMutationIndex = -1;
         public frmMutations()
         {
             InitializeComponent();
@@ -37,13 +38,27 @@ namespace The_Isle_Evrima_Manager.Forms
 
         private void btnAddMutation_Click(object sender, EventArgs e)
         {
-            Mutations mut = new Mutations();
-            mut.EffectiveValue = Decimal.Parse(txtMutationEffectiveValue.Text); // It only allows decimal values
-            mut.Name = txtMutationName.Text;
-            GameServerSettings.GameIniState.EnabledMutations.Add(mut);
-            UpdateMutationList();
-            txtMutationEffectiveValue.Text = "1.00";
-            txtMutationName.Text = "";
+            if (currentMutationIndex != -1)
+            {
+                // We're adding a new item
+                Mutations mut = new Mutations();
+                mut.EffectiveValue = Decimal.Parse(txtMutationEffectiveValue.Text); // It only allows decimal values
+                mut.Name = txtMutationName.Text;
+                GameServerSettings.GameIniState.EnabledMutations.Add(mut);
+                UpdateMutationList();
+                txtMutationEffectiveValue.Text = "1.00";
+                txtMutationName.Text = "";
+                GameServerSettings.PendingSettingsApply = true;
+            }
+            else {
+                // We're updating an existing item
+                GameServerSettings.GameIniState.EnabledMutations[currentMutationIndex].EffectiveValue = Decimal.Parse(txtMutationEffectiveValue.Text);
+                GameServerSettings.GameIniState.EnabledMutations[currentMutationIndex].Name = txtMutationName.Text;
+                txtMutationEffectiveValue.Text = "1.00";
+                txtMutationName.Text = "";
+                UpdateMutationList(); // Technically we don't have to but we will just because
+                GameServerSettings.PendingSettingsApply = true;
+            }
         }
 
         private void UpdateMutationList()
@@ -63,6 +78,14 @@ namespace The_Isle_Evrima_Manager.Forms
         {
             this.Close();
             this.Dispose();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            currentMutationIndex = lstMutations.SelectedIndex;
+            var selected = GameServerSettings.GameIniState.EnabledMutations[currentMutationIndex];
+            txtMutationName.Text = selected.Name;
+            txtMutationEffectiveValue.Text = selected.EffectiveValue.ToString();
         }
     }
 }

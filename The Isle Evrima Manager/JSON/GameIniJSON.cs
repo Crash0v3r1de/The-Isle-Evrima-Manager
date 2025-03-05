@@ -32,7 +32,7 @@ namespace The_Isle_Evrima_Manager.JSON
         public bool EnableGlobalChat { get; set; } // bEnableGlobalChat
         public bool SpawnAI { get; set; } // bSpawnAI
         public int AISpawnInterval { get; set; }
-        public int AIDensity { get; set; }
+        public decimal AIDensity { get; set; }
         public bool EnableMigration { get; set; } // bEnableMigration
         public int MaxMigrationTime { get; set; }
         public int SpeciaMigrationTime { get; set; }
@@ -41,17 +41,17 @@ namespace The_Isle_Evrima_Manager.JSON
         public int MassMigrationDisableTime { get; set; }
         public bool EnablePatrolZones { get; set; } // bEnablePatrolZones
         public bool EnableDiets { get; set; } // bEnableDiets
-        public int GrowthMultiplier { get; set; }
+        public decimal GrowthMultiplier { get; set; }
         public bool FallDamage { get; set; } // bServerFallDamage
         public bool AllowRecordingReplays { get; set; } // bAllowRecordingReplays
         public bool SpawnPlants { get; set; } // bSpawnPlants
-        public int PlantSpawnMultiplier { get; set; }
+        public decimal PlantSpawnMultiplier { get; set; }
         public bool EnableMutations { get; set; } // bEnableMutations
         public bool UseRegionSpawning { get; set; } // bUseRegionSpawning
         public bool RegionSpawnCooldown { get; set; } // bUseRegionSpawnCooldown
         public int RegionSpawnCooldownTimeSeconds { get; set; }
         public string Discord { get; set; }
-        public int CorpseDecayMultiplier { get; set; }
+        public decimal CorpseDecayMultiplier { get; set; }
     }
     public class  GameIniStateBase
     {
