@@ -12,10 +12,11 @@ on:
 defaults:
   run:
     shell: cmd
-    working-directory: "/The Isle Evrima Manager"
+    working-directory: ./The Isle Evrima Manager.
 
 jobs:
   build:
+  
     runs-on: windows-latest
 
     steps:
@@ -25,8 +26,8 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - name: Restore dependencies
-      run: dotnet restore "The Isle Evrima Manager.sln"
+      run: dotnet restore
     - name: Build
-      run: dotnet build "The Isle Evrima Manager.sln" --no-restore
+      run: dotnet build --no-restore
     - name: Test
-      run: dotnet test "The Isle Evrima Manager.sln" --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal
