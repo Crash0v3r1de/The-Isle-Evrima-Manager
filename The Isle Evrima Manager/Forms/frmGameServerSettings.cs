@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using The_Isle_Evrima_Manager.IO;
+using The_Isle_Evrima_Manager.JSON;
 using The_Isle_Evrima_Manager.Threadz.ThreadTracking;
 
 namespace The_Isle_Evrima_Manager.Forms
@@ -87,7 +88,8 @@ namespace The_Isle_Evrima_Manager.Forms
         private void saveAndCloseToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ParseCoreSetting();
-
+            ParseDynoClasses();
+            ParseAIClasses();
             var adminCount = GameServerSettings.GameIniState.AdminSteamIDs.Count;
             var whitelistCount = GameServerSettings.GameIniState.WhitelistIDs.Count;
             var vipCount = GameServerSettings.GameIniState.VIPs.Count;
@@ -96,14 +98,14 @@ namespace The_Isle_Evrima_Manager.Forms
 
             if (adminCount <= 0) {
                 // admin good
-                var result = MessageBox.Show("Missing Server Admins", "There are NO server admins set, is this okay?", MessageBoxButtons.YesNo);
+                var result = MessageBox.Show("There are NO server admins set, is this okay?\n*no to add*", "Missing Server Admins", MessageBoxButtons.YesNo);
                 if (result == DialogResult.No)
                 {
                     new ServerAdmins().ShowDialog(this);
                 }                
             }
             if (whitelistCount <= 0 && GameServerSettings.GameIniSession.ServerWhitelistMode) {
-                var result = MessageBox.Show("Whitelist Enabled - no IDs", "Whitelist enabled but no users, add users or cancel to disable", MessageBoxButtons.OKCancel);
+                var result = MessageBox.Show("Whitelist enabled but no users, add users or cancel to disable", "Whitelist Enabled - no IDs", MessageBoxButtons.OKCancel);
                 if (result == DialogResult.OK)
                 {
                     new ServerWhitelist().ShowDialog(this);
@@ -113,13 +115,13 @@ namespace The_Isle_Evrima_Manager.Forms
                 }
             }
             if (vipCount <= 0) { 
-                var result = MessageBox.Show("No VIPs, Verify it's normal", "There are no VIPs entered, is this okay? (no if not)", MessageBoxButtons.YesNo);
-                if (result == DialogResult.Yes) { 
+                var result = MessageBox.Show("There are no VIPs entered, is this okay?\n*no to add*", "No VIPs, Verify it's normal", MessageBoxButtons.YesNo);
+                if (result == DialogResult.No) { 
                     new ServerVIPS().ShowDialog(this);
                 }
             }
             if (disallowAICount <= 0) {
-                var result = MessageBox.Show("All AI Allowed", "All AI is allowed, is this okay?", MessageBoxButtons.YesNo);
+                var result = MessageBox.Show("All AI is allowed, is this okay?", "All AI Allowed", MessageBoxButtons.YesNo);
                 if (result == DialogResult.Yes) {
                     // Leave this window open and exit method
                     dontClose = false;
@@ -143,10 +145,10 @@ namespace The_Isle_Evrima_Manager.Forms
             Process.Start("explorer.exe", "GITHUB");
         }
         private void ParseCoreSetting() {
-            GameServerSettings.GameIniSession.AIDensity = txtAIDensity.Value;
+            GameServerSettings.GameIniSession.AIDensity = (int)txtAIDensity.Value;
             GameServerSettings.GameIniSession.AISpawnInterval = (int)txtAIInt.Value;
             GameServerSettings.GameIniSession.AllowRecordingReplays = chkRecordings.Checked;
-            GameServerSettings.GameIniSession.CorpseDecayMultiplier = numCorpseDecay.Value;
+            GameServerSettings.GameIniSession.CorpseDecayMultiplier = (int)numCorpseDecay.Value;
             GameServerSettings.GameIniSession.Discord = txtDiscordInvite.Text;
             GameServerSettings.GameIniSession.DynamicWeather = chkDynamicWeather.Checked;
             GameServerSettings.GameIniSession.EnableDiets = chkDiets.Checked;
@@ -159,7 +161,7 @@ namespace The_Isle_Evrima_Manager.Forms
             GameServerSettings.GameIniSession.EnableQueue = chkQueue.Checked;
             GameServerSettings.GameIniSession.EnableRCON = chkRCON.Checked;
             GameServerSettings.GameIniSession.FallDamage = chkFallDamage.Checked;
-            GameServerSettings.GameIniSession.GrowthMultiplier = txtGrowthRate.Value;
+            GameServerSettings.GameIniSession.GrowthMultiplier = (int)txtGrowthRate.Value;
             GameServerSettings.GameIniSession.MapName = txtMapName.Text;
             GameServerSettings.GameIniSession.MassMigrationDisableTime = (int)txtMassMigrationCooldown.Value;
             GameServerSettings.GameIniSession.MassMigrationTime = (int)txtMassMigrationTime.Value;
@@ -167,7 +169,7 @@ namespace The_Isle_Evrima_Manager.Forms
             GameServerSettings.GameIniSession.MaxMigrationTime = (int)txtMassMigrationCooldown.Value;
             GameServerSettings.GameIniSession.MaxPlayers = (int)txtMaxPlayers.Value;
             GameServerSettings.GameIniSession.MinimumWeatherVariationInterval = (int)txtMassMigrationCooldown.Value;
-            GameServerSettings.GameIniSession.PlantSpawnMultiplier = txtPlantDensity.Value;
+            GameServerSettings.GameIniSession.PlantSpawnMultiplier = (int)txtPlantDensity.Value;
             GameServerSettings.GameIniSession.QueuePort = (int)txtQueuePort.Value;
             GameServerSettings.GameIniSession.RCONPassword = txtRCONPass.Text;
             GameServerSettings.GameIniSession.RCONPort = (int)txtRCONPort.Value;
@@ -184,8 +186,114 @@ namespace The_Isle_Evrima_Manager.Forms
             GameServerSettings.GameIniSession.SpeciaMigrationTime = (int)txtSpeciesMigrationTime.Value;
             GameServerSettings.GameIniSession.UseRegionSpawning = chkRegionSpawn.Checked;
         }
-        private void ParseGameStateData() { 
-            
+        private void ParseDynoClasses() {
+            var dino = new DinoClass();
+            if (chkDryosaurus.Checked) { 
+                dino.ClassName = "Dryosaurus";
+                GameServerSettings.GameIniState.AllowedClasses.Add(dino);
+            }
+            if (chkHypsilophodon.Checked)
+            {
+                dino.ClassName = "Hypsilophodon";
+                GameServerSettings.GameIniState.AllowedClasses.Add(dino);
+            }
+            if (chkPachycephalosaurus.Checked)
+            {
+                dino.ClassName = "Pachycephalosaurus";
+                GameServerSettings.GameIniState.AllowedClasses.Add(dino);
+            }
+            if (chkStegosaurus.Checked)
+            {
+                dino.ClassName = "Stegosaurus";
+                GameServerSettings.GameIniState.AllowedClasses.Add(dino);
+            }
+            if (chkTenontosaurus.Checked)
+            {
+                dino.ClassName = "Tenontosaurus";
+                GameServerSettings.GameIniState.AllowedClasses.Add(dino);
+            }
+            if (chkCarnotaurus.Checked)
+            {
+                dino.ClassName = "Carnotaurus";
+                GameServerSettings.GameIniState.AllowedClasses.Add(dino);
+            }
+            if (chkCeratosaurus.Checked)
+            {
+                dino.ClassName = "Ceratosaurus";
+                GameServerSettings.GameIniState.AllowedClasses.Add(dino);
+            }
+            if (chkDeinosuchus.Checked)
+            {
+                dino.ClassName = "Deinosuchus";
+                GameServerSettings.GameIniState.AllowedClasses.Add(dino);
+            }
+            if (chkDiabloceratops.Checked)
+            {
+                dino.ClassName = "Diabloceratops";
+                GameServerSettings.GameIniState.AllowedClasses.Add(dino);
+            }
+            if (chkPteranodon.Checked)
+            {
+                dino.ClassName = "Pteranodon";
+                GameServerSettings.GameIniState.AllowedClasses.Add(dino);
+            }
+            if (chkTroodon.Checked)
+            {
+                dino.ClassName = "Troodon";
+                GameServerSettings.GameIniState.AllowedClasses.Add(dino);
+            }
+            if (chkBeipiaosaurus.Checked)
+            {
+                dino.ClassName = "Beipiaosaurus";
+                GameServerSettings.GameIniState.AllowedClasses.Add(dino);
+            }
+            if (chkGallimimus.Checked)
+            {
+                dino.ClassName = "Gallimimus";
+                GameServerSettings.GameIniState.AllowedClasses.Add(dino);
+            }
+            if (chkDilophosaurus.Checked)
+            {
+                dino.ClassName = "Dilophosaurus";
+                GameServerSettings.GameIniState.AllowedClasses.Add(dino);
+            }
+            if (chkHerrerasaurus.Checked)
+            {
+                dino.ClassName = "Herrerasaurus";
+                GameServerSettings.GameIniState.AllowedClasses.Add(dino);
+            }
+            if (chkMaiasaura.Checked)
+            {
+                dino.ClassName = "Maiasaura";
+                GameServerSettings.GameIniState.AllowedClasses.Add(dino);
+            }
+        }
+        private void ParseAIClasses() { 
+            var ai = new AIClasses();
+            if (!chkCompsoAI.Checked) {
+                ai.AIName = "Compsognathus";
+                GameServerSettings.GameIniState.DisallowedAIClasses.Add(ai);
+            }
+            if (!chkPteranodon.Checked) {
+                ai.AIName = "Pterodactylus";
+                GameServerSettings.GameIniState.DisallowedAIClasses.Add(ai);
+            }
+            if (!chkBoarAI.Checked) {
+                ai.AIName = "Boar";
+                GameServerSettings.GameIniState.DisallowedAIClasses.Add(ai);
+            }
+            if (!chkDeerAI.Checked) {
+                ai.AIName = "Deer";
+                GameServerSettings.GameIniState.DisallowedAIClasses.Add(ai);
+            }
+            if (!chkGoatAI.Checked) {
+                ai.AIName = "Goat";
+                GameServerSettings.GameIniState.DisallowedAIClasses.Add(ai);
+            }
+            if (!chkSeaturtleAI.Checked) {
+                ai.AIName = "Seaturtle";
+                GameServerSettings.GameIniState.DisallowedAIClasses.Add(ai);
+            }
         }
     }
 }

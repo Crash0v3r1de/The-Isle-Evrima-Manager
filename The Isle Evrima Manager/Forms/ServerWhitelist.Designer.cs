@@ -108,12 +108,13 @@
             // 
             // btnRemoveID
             // 
-            btnRemoveID.Location = new Point(84, 242);
+            btnRemoveID.Location = new Point(68, 242);
             btnRemoveID.Name = "btnRemoveID";
-            btnRemoveID.Size = new Size(75, 23);
+            btnRemoveID.Size = new Size(110, 23);
             btnRemoveID.TabIndex = 1;
             btnRemoveID.Text = "Delete";
             btnRemoveID.UseVisualStyleBackColor = true;
+            btnRemoveID.Click += btnRemoveID_Click;
             // 
             // lstWhitelistIDs
             // 
@@ -138,6 +139,7 @@
             closeToolStripMenuItem.Name = "closeToolStripMenuItem";
             closeToolStripMenuItem.Size = new Size(48, 20);
             closeToolStripMenuItem.Text = "Close";
+            closeToolStripMenuItem.Click += closeToolStripMenuItem_Click;
             // 
             // toolStripMenuItem1
             // 
@@ -150,7 +152,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(312, 453);
+            ClientSize = new Size(312, 424);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
             Controls.Add(menuStrip1);

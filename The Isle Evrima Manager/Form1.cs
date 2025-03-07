@@ -398,17 +398,15 @@ namespace The_Isle_Evrima_Manager
 
         private void btnStartServerUI_Click(object sender, EventArgs e)
         {
-            if (String.IsNullOrEmpty(GameServerSettings.GameIniSession.ServerName)) { 
+            if (String.IsNullOrEmpty(GameServerSettings.GameIniSession.ServerName))
+            {
                 // Fresh start
-
+                PromptForSetup();
             }
-            GameServer.StartServer();
-        }
-
-        private void PromptFreshInstallSettings()
-        {
-            // Open all settings windows, parse to JSON as well as INI after install
-            // set install to true
+            else
+            {
+                GameServer.StartServer();
+            }
         }
 
         private void toolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -417,6 +415,11 @@ namespace The_Isle_Evrima_Manager
         }
 
         private void changeServerDirectoryLocationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PromptServerDir();
+        }
+
+        private void PromptServerDir()
         {
             FolderBrowserDialog dir = new FolderBrowserDialog();
             dir.Tag = "Select the directory where the server files will be installed";
@@ -467,6 +470,7 @@ namespace The_Isle_Evrima_Manager
             ManagerGlobalTracker.serverPath = rootDir;
             ManagerGlobalTracker.dllDir = rootDir + @"\TheIsle\Binaries\Win64\";
             ManagerGlobalTracker.serverExe = rootDir + @"\TheIsleServer.exe";
+            CoreFiles.SaveManagerSettings();
         }
 
         #region Public Methods
@@ -502,7 +506,7 @@ namespace The_Isle_Evrima_Manager
         private void adminsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ServerAdmins admins = new ServerAdmins();
-            admins.Show();
+            admins.ShowDialog(this);
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e)
@@ -510,9 +514,11 @@ namespace The_Isle_Evrima_Manager
             // Gracefully exit server, save settings to Game.ini in ini format, save settings into our own JSON and start the server again
             GameServer.StopGracefully();
             GameServerStatusTracker.AllowServerRunning = false; // wait for thread to start closing in it's loop
-            new Thread(() => {
+            new Thread(() =>
+            {
                 // this is where we wait and then process the changes
-                while (ManagerGlobalTracker.CurrentStatus != ManagerStatus.idle & GameServerSettings.PendingSettingsApply) {
+                while (ManagerGlobalTracker.CurrentStatus != ManagerStatus.idle & GameServerSettings.PendingSettingsApply)
+                {
                     // wait on runtime status to change AND pending settings is true - additonal validation for bool check
                     Thread.Sleep(1200);
                 }
@@ -531,11 +537,46 @@ namespace The_Isle_Evrima_Manager
 
         }
 
-        private void PromptForSetup() { 
+        private void PromptForSetup()
+        {
             new ManagerSettings().ShowDialog(this);
             CoreFiles.SaveManagerSettings();
 
             new frmGameServerSettings().ShowDialog(this);
+            if (GameServerSettings.GameIniSession.EnableRCON)
+            {
+                new frmRCONSettings().ShowDialog(this);
+                new frmRCONTasks().ShowDialog(this);
+                CoreFiles.SaveRCONSettings();
+                CoreFiles.SaveRCONTasks();
+            }
+            var result = MessageBox.Show("Do you want to change the game servers install location?\n*it installs in the server folder of the root of this tool*", "Change Server Install Path?", MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes) PromptServerDir();
+            new Thread(() =>
+            {
+                ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.savingSettings);
+                CoreFiles.SaveGameServerSettings();
+                ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.downloadingSteamCMD);
+                new BinaryDownloader().DownloadSteamCMD();
+                var steam = new SteamCMDControl();
+                steam.InitializeTool();
+                ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.downloadingServerFiles);
+                steam.InstallIsleServer();
+                CoreFiles.CopyDLLs();
+                CoreFiles.SaveEngineINI();
+                CoreFiles.SaveGameINI();
+                GameServerSettings.PendingSettingsApply = false;
+                ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.startingServer);
+                GameServer.StartServer();
+            }).Start();
+        }
+
+        private void btnVerifyIsleServer_Click(object sender, EventArgs e)
+        {
+            new Thread(() =>
+            {
+                new SteamCMDControl().VerifyIsleServer();
+            }).Start();            
         }
     }
 }

@@ -50,7 +50,7 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { saveAndCloseToolStripMenuItem, exitAndDiscardToolStripMenuItem, toolStripMenuItem1 });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(426, 24);
+            menuStrip1.Size = new Size(364, 24);
             menuStrip1.TabIndex = 0;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -86,7 +86,7 @@
             groupBox1.Controls.Add(label1);
             groupBox1.Location = new Point(12, 27);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(411, 174);
+            groupBox1.Size = new Size(342, 174);
             groupBox1.TabIndex = 1;
             groupBox1.TabStop = false;
             groupBox1.Text = "Connection Settings";
@@ -145,6 +145,7 @@
             txtHost.Name = "txtHost";
             txtHost.Size = new Size(298, 23);
             txtHost.TabIndex = 1;
+            txtHost.Text = "127.0.0.1";
             // 
             // label1
             // 
@@ -159,7 +160,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(426, 208);
+            ClientSize = new Size(364, 208);
             Controls.Add(groupBox1);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;

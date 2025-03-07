@@ -459,6 +459,7 @@
             btnVerifyIsleServer.Name = "btnVerifyIsleServer";
             btnVerifyIsleServer.Size = new Size(248, 22);
             btnVerifyIsleServer.Text = "Verify (will stop if running)";
+            btnVerifyIsleServer.Click += btnVerifyIsleServer_Click;
             // 
             // btnServerStatsRefresh
             // 

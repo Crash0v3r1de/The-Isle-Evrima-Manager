@@ -35,7 +35,7 @@
             label1 = new Label();
             menuStrip1 = new MenuStrip();
             saveAndCloseToolStripMenuItem = new ToolStripMenuItem();
-            exitAndDiscardToolStripMenuItem = new ToolStripMenuItem();
+            toolStripMenuItem1 = new ToolStripMenuItem();
             groupBox2 = new GroupBox();
             button1 = new Button();
             lstAdmins = new ListBox();
@@ -50,7 +50,7 @@
             groupBox1.Controls.Add(lblGetID);
             groupBox1.Controls.Add(txtAdminID);
             groupBox1.Controls.Add(label1);
-            groupBox1.Location = new Point(53, 46);
+            groupBox1.Location = new Point(53, 34);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(275, 114);
             groupBox1.TabIndex = 0;
@@ -97,7 +97,7 @@
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { saveAndCloseToolStripMenuItem, exitAndDiscardToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { saveAndCloseToolStripMenuItem, toolStripMenuItem1 });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(382, 24);
@@ -111,18 +111,18 @@
             saveAndCloseToolStripMenuItem.Text = "Close";
             saveAndCloseToolStripMenuItem.Click += saveAndCloseToolStripMenuItem_Click;
             // 
-            // exitAndDiscardToolStripMenuItem
+            // toolStripMenuItem1
             // 
-            exitAndDiscardToolStripMenuItem.Name = "exitAndDiscardToolStripMenuItem";
-            exitAndDiscardToolStripMenuItem.Size = new Size(103, 20);
-            exitAndDiscardToolStripMenuItem.Text = "Exit and Discard";
-            exitAndDiscardToolStripMenuItem.Click += exitAndDiscardToolStripMenuItem_Click;
+            toolStripMenuItem1.Name = "toolStripMenuItem1";
+            toolStripMenuItem1.Size = new Size(24, 20);
+            toolStripMenuItem1.Text = "?";
+            toolStripMenuItem1.Click += toolStripMenuItem1_Click;
             // 
             // groupBox2
             // 
             groupBox2.Controls.Add(button1);
             groupBox2.Controls.Add(lstAdmins);
-            groupBox2.Location = new Point(12, 166);
+            groupBox2.Location = new Point(12, 154);
             groupBox2.Name = "groupBox2";
             groupBox2.Size = new Size(354, 212);
             groupBox2.TabIndex = 2;
@@ -152,7 +152,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(382, 390);
+            ClientSize = new Size(382, 373);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
             Controls.Add(menuStrip1);
@@ -177,10 +177,10 @@
         private Label label1;
         private MenuStrip menuStrip1;
         private ToolStripMenuItem saveAndCloseToolStripMenuItem;
-        private ToolStripMenuItem exitAndDiscardToolStripMenuItem;
         private Button btnAddAdmin;
         private GroupBox groupBox2;
         private ListBox lstAdmins;
         private Button button1;
+        private ToolStripMenuItem toolStripMenuItem1;
     }
 }

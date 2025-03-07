@@ -12,7 +12,7 @@ namespace The_Isle_Evrima_Manager.WebActions
     public class BinaryDownloader
     {
         public bool DownloadSteamCMD() {
-            string tmpDir = Environment.CurrentDirectory + @"\tmp\steamcmd.zip";            
+            string tmpDir = ManagerGlobalTracker.tmpPath + @"steamcmd.zip";            
             if (!File.Exists(ManagerGlobalTracker.steamCMDexe)) {
                 while (!File.Exists(tmpDir))
                 {
@@ -25,7 +25,6 @@ namespace The_Isle_Evrima_Manager.WebActions
                 Logger.Log("SteamCMD extracted, removing tmp file...", LogType.Info);
             }
             else Logger.Log("SteamCMD already exists, skipping download...", LogType.Info);
-            ManagerGlobalTracker.steamCMDInstalled = true;
             // I should add some error handling here, add to the TODO: list
             return false;
         }

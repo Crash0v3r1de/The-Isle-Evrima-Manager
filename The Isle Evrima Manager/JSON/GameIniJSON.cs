@@ -58,11 +58,11 @@ namespace The_Isle_Evrima_Manager.JSON
         public List<string> AdminSteamIDs { get; set; } = new List<string>();
         public List<string> WhitelistIDs { get; set; } = new List<string>();
         public List<string> VIPs { get; set; } = new List<string>();
-        public List<DinoClasses> AllowedClasses { get; set; } = new List<DinoClasses>(); // null/empty to enable all
+        public List<DinoClass> AllowedClasses { get; set; } = new List<DinoClass>(); // null/empty to enable all
         public List<Mutations> EnabledMutations { get; set; } = new List<Mutations>(); // null/empty to enable all
         public List<AIClasses> DisallowedAIClasses { get; set; } = new List<AIClasses>(); // null/empty to enable all
     }
-    public class DinoClasses
+    public class DinoClass
     {
         public string ClassName { get; set; }
     }

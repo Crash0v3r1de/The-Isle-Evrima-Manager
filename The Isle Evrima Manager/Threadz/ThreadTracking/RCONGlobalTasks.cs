@@ -9,6 +9,6 @@ namespace The_Isle_Evrima_Manager.Threadz.ThreadTracking
 {
     public static class RCONGlobalTasks
     {
-        public static List<RCONTaskItem> rconTasks = new List<RCONTaskItem>();
+        public static List<RCONTaskItemJSON> rconTasks = new List<RCONTaskItemJSON>();
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -21,12 +22,23 @@ namespace The_Isle_Evrima_Manager.Forms
 
         private void ServerWhitelist_Load(object sender, EventArgs e)
         {
+            LoadWhitelistList();
+        }
 
+        private void LoadWhitelistList()
+        {
+            if (GameServerSettings.GameIniState.WhitelistIDs != null && GameServerSettings.GameIniState.WhitelistIDs.Count > 0)
+            {
+                for (int x = 0; x < GameServerSettings.GameIniState.WhitelistIDs.Count; x++)
+                {
+                    lstWhitelistIDs.Items.Add(GameServerSettings.GameIniState.WhitelistIDs[x]); // Load in logical order
+                }
+            }
         }
 
         private void lblGetID_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-
+            Process.Start("explorer.exe", "https://steamid.io/");
         }
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
@@ -74,16 +86,33 @@ namespace The_Isle_Evrima_Manager.Forms
 
             return true;
         }
-        private void ParseNewID(string id) { 
+        private void ParseNewID(string id)
+        {
             GameServerSettings.GameIniState.WhitelistIDs.Add(id);
+            GameServerSettings.PendingSettingsApply = true;
             ReloadIDList();
         }
         private void ReloadIDList()
         {
             lstWhitelistIDs.Items.Clear();
-            for (int x = 0; x < GameServerSettings.GameIniState.WhitelistIDs.Count; x++) { 
+            for (int x = 0; x < GameServerSettings.GameIniState.WhitelistIDs.Count; x++)
+            {
                 lstWhitelistIDs.Items.Add(GameServerSettings.GameIniState.WhitelistIDs[x]);
             }
+        }
+
+        private void btnRemoveID_Click(object sender, EventArgs e)
+        {
+            GameServerSettings.GameIniState.AdminSteamIDs.RemoveAt(lstWhitelistIDs.SelectedIndex);
+            GameServerSettings.PendingSettingsApply = true;
+            lstWhitelistIDs.Items.Clear();
+            ReloadIDList();
+        }
+
+        private void closeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            this.Dispose();
         }
     }
 }

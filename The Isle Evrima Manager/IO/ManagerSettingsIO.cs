@@ -38,7 +38,7 @@ namespace The_Isle_Evrima_Manager.IO
             if (RCONTasksPresent())
             { // Just some added validation so we don't load a non existent file
                 string json = File.ReadAllText(managerSettingsJSON);
-                ParseRCONTasks(JsonConvert.DeserializeObject<List<RCONTaskItem>>(json));
+                ParseRCONTasks(JsonConvert.DeserializeObject<List<RCONTaskItemJSON>>(json));
             }            
         }
 
@@ -73,7 +73,7 @@ namespace The_Isle_Evrima_Manager.IO
             RCONGlobalTracker.rconPassword = data.rconPassword;
             RCONGlobalTracker.rconEnabled  = data.rconEnabled;
         }
-        private void ParseRCONTasks(List<RCONTaskItem> data)
+        private void ParseRCONTasks(List<RCONTaskItemJSON> data)
         {
             for (int x = 0; x < data.Count;x++) { 
                 RCONGlobalTasks.rconTasks.Add(data[x]);

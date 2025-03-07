@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using The_Isle_Evrima_Manager.Enums;
 using The_Isle_Evrima_Manager.JSON.RCON_Task;
 using The_Isle_Evrima_Manager.Threadz.ThreadTracking;
 
@@ -41,7 +42,7 @@ namespace The_Isle_Evrima_Manager.Forms
                     var tskName = RCONGlobalTasks.rconTasks[x].TaskName;
                     var tskCmd = RCONGlobalTasks.rconTasks[x].TaskCommand;
                     var tskEnabled = RCONGlobalTasks.rconTasks[x].TaskEnabled;
-                    lstTasks.Items.Add($"Name: {tskName} | Command: {tskCmd} | Enabled: {tskEnabled}");
+                    lstTasks.Items.Add($"Name: {tskName} | Command: {tskCmd.ToString()} | Enabled: {tskEnabled}");
                 }
             }
 
@@ -49,15 +50,20 @@ namespace The_Isle_Evrima_Manager.Forms
 
         private void btnAddTask_Click(object sender, EventArgs e)
         {
-            if (currentTask > 0)
+            if (!String.IsNullOrEmpty(txtTaskName.Text))
             {
-                // We're modifying an existing task
-                UpdateTask();
+                if (currentTask != 0)
+                {
+                    // We're modifying an existing task
+                    UpdateTask();
+                }
+                else
+                {
+                    // We're adding a new task
+                    AddNewTask();
+                }
             }
-            else {
-                // We're adding a new task
-                AddNewTask();
-            }
+            else MessageBox.Show("The task needs a name for reference.", "Task needs a name boss");
             // Eventually can use a DateTime picker but this is quick and dirty for now
             // Time wil be ignored if Hourly is selected
             //Mightnight - 0
@@ -94,24 +100,27 @@ namespace The_Isle_Evrima_Manager.Forms
 
         private void btnEditTask_Click(object sender, EventArgs e)
         {
-            if (lstTasks.Items.Count > 0) {
+            if (lstTasks.Items.Count > 0)
+            {
                 currentTask = lstTasks.SelectedIndex;
                 txtTaskName.Text = RCONGlobalTasks.rconTasks[currentTask].TaskName;
                 ParseHowOften(currentTask);
                 ParseTime(currentTask);
                 chkEnableTask.Checked = RCONGlobalTasks.rconTasks[currentTask].TaskEnabled;
-            }            
+            }
         }
 
 
         #region Private methods
-        private void ParseHowOften(int taskNum) {
+        private void ParseHowOften(int taskNum)
+        {
             // TODO: Make this a switch
             //Daily - 0
             //Weekly - 1
             //Monthly - 2
             //Hourly - 3
-            if (RCONGlobalTasks.rconTasks[taskNum].TaskMonthly) { 
+            if (RCONGlobalTasks.rconTasks[taskNum].TaskMonthly)
+            {
                 txtHowOften.SelectedIndex = 2;
             }
             if (RCONGlobalTasks.rconTasks[taskNum].TaskHourly)
@@ -127,7 +136,8 @@ namespace The_Isle_Evrima_Manager.Forms
                 txtHowOften.SelectedIndex = 0;
             }
         }
-        private void ParseTime(int taskNum) {
+        private void ParseTime(int taskNum)
+        {
             DateTime time = RCONGlobalTasks.rconTasks[taskNum].TaskRunTime;
             //Mightnight - 0
             //1am - 1
@@ -138,7 +148,8 @@ namespace The_Isle_Evrima_Manager.Forms
             //6am - 6
             //7am - 7
             //8am - 8
-            switch (time.Hour) {
+            switch (time.Hour)
+            {
                 case 0: // Midnight
                     txtExecTime.SelectedIndex = 0;
                     break;
@@ -168,15 +179,21 @@ namespace The_Isle_Evrima_Manager.Forms
                     break;
             }
         }
-        private void UpdateTask() { 
+        private void UpdateTask()
+        {
+            SanitizeTask();
             RCONGlobalTasks.rconTasks[currentTask].TaskName = txtTaskName.Text;
             RCONGlobalTasks.rconTasks[currentTask].TaskEnabled = chkEnableTask.Checked;
-            RCONGlobalTasks.rconTasks[currentTask].TaskCommand = txtTaskCommand.Text;
-            if (txtHowOften.SelectedIndex == 2)RCONGlobalTasks.rconTasks[currentTask].TaskMonthly = true;
-            if(txtHowOften.SelectedIndex == 0)RCONGlobalTasks.rconTasks[currentTask].TaskDaily = true;
-            if(txtHowOften.SelectedIndex == 1)RCONGlobalTasks.rconTasks[currentTask].TaskWeekly = true;
-            if(txtHowOften.SelectedIndex == 3)RCONGlobalTasks.rconTasks[currentTask].TaskHourly = true;
-            switch (txtExecTime.SelectedIndex) { 
+            RCONGlobalTasks.rconTasks[currentTask].TaskCommand = (RCONType)drpTaskType.SelectedIndex;
+            if (RCONGlobalTasks.rconTasks[currentTask].TaskCommand == RCONType.Custom) {
+                RCONGlobalTasks.rconTasks[currentTask].CustomCommand = txtTaskCommand.Text;
+            }
+            if (txtHowOften.SelectedIndex == 2) RCONGlobalTasks.rconTasks[currentTask].TaskMonthly = true;
+            if (txtHowOften.SelectedIndex == 0) RCONGlobalTasks.rconTasks[currentTask].TaskDaily = true;
+            if (txtHowOften.SelectedIndex == 1) RCONGlobalTasks.rconTasks[currentTask].TaskWeekly = true;
+            if (txtHowOften.SelectedIndex == 3) RCONGlobalTasks.rconTasks[currentTask].TaskHourly = true;
+            switch (txtExecTime.SelectedIndex)
+            {
                 case 0: // Midnight
                     RCONGlobalTasks.rconTasks[currentTask].TaskRunTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
                     break;
@@ -206,10 +223,19 @@ namespace The_Isle_Evrima_Manager.Forms
                     break;
             }
             ClearForNewTask();
+            UpdateTaskList();
         }
-        private void ClearForNewTask() {
+        private void SanitizeTask() {
+            RCONGlobalTasks.rconTasks[currentTask].TaskMonthly = false;
+            RCONGlobalTasks.rconTasks[currentTask].TaskDaily = false;
+            RCONGlobalTasks.rconTasks[currentTask].TaskWeekly = false;
+            RCONGlobalTasks.rconTasks[currentTask].TaskHourly = false;
+        }
+        private void ClearForNewTask()
+        {
             currentTask = 0;
             txtTaskName.Text = "";
+            txtTaskCommand.Text = "";
             txtHowOften.SelectedIndex = 0;
             txtExecTime.SelectedIndex = 0;
             chkEnableTask.Checked = true;
@@ -225,11 +251,13 @@ namespace The_Isle_Evrima_Manager.Forms
                 lstTasks.Items.Add($"Name: {tskName} | Command: {tskCmd} | Enabled: {tskEnabled}");
             }
         }
-        private void AddNewTask() { 
-            RCONTaskItem task = new RCONTaskItem();
+        private void AddNewTask()
+        {
+            RCONTaskItemJSON task = new RCONTaskItemJSON();
             task.TaskName = txtTaskName.Text;
             task.TaskEnabled = chkEnableTask.Checked;
-            task.TaskCommand = txtTaskCommand.Text;
+            task.TaskCommand = (RCONType)drpTaskType.SelectedIndex;
+            if (task.TaskCommand == RCONType.Custom) task.CustomCommand = txtTaskCommand.Text;
             if (txtHowOften.SelectedIndex == 2) task.TaskMonthly = true;
             if (txtHowOften.SelectedIndex == 0) task.TaskDaily = true;
             if (txtHowOften.SelectedIndex == 1) task.TaskWeekly = true;
@@ -269,5 +297,22 @@ namespace The_Isle_Evrima_Manager.Forms
             ClearForNewTask();
         }
         #endregion
+
+        private void groupBox2_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void drpTaskType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (drpTaskType.SelectedIndex == 5) txtTaskCommand.Enabled = true;
+            else txtTaskCommand.Enabled = false;
+        }
+
+        private void saveAndCloseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            this.Dispose();
+        }
     }
 }

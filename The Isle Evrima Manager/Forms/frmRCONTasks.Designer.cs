@@ -30,7 +30,6 @@
         {
             menuStrip1 = new MenuStrip();
             saveAndCloseToolStripMenuItem = new ToolStripMenuItem();
-            exitAndDiscardChangesToolStripMenuItem = new ToolStripMenuItem();
             toolStripMenuItem1 = new ToolStripMenuItem();
             groupBox1 = new GroupBox();
             lstTasks = new ListBox();
@@ -38,6 +37,7 @@
             btnDisableTask = new Button();
             btnEnableTask = new Button();
             groupBox2 = new GroupBox();
+            drpTaskType = new ComboBox();
             txtTaskCommand = new TextBox();
             label5 = new Label();
             chkEnableTask = new CheckBox();
@@ -56,25 +56,19 @@
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { saveAndCloseToolStripMenuItem, exitAndDiscardChangesToolStripMenuItem, toolStripMenuItem1 });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { saveAndCloseToolStripMenuItem, toolStripMenuItem1 });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(519, 24);
+            menuStrip1.Size = new Size(494, 24);
             menuStrip1.TabIndex = 0;
             menuStrip1.Text = "menuStrip1";
             // 
             // saveAndCloseToolStripMenuItem
             // 
             saveAndCloseToolStripMenuItem.Name = "saveAndCloseToolStripMenuItem";
-            saveAndCloseToolStripMenuItem.Size = new Size(98, 20);
-            saveAndCloseToolStripMenuItem.Text = "Save and Close";
-            // 
-            // exitAndDiscardChangesToolStripMenuItem
-            // 
-            exitAndDiscardChangesToolStripMenuItem.Name = "exitAndDiscardChangesToolStripMenuItem";
-            exitAndDiscardChangesToolStripMenuItem.Size = new Size(152, 20);
-            exitAndDiscardChangesToolStripMenuItem.Text = "Exit and Discard Changes";
-            exitAndDiscardChangesToolStripMenuItem.Click += exitAndDiscardChangesToolStripMenuItem_Click;
+            saveAndCloseToolStripMenuItem.Size = new Size(43, 20);
+            saveAndCloseToolStripMenuItem.Text = "Save";
+            saveAndCloseToolStripMenuItem.Click += saveAndCloseToolStripMenuItem_Click;
             // 
             // toolStripMenuItem1
             // 
@@ -89,9 +83,9 @@
             groupBox1.Controls.Add(btnEditTask);
             groupBox1.Controls.Add(btnDisableTask);
             groupBox1.Controls.Add(btnEnableTask);
-            groupBox1.Location = new Point(12, 237);
+            groupBox1.Location = new Point(12, 271);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(462, 233);
+            groupBox1.Size = new Size(462, 254);
             groupBox1.TabIndex = 2;
             groupBox1.TabStop = false;
             groupBox1.Text = "Current Tasks";
@@ -102,12 +96,12 @@
             lstTasks.ItemHeight = 15;
             lstTasks.Location = new Point(6, 22);
             lstTasks.Name = "lstTasks";
-            lstTasks.Size = new Size(450, 169);
+            lstTasks.Size = new Size(450, 199);
             lstTasks.TabIndex = 4;
             // 
             // btnEditTask
             // 
-            btnEditTask.Location = new Point(296, 199);
+            btnEditTask.Location = new Point(296, 225);
             btnEditTask.Name = "btnEditTask";
             btnEditTask.Size = new Size(114, 23);
             btnEditTask.TabIndex = 4;
@@ -117,7 +111,7 @@
             // 
             // btnDisableTask
             // 
-            btnDisableTask.Location = new Point(169, 199);
+            btnDisableTask.Location = new Point(169, 225);
             btnDisableTask.Name = "btnDisableTask";
             btnDisableTask.Size = new Size(121, 23);
             btnDisableTask.TabIndex = 3;
@@ -126,7 +120,7 @@
             // 
             // btnEnableTask
             // 
-            btnEnableTask.Location = new Point(48, 199);
+            btnEnableTask.Location = new Point(48, 225);
             btnEnableTask.Name = "btnEnableTask";
             btnEnableTask.Size = new Size(115, 23);
             btnEnableTask.TabIndex = 2;
@@ -135,6 +129,7 @@
             // 
             // groupBox2
             // 
+            groupBox2.Controls.Add(drpTaskType);
             groupBox2.Controls.Add(txtTaskCommand);
             groupBox2.Controls.Add(label5);
             groupBox2.Controls.Add(chkEnableTask);
@@ -146,16 +141,28 @@
             groupBox2.Controls.Add(label2);
             groupBox2.Controls.Add(txtTaskName);
             groupBox2.Controls.Add(label1);
-            groupBox2.Location = new Point(12, 27);
+            groupBox2.Location = new Point(33, 27);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(419, 204);
+            groupBox2.Size = new Size(419, 238);
             groupBox2.TabIndex = 3;
             groupBox2.TabStop = false;
             groupBox2.Text = "New Task";
+            groupBox2.Enter += groupBox2_Enter;
+            // 
+            // drpTaskType
+            // 
+            drpTaskType.FormattingEnabled = true;
+            drpTaskType.Items.AddRange(new object[] { "Announcement", "Kick", "Ban", "PlayerList", "Save", "Custom" });
+            drpTaskType.Location = new Point(6, 130);
+            drpTaskType.Name = "drpTaskType";
+            drpTaskType.Size = new Size(202, 23);
+            drpTaskType.TabIndex = 11;
+            drpTaskType.SelectedIndexChanged += drpTaskType_SelectedIndexChanged;
             // 
             // txtTaskCommand
             // 
-            txtTaskCommand.Location = new Point(6, 130);
+            txtTaskCommand.Enabled = false;
+            txtTaskCommand.Location = new Point(6, 159);
             txtTaskCommand.Name = "txtTaskCommand";
             txtTaskCommand.Size = new Size(398, 23);
             txtTaskCommand.TabIndex = 10;
@@ -174,7 +181,7 @@
             chkEnableTask.AutoSize = true;
             chkEnableTask.Checked = true;
             chkEnableTask.CheckState = CheckState.Checked;
-            chkEnableTask.Location = new Point(12, 163);
+            chkEnableTask.Location = new Point(12, 194);
             chkEnableTask.Name = "chkEnableTask";
             chkEnableTask.Size = new Size(86, 19);
             chkEnableTask.TabIndex = 8;
@@ -211,7 +218,7 @@
             // 
             // btnAddTask
             // 
-            btnAddTask.Location = new Point(104, 163);
+            btnAddTask.Location = new Point(104, 194);
             btnAddTask.Name = "btnAddTask";
             btnAddTask.Size = new Size(295, 23);
             btnAddTask.TabIndex = 4;
@@ -257,7 +264,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(519, 482);
+            ClientSize = new Size(494, 541);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
             Controls.Add(menuStrip1);
@@ -278,7 +285,6 @@
 
         private MenuStrip menuStrip1;
         private ToolStripMenuItem saveAndCloseToolStripMenuItem;
-        private ToolStripMenuItem exitAndDiscardChangesToolStripMenuItem;
         private ToolStripMenuItem toolStripMenuItem1;
         private GroupBox groupBox1;
         private GroupBox groupBox2;
@@ -297,5 +303,6 @@
         private ListBox lstTasks;
         private TextBox txtTaskCommand;
         private Label label5;
+        private ComboBox drpTaskType;
     }
 }

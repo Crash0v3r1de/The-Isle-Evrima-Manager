@@ -8,28 +8,23 @@ using The_Isle_Evrima_Manager.Threadz.ThreadTracking;
 using Newtonsoft.Json;
 using The_Isle_Evrima_Manager.JSON;
 using static System.Windows.Forms.LinkLabel;
+using The_Isle_Evrima_Manager.JSON.RCON_Task;
 
 namespace The_Isle_Evrima_Manager.IO
 {
     public static class CoreFiles
     {
-        private static string currentDir = Environment.CurrentDirectory;
-        private static string steamCMDDir = currentDir+@"\utils\steamcmd";
-        private static string utilDir = currentDir + @"\utils";
-        private static string tmpDir = currentDir + @"\tmp";
-
-
         public static void InitializeStructure() {
-            if (!Directory.Exists(utilDir)) { 
-            Directory.CreateDirectory(utilDir);
+            if (!Directory.Exists(ManagerGlobalTracker.utilPath)) { 
+            Directory.CreateDirectory(ManagerGlobalTracker.utilPath);
             }
-            if (!Directory.Exists(steamCMDDir))
+            if (!Directory.Exists(ManagerGlobalTracker.utilPath+ @"steamcmd\"))
             {
-                Directory.CreateDirectory(steamCMDDir);
+                Directory.CreateDirectory(ManagerGlobalTracker.utilPath + @"steamcmd\");
             }
-            if (!Directory.Exists(tmpDir))
+            if (!Directory.Exists(ManagerGlobalTracker.tmpPath))
             {
-                Directory.CreateDirectory(tmpDir);
+                Directory.CreateDirectory(ManagerGlobalTracker.tmpPath);
             }
             if (!Directory.Exists(ManagerGlobalTracker.serverPath))
             {
@@ -44,7 +39,9 @@ namespace The_Isle_Evrima_Manager.IO
             }
         }
         public static void SaveAndExtractSteamCMD(string tmpPath) { 
-            ZipFile.ExtractToDirectory(tmpPath, steamCMDDir);
+            ZipFile.ExtractToDirectory(tmpPath, ManagerGlobalTracker.utilPath + @"steamcmd\");
+            ManagerGlobalTracker.steamCMDInstalled = true;
+            CoreFiles.SaveManagerSettings();
         }
         public static void SaveGameINI() {
             // Saved\Config\WindowsServer - folder structure needed inside server root directory
@@ -147,6 +144,47 @@ namespace The_Isle_Evrima_Manager.IO
                 Logger.Log("Saving game server settings json - " + ex.Message, LogType.Debug);
             }
         }
+        public static void SaveRCONSettings()
+        {
+            using (StreamWriter sw = new StreamWriter(ManagerGlobalTracker.managerConfDir + "rcon-settings.json", false))
+            {
+                sw.Write(JsonConvert.SerializeObject(new
+                {
+                    rconHost = RCONGlobalTracker.rconHost,
+                    rconPort = RCONGlobalTracker.rconPort,
+                    rconPassword = RCONGlobalTracker.rconPassword,
+                    rconEnabled = RCONGlobalTracker.rconEnabled
+                }));
+            }
+        }
+        public static void SaveRCONTasks()
+        {
+            using (StreamWriter sw = new StreamWriter(ManagerGlobalTracker.managerConfDir + "rcon-tasks.json", false))
+            {
+                sw.Write(JsonConvert.SerializeObject(RCONGlobalTasks.rconTasks));
+            }
+        }
+        public static void LoadRCONTasks()
+        {
+            using (StreamReader sr = new StreamReader(ManagerGlobalTracker.managerConfDir + "rcon-tasks.json"))
+            {
+                var items = JsonConvert.DeserializeObject<List<RCONTaskItemJSON>>(sr.ReadToEnd());
+                foreach (var task in items) { 
+                    items.Add(task);
+                }
+            }
+        }
+        public static void LoadRCONSettings()
+        {
+            using (StreamReader sr = new StreamReader(ManagerGlobalTracker.managerConfDir + "rcon-tasks.json"))
+            {
+                var items = JsonConvert.DeserializeObject<RCONSettingsJSON>(sr.ReadToEnd());
+                RCONGlobalTracker.rconHost = items.rconHost;
+                RCONGlobalTracker.rconPort = items.rconPort;
+                RCONGlobalTracker.rconPassword = items.rconPassword;
+                RCONGlobalTracker.rconEnabled = items.rconEnabled;
+            }
+        }
 
         #region Private Methods
         private static void WriteEngineINI()
@@ -231,18 +269,22 @@ namespace The_Isle_Evrima_Manager.IO
             rawINI.Add("CorpseDecayMultiplier=" + GameServerSettings.GameIniSession.CorpseDecayMultiplier);
             // Logical order, now we do IniState
             rawINI.Add("[/script/theisle.tigamestatebase]"); // Needs to be added first
+            if(GameServerSettings.GameIniState.AdminSteamIDs.Count == 0) rawINI.Add($"AdminSteamIDs=");
             foreach (var id in GameServerSettings.GameIniState.AdminSteamIDs)
             {
                 rawINI.Add($"AdminSteamIDs={id}");
             }
+            if (GameServerSettings.GameIniState.WhitelistIDs.Count == 0) rawINI.Add($"WhitelistIDs=");
             foreach (var id in GameServerSettings.GameIniState.WhitelistIDs)
             {
                 rawINI.Add($"WhitelistIDs={id}");
             }
+            if (GameServerSettings.GameIniState.VIPs.Count == 0) rawINI.Add($"VIPs=");
             foreach (var id in GameServerSettings.GameIniState.VIPs)
             {
                 rawINI.Add($"VIPs={id}");
             }
+
             foreach (var id in GameServerSettings.GameIniState.AllowedClasses)
             {
                 rawINI.Add($"AllowedClasses={id}");

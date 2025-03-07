@@ -27,8 +27,7 @@ namespace The_Isle_Evrima_Manager.Forms
 
         private void exitAndDiscardToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.Close();
-            this.Dispose();
+
         }
 
         private void lblGetID_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -38,9 +37,8 @@ namespace The_Isle_Evrima_Manager.Forms
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var selected = lstAdmins.SelectedIndex;
-            GameServerSettings.GameIniState.AdminSteamIDs.RemoveAt(selected);
-            // TODO: Need to report config change if running and stage the change next stop/reboot
+            GameServerSettings.GameIniState.AdminSteamIDs.RemoveAt(lstAdmins.SelectedIndex);
+            GameServerSettings.PendingSettingsApply = true;
             lstAdmins.Items.Clear();
             LoadAdminList();
         }
@@ -63,7 +61,7 @@ namespace The_Isle_Evrima_Manager.Forms
             {
                 if (!IsDigitsOnly(txtAdminID.Text))
                 {
-                    MessageBox.Show("Steam ID containers non numbers, please use a correct SteamID64.");
+                    MessageBox.Show("Steam ID contains non numbers, please use a correct SteamID64.");
                 }
                 else
                 {
@@ -76,13 +74,14 @@ namespace The_Isle_Evrima_Manager.Forms
             {
                 if (!IsDigitsOnly(txtAdminID.Text))
                 {
-                    MessageBox.Show("Steam ID containers non numbers, please use a correct SteamID64.");
+                    MessageBox.Show("Steam ID contains non numbers, please use a correct SteamID64.");
                     txtAdminID.Text = "";
                 }
                 else
                 {
-                    AdminSteamIDs.Add(txtAdminID.Text);
-                    lstAdmins.Items.Add(txtAdminID.Text);
+                    GameServerSettings.GameIniState.AdminSteamIDs.Add(txtAdminID.Text);
+                    GameServerSettings.PendingSettingsApply = true;
+                    LoadAdminList();
                     txtAdminID.Text = "";
                 }
             }
@@ -101,11 +100,13 @@ namespace The_Isle_Evrima_Manager.Forms
 
         private void saveAndCloseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            foreach (var id in lstAdmins.Items) { 
-                GameServerSettings.GameIniState.AdminSteamIDs.Add(id.ToString());
-            }
             this.Close();
             this.Dispose();
+        }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            // Load wiki page when public
         }
     }
 }

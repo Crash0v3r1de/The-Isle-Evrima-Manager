@@ -85,6 +85,15 @@ namespace The_Isle_Evrima_Manager.Tools
                     Form1.AppendConsoleEntry(e.Data);
                 }
             });
+            ServerThread.server.ErrorDataReceived += new DataReceivedEventHandler((sender, e) =>
+            {
+                if (!String.IsNullOrEmpty(e.Data))
+                {
+                    Form1.AppendConsoleEntry(e.Data);
+                }
+            });
+            ServerThread.server.EnableRaisingEvents = true;
+            //ServerThread.server.PriorityBoostEnabled = true;
             // The way .NET is handling the console when hidden does not allow it to output into the textbox realtime
             // Is what it is for now unless someone has a better code to handle it realtime
             ServerThread.server.Start();
@@ -103,6 +112,8 @@ namespace The_Isle_Evrima_Manager.Tools
             args.Arguments = $"?Port={GameServerStatusTracker.ServerPort} -ini:Engine:[EpicOnlineServices]:DedicatedServerClientId=xyza7891gk5PRo3J7G9puCJGFJjmEguW -ini:Engine:[EpicOnlineServices]:DedicatedServerClientSecret=pKWl6t5i9NJK8gTpVlAxzENZ65P8hYzodV8Dqe5Rlc8 -log";
             args.UseShellExecute = false;
             args.RedirectStandardOutput = true;
+            args.RedirectStandardError = true;
+            args.CreateNoWindow = true;
             args.WindowStyle = ProcessWindowStyle.Hidden;
             args.FileName = ManagerGlobalTracker.serverExe;
             return args;
