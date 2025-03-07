@@ -12,7 +12,7 @@ on:
 defaults:
   run:
     shell: cmd
-    working-directory: /The Isle Evrima Manager
+    working-directory: "/The Isle Evrima Manager"
 
 jobs:
   build:
