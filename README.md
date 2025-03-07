@@ -1,4 +1,4 @@
-*<sub>(AI generated)</sub>*
+*<sub>(AI generated img)</sub>*
 
 ![banner](https://github.com/user-attachments/assets/1ed4874f-51bc-455d-b8cf-64251c292669)
 
@@ -59,3 +59,5 @@ This will obviously be an annoying thing to update as Valve updates these librar
 
 ## Notice of time dedicated to project
 Just to be completely transparent - this is PURELY a side project. I work fulltime as well as volunteer alot of time for county work. I do not guarentee this will be maintained as quickly as game and Steam updates. Thankfully the dev's for The Isle push updates infrequently so that's kind of a plus.
+It's also worth noting I am not a developer by career, what I do and know is from years of trial and error making my own tools and what not over the years from high school until today. Comments within code are usually prevelant so fair watrning if you're forking and modifying.
+Code snippets copied and pasted into the project from being lazy or having no brain function at the time of making the method have references as to where it is from as a comment within the code.
