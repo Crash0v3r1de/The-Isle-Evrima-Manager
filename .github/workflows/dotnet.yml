@@ -21,8 +21,11 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - name: Restore dependencies
+      working-directory: ./The Isle Evrima Manager
       run: dotnet restore
     - name: Build
+      working-directory: ./The Isle Evrima Manager
       run: dotnet build --no-restore
     - name: Test
+      working-directory: ./The Isle Evrima Manager
       run: dotnet test --no-build --verbosity normal
