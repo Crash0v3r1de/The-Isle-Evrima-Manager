@@ -95,6 +95,8 @@
             btnStartServerUI = new Button();
             btnUIStopServerGraceful = new Button();
             btnForceStopUI = new Button();
+            toolStripSeparator5 = new ToolStripSeparator();
+            checkForManagerUpdateToolStripMenuItem = new ToolStripMenuItem();
             stsStripMain.SuspendLayout();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
@@ -327,7 +329,7 @@
             // toolStripDropDownButton2
             // 
             toolStripDropDownButton2.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            toolStripDropDownButton2.DropDownItems.AddRange(new ToolStripItem[] { viewLogsToolStripMenuItem, downloadDependenciesToolStripMenuItem, btnChangeProcPrior, changeServerDirectoryLocationToolStripMenuItem });
+            toolStripDropDownButton2.DropDownItems.AddRange(new ToolStripItem[] { viewLogsToolStripMenuItem, downloadDependenciesToolStripMenuItem, btnChangeProcPrior, changeServerDirectoryLocationToolStripMenuItem, toolStripSeparator5, checkForManagerUpdateToolStripMenuItem });
             toolStripDropDownButton2.Image = (Image)resources.GetObject("toolStripDropDownButton2.Image");
             toolStripDropDownButton2.ImageTransparentColor = Color.Magenta;
             toolStripDropDownButton2.Name = "toolStripDropDownButton2";
@@ -422,6 +424,7 @@
             generalServerSettingsToolStripMenuItem.Name = "generalServerSettingsToolStripMenuItem";
             generalServerSettingsToolStripMenuItem.Size = new Size(248, 22);
             generalServerSettingsToolStripMenuItem.Text = "General Server Settings";
+            generalServerSettingsToolStripMenuItem.Click += generalServerSettingsToolStripMenuItem_Click;
             // 
             // userSettingsToolStripMenuItem
             // 
@@ -433,21 +436,23 @@
             // adminsToolStripMenuItem
             // 
             adminsToolStripMenuItem.Name = "adminsToolStripMenuItem";
-            adminsToolStripMenuItem.Size = new Size(120, 22);
+            adminsToolStripMenuItem.Size = new Size(180, 22);
             adminsToolStripMenuItem.Text = "Admins";
             adminsToolStripMenuItem.Click += adminsToolStripMenuItem_Click;
             // 
             // vIPsToolStripMenuItem
             // 
             vIPsToolStripMenuItem.Name = "vIPsToolStripMenuItem";
-            vIPsToolStripMenuItem.Size = new Size(120, 22);
+            vIPsToolStripMenuItem.Size = new Size(180, 22);
             vIPsToolStripMenuItem.Text = "VIPs";
+            vIPsToolStripMenuItem.Click += vIPsToolStripMenuItem_Click;
             // 
             // whitelistToolStripMenuItem
             // 
             whitelistToolStripMenuItem.Name = "whitelistToolStripMenuItem";
-            whitelistToolStripMenuItem.Size = new Size(120, 22);
+            whitelistToolStripMenuItem.Size = new Size(180, 22);
             whitelistToolStripMenuItem.Text = "Whitelist";
+            whitelistToolStripMenuItem.Click += whitelistToolStripMenuItem_Click;
             // 
             // toolStripSeparator4
             // 
@@ -654,6 +659,18 @@
             btnForceStopUI.UseVisualStyleBackColor = true;
             btnForceStopUI.Click += btnForceStopUI_Click;
             // 
+            // toolStripSeparator5
+            // 
+            toolStripSeparator5.Name = "toolStripSeparator5";
+            toolStripSeparator5.Size = new Size(247, 6);
+            // 
+            // checkForManagerUpdateToolStripMenuItem
+            // 
+            checkForManagerUpdateToolStripMenuItem.Name = "checkForManagerUpdateToolStripMenuItem";
+            checkForManagerUpdateToolStripMenuItem.Size = new Size(250, 22);
+            checkForManagerUpdateToolStripMenuItem.Text = "Check for Manager Update";
+            checkForManagerUpdateToolStripMenuItem.Click += checkForManagerUpdateToolStripMenuItem_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -754,5 +771,7 @@
         private Label label7;
         private ToolStripButton btnPendingSettingsChange;
         private ToolStripMenuItem troubleshootingIssuesToolStripMenuItem;
+        private ToolStripSeparator toolStripSeparator5;
+        private ToolStripMenuItem checkForManagerUpdateToolStripMenuItem;
     }
 }

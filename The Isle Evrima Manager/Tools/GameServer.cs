@@ -16,6 +16,7 @@ namespace The_Isle_Evrima_Manager.Tools
         private static string serverPrimaryBinary = "TheIsleServer-Win64-Shipping.exe"; // This is the actual server
         private static string serverSecondayBinary = "TheIsleServer.exe"; // Main binary to load the actual server
         private static PerformanceCounter counter = new PerformanceCounter();
+        public static bool ServerRunning = false;
 
         public static string ServerMemoryUage()
         {

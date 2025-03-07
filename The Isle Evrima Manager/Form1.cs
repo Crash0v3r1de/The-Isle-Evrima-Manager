@@ -507,6 +507,25 @@ namespace The_Isle_Evrima_Manager
         {
             ServerAdmins admins = new ServerAdmins();
             admins.ShowDialog(this);
+            if (GameServerSettings.PendingSettingsApply)
+            {
+                var result = MessageBox.Show("New game settings pending...restart server to apply?", "Pending Game Changes", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
+                {
+                    ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.stoppingServer);
+                    GameServer.StopGracefully();
+                    while (GameServer.ServerRunning)
+                    {
+                        Thread.Sleep(1500); // Wait for exit
+                    }
+                    ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.savingSettings);
+                    CoreFiles.SaveGameINI();
+                    CoreFiles.SaveGameServerSettings();
+                    GameServerSettings.PendingSettingsApply = false;
+                    ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.startingServer);
+                    GameServer.StartServer();
+                }
+            }
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e)
@@ -576,7 +595,88 @@ namespace The_Isle_Evrima_Manager
             new Thread(() =>
             {
                 new SteamCMDControl().VerifyIsleServer();
-            }).Start();            
+            }).Start();
+        }
+
+        private void generalServerSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Make modular method for these calls
+            new frmGameServerSettings().ShowDialog(this);
+            if (GameServerSettings.PendingSettingsApply)
+            {
+                var result = MessageBox.Show("New game settings pending...restart server to apply?", "Pending Game Changes", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
+                {
+                    ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.stoppingServer);
+                    GameServer.StopGracefully();
+                    while (GameServer.ServerRunning)
+                    {
+                        Thread.Sleep(1500); // Wait for exit
+                    }
+                    ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.savingSettings);
+                    CoreFiles.SaveGameINI();
+                    CoreFiles.SaveGameServerSettings();
+                    GameServerSettings.PendingSettingsApply = false;
+                    ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.startingServer);
+                    GameServer.StartServer();
+                }
+            }
+        }
+
+        private void vIPsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Make modular method for these calls
+            new ServerVIPS().ShowDialog(this);
+            if (GameServerSettings.PendingSettingsApply)
+            {
+                var result = MessageBox.Show("New game settings pending...restart server to apply?", "Pending Game Changes", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
+                {
+                    ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.stoppingServer);
+                    GameServer.StopGracefully();
+                    while (GameServer.ServerRunning)
+                    {
+                        Thread.Sleep(1500); // Wait for exit
+                    }
+                    ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.savingSettings);
+                    CoreFiles.SaveGameINI();
+                    CoreFiles.SaveGameServerSettings();
+                    GameServerSettings.PendingSettingsApply = false;
+                    ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.startingServer);
+                    GameServer.StartServer();
+                }
+            }
+        }
+
+        private void whitelistToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Make modular method for these calls
+            new ServerWhitelist().ShowDialog(this);
+            if (GameServerSettings.PendingSettingsApply)
+            {
+                var result = MessageBox.Show("New game settings pending...restart server to apply?", "Pending Game Changes", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
+                {
+                    ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.stoppingServer);
+                    GameServer.StopGracefully();
+                    while (GameServer.ServerRunning)
+                    {
+                        Thread.Sleep(1500); // Wait for exit
+                    }
+                    ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.savingSettings);
+                    CoreFiles.SaveGameINI();
+                    CoreFiles.SaveGameServerSettings();
+                    GameServerSettings.PendingSettingsApply = false;
+                    ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.startingServer);
+                    GameServer.StartServer();
+                }
+            }
+        }
+
+        private void checkForManagerUpdateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var tmp = new UpdateChecker();
+            Logger.Log($"Manager Update? - {tmp.ManagerUpdate()}",LogType.Info);
         }
     }
 }

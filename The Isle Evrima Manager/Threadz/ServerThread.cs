@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using The_Isle_Evrima_Manager.IO;
 using The_Isle_Evrima_Manager.Threadz.ThreadTracking;
+using The_Isle_Evrima_Manager.Tools;
 
 namespace The_Isle_Evrima_Manager.Threadz
 {
@@ -34,7 +35,9 @@ namespace The_Isle_Evrima_Manager.Threadz
                             Logger.Log("Server exited(crash?) - restarting...", LogType.Error);
                             server.Start(); // Restart server
                         }
-                        Thread.Sleep(5000); // Maybe add this as manager setting eventually
+                        Thread.Sleep(5000); // TODO: Maybe add this as manager setting eventually
+                        if(server.HasExited) GameServer.ServerRunning = false;
+                        else GameServer.ServerRunning = true;
                     }
                 }
                 else
@@ -58,6 +61,9 @@ namespace The_Isle_Evrima_Manager.Threadz
                             Logger.Log("Server exited(crash?) - restart disabled in settings...", LogType.Error);
                             break; // exit the loop and exit thread since not watching the server anymore
                         }
+                        if (server.HasExited) GameServer.ServerRunning = false;
+                        else GameServer.ServerRunning = true;
+                        Thread.Sleep(5000); // TODO: Maybe add this as manager setting eventually
                     }
                 }
             }
