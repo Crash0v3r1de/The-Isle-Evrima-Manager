@@ -18,8 +18,10 @@ namespace The_Isle_Evrima_Manager.Tools
         public bool ManagerUpdate() {
             var client = new Octokit.GitHubClient(new Octokit.ProductHeaderValue("the-isle-evrima-manager"));
             var releases = client.Repository.Release.GetAll("Crash0v3r1de", "the-isle-evrima-manager");
-            var latest = releases.Result[0];
-            if (latest.TagName != Properties.Settings.Default.version) return true;
+            if (releases.Result.Count != 0) {
+                var latest = releases.Result[0];
+                if (latest.TagName != Properties.Settings.Default.version) return true;
+            }            
             return false;
         }
         public bool EVIRMAUpdate() {

@@ -57,7 +57,7 @@
             txtQueuePort = new NumericUpDown();
             label4 = new Label();
             chkQueue = new CheckBox();
-            comboBox1 = new ComboBox();
+            drpMapName = new ComboBox();
             label5 = new Label();
             chkEnableHumans = new CheckBox();
             label3 = new Label();
@@ -189,7 +189,7 @@
             txtMapName.Controls.Add(txtQueuePort);
             txtMapName.Controls.Add(label4);
             txtMapName.Controls.Add(chkQueue);
-            txtMapName.Controls.Add(comboBox1);
+            txtMapName.Controls.Add(drpMapName);
             txtMapName.Controls.Add(label5);
             txtMapName.Controls.Add(chkEnableHumans);
             txtMapName.Controls.Add(label3);
@@ -490,15 +490,15 @@
             chkQueue.Text = "Enable Queue";
             chkQueue.UseVisualStyleBackColor = true;
             // 
-            // comboBox1
+            // drpMapName
             // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Items.AddRange(new object[] { "Gateway", "Isla Spiro" });
-            comboBox1.Location = new Point(78, 79);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(121, 23);
-            comboBox1.TabIndex = 8;
-            comboBox1.Text = "Gateway";
+            drpMapName.FormattingEnabled = true;
+            drpMapName.Items.AddRange(new object[] { "Gateway", "Isla Spiro" });
+            drpMapName.Location = new Point(78, 79);
+            drpMapName.Name = "drpMapName";
+            drpMapName.Size = new Size(121, 23);
+            drpMapName.TabIndex = 8;
+            drpMapName.Text = "Gateway";
             // 
             // label5
             // 
@@ -1380,7 +1380,7 @@
         private Label label3;
         private Label label5;
         private CheckBox chkEnableHumans;
-        private ComboBox comboBox1;
+        private ComboBox drpMapName;
         private CheckBox chkQueue;
         private NumericUpDown txtQueuePort;
         private Label label4;

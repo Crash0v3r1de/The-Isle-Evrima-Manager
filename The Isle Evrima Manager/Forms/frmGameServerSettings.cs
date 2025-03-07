@@ -159,10 +159,9 @@ namespace The_Isle_Evrima_Manager.Forms
             GameServerSettings.GameIniSession.EnableMutations = chkMutations.Checked;
             GameServerSettings.GameIniSession.EnablePatrolZones = chkPatrolZones.Checked;
             GameServerSettings.GameIniSession.EnableQueue = chkQueue.Checked;
-            GameServerSettings.GameIniSession.EnableRCON = chkRCON.Checked;
             GameServerSettings.GameIniSession.FallDamage = chkFallDamage.Checked;
             GameServerSettings.GameIniSession.GrowthMultiplier = (int)txtGrowthRate.Value;
-            GameServerSettings.GameIniSession.MapName = txtMapName.Text;
+            GameServerSettings.GameIniSession.MapName = drpMapName.SelectedItem?.ToString();
             GameServerSettings.GameIniSession.MassMigrationDisableTime = (int)txtMassMigrationCooldown.Value;
             GameServerSettings.GameIniSession.MassMigrationTime = (int)txtMassMigrationTime.Value;
             GameServerSettings.GameIniSession.MaximumWeatherVariationInterval = (int)txtMaxWeatherVariation.Value;
