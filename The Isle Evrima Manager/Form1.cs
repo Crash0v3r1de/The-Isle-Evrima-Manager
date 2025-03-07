@@ -196,7 +196,7 @@ namespace The_Isle_Evrima_Manager
                 btnChangeProcPrior.Text = "Change Server Process Priority (NOT ADMIN)";
             }
         }
-        private void UpdateTitle()
+        private void UpdateTitle(bool update = false)
         {
             if (InvokeRequired)
             {
@@ -204,10 +204,20 @@ namespace The_Isle_Evrima_Manager
                 return;
             }
 
-            // This used to be ALOT easier/simpler but .NET Core gunna .NET Core
-            Assembly ass = Assembly.GetExecutingAssembly();
-            FileVersionInfo fv = FileVersionInfo.GetVersionInfo(ass.Location);
-            this.Text = $"The Isle Evirma Server Manager - v{fv.FileVersion} | Windows {Environment.OSVersion.Version.Major}";
+            if (update) {
+                this.Text = $"The Isle Evirma Server Manager - v{Properties.Settings.Default.version} | Windows {Environment.OSVersion.Version.Major} | UPDATE AVAILABLE ON GITHUB!";
+            } else {
+                var up = new UpdateChecker();
+                if (up.ManagerUpdate())
+                {
+                    // Not newest compiled version compared to Github release tag
+                    Logger.Log("Manager Update Available!", LogType.Info);
+                    this.Text = $"The Isle Evirma Server Manager - v{Properties.Settings.Default.version} | Windows {Environment.OSVersion.Version.Major} | UPDATE AVAILABLE ON GITHUB!";
+                }
+                else {
+                    this.Text = $"The Isle Evirma Server Manager - v{Properties.Settings.Default.version} | Windows {Environment.OSVersion.Version.Major}";
+                }                
+            }
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -544,6 +554,7 @@ namespace The_Isle_Evrima_Manager
                 // Server should be stopped now
                 ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.savingSettings);
                 CoreFiles.SaveGameINI();
+                CoreFiles.SaveGameServerSettings();
                 ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.startingServer);
                 GameServer.StartServer();
             }).Start();
@@ -675,8 +686,12 @@ namespace The_Isle_Evrima_Manager
 
         private void checkForManagerUpdateToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var tmp = new UpdateChecker();
-            Logger.Log($"Manager Update? - {tmp.ManagerUpdate()}",LogType.Info);
+            var up = new UpdateChecker();
+            if (up.ManagerUpdate()) {
+                // Not newest compiled version compared to Github release tag
+                Logger.Log("Manager Update Available!", LogType.Info);
+                UpdateTitle(true);
+            }
         }
     }
 }

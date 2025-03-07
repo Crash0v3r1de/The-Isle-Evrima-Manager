@@ -19,11 +19,7 @@ namespace The_Isle_Evrima_Manager.Tools
             var client = new Octokit.GitHubClient(new Octokit.ProductHeaderValue("the-isle-evrima-manager"));
             var releases = client.Repository.Release.GetAll("Crash0v3r1de", "the-isle-evrima-manager");
             var latest = releases.Result[0];
-            Console.WriteLine(
-                "The latest release is tagged at {0} and is named {1}",
-                latest.TagName,
-                latest.Name);
-
+            if (latest.TagName != Properties.Settings.Default.version) return true;
             return false;
         }
         public bool EVIRMAUpdate() {

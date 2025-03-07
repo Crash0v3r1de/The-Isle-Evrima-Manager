@@ -184,7 +184,7 @@ namespace The_Isle_Evrima_Manager.IO
                 RCONGlobalTracker.rconPassword = items.rconPassword;
                 RCONGlobalTracker.rconEnabled = items.rconEnabled;
             }
-        }
+        }        
 
         #region Private Methods
         private static void WriteEngineINI()
