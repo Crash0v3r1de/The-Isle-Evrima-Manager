@@ -9,9 +9,13 @@ on:
   pull_request:
     branches: [ "main" ]
 
+defaults:
+  run:
+    shell: cmd
+    working-directory: /The\ Isle\ Evrima\ Manager
+
 jobs:
   build:
-
     runs-on: windows-latest
 
     steps:
@@ -21,11 +25,8 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - name: Restore dependencies
-      working-directory: ./The Isle Evrima Manager
       run: dotnet restore
     - name: Build
-      working-directory: ./The Isle Evrima Manager
       run: dotnet build --no-restore
     - name: Test
-      working-directory: ./The Isle Evrima Manager
       run: dotnet test --no-build --verbosity normal
