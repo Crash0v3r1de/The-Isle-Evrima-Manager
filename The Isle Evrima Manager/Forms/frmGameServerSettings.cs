@@ -56,7 +56,6 @@ namespace The_Isle_Evrima_Manager.Forms
                 txtRCONPort.Value = GameServerSettings.GameIniSession.RCONPort;
                 chkRegionSpawnCooldown.Checked = GameServerSettings.GameIniSession.RegionSpawnCooldown;
                 txtRegionCooldownSecs.Value = GameServerSettings.GameIniSession.RegionSpawnCooldownTimeSeconds;
-                txtRegionCooldownSecs.Value = GameServerSettings.GameIniSession.ServerDayLengthMinutes;
                 txtServerName.Text = GameServerSettings.GameIniSession.ServerName;
                 txtNightLength.Value = GameServerSettings.GameIniSession.ServerNightLengthMinutes;
                 txtSrvPassword.Text = GameServerSettings.GameIniSession.ServerPassword;
@@ -189,6 +188,21 @@ namespace The_Isle_Evrima_Manager.Forms
             }
         }
 
+        private static int GetUtcOffsetInSeconds()
+        {
+            // Get the current local time
+            DateTime localTime = DateTime.Now;
+
+            // Get the current UTC time
+            DateTime utcTime = DateTime.UtcNow;
+
+            // Calculate the difference between local time and UTC time
+            TimeSpan offset = localTime - utcTime;
+
+            // Return the total offset in seconds
+            return (int)offset.TotalSeconds;
+        }
+
         private void saveAndCloseToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ParseCoreSetting();
@@ -287,8 +301,6 @@ namespace The_Isle_Evrima_Manager.Forms
             GameServerSettings.GameIniSession.EnableRCON = chkRCON.Checked;
             GameServerSettings.GameIniSession.RCONPassword = txtRCONPass.Text;
             GameServerSettings.GameIniSession.RCONPort = (int)txtRCONPort.Value;
-            GameServerSettings.GameIniSession.RegionSpawnCooldown = chkRegionSpawnCooldown.Checked;
-            GameServerSettings.GameIniSession.RegionSpawnCooldownTimeSeconds = (int)txtRegionCooldownSecs.Value;
             GameServerSettings.GameIniSession.ServerDayLengthMinutes = (int)txtRegionCooldownSecs.Value;
             GameServerSettings.GameIniSession.ServerName = txtServerName.Text;
             GameServerSettings.GameIniSession.ServerNightLengthMinutes = (int)txtNightLength.Value;
@@ -298,8 +310,19 @@ namespace The_Isle_Evrima_Manager.Forms
             GameServerSettings.GameIniSession.SpawnAI = chkAI.Checked;
             GameServerSettings.GameIniSession.SpawnPlants = chkSpawnPlants.Checked;
             GameServerSettings.GameIniSession.SpeciaMigrationTime = (int)txtSpeciesMigrationTime.Value;
-            GameServerSettings.GameIniSession.UseRegionSpawning = chkRegionSpawn.Checked;
-            GameServerStatusTracker.ServerPort = (int)numServerPort.Value;
+            if (chkRegionSpawn.Checked && !chkRegionSpawnCooldown.Checked)
+            {
+                GameServerSettings.GameIniSession.UseRegionSpawning = chkRegionSpawn.Checked;
+                GameServerSettings.GameIniSession.RegionSpawnCooldown = chkRegionSpawnCooldown.Checked;
+                GameServerSettings.GameIniSession.RegionSpawnCooldownTimeSeconds = GetUtcOffsetInSeconds();
+                // Server will still apply cooldown timer if this is not the amount of seconds your server is from UTC time
+            }
+            else {
+                GameServerSettings.GameIniSession.UseRegionSpawning = chkRegionSpawn.Checked;
+                GameServerSettings.GameIniSession.RegionSpawnCooldown = chkRegionSpawnCooldown.Checked;
+                GameServerSettings.GameIniSession.RegionSpawnCooldownTimeSeconds = (int)txtRegionCooldownSecs.Value;
+                GameServerStatusTracker.ServerPort = (int)numServerPort.Value;
+            }            
         }
         private void ParseDynoClasses()
         {

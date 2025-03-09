@@ -254,6 +254,7 @@
             // 
             txtRegionCooldownSecs.Location = new Point(462, 102);
             txtRegionCooldownSecs.Maximum = new decimal(new int[] { 999999999, 0, 0, 0 });
+            txtRegionCooldownSecs.Minimum = new decimal(new int[] { 999999999, 0, 0, int.MinValue });
             txtRegionCooldownSecs.Name = "txtRegionCooldownSecs";
             txtRegionCooldownSecs.Size = new Size(120, 23);
             txtRegionCooldownSecs.TabIndex = 34;
