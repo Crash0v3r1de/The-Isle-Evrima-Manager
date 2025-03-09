@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using The_Isle_Evrima_Manager.Threadz.ThreadTracking;
+using The_Isle_Evrima_Manager.WebActions;
 
 namespace The_Isle_Evrima_Manager.IO
 {
@@ -17,14 +18,17 @@ namespace The_Isle_Evrima_Manager.IO
             {
                 case LogType.Info:
                     Console.ForegroundColor = ConsoleColor.White;
+                    if (ManagerGlobalTracker.enableDiscordNotifications) DiscordHandler.SendWebhook(message,type);
                     WriteLog($"{currTime} - [INFO] {message}");
                     break;
                 case LogType.Warning:
                     Console.ForegroundColor = ConsoleColor.Yellow;
+                    if (ManagerGlobalTracker.enableDiscordNotifications) DiscordHandler.SendWebhook(message,type);
                     WriteLog($"{currTime} - [WARNING] {message}");
                     break;
                 case LogType.Error:
                     Console.ForegroundColor = ConsoleColor.Red;
+                    if (ManagerGlobalTracker.enableDiscordNotifications) DiscordHandler.SendWebhook(message,type);
                     WritErrorLog($"{currTime} - [ERROR] {message}");
                     break;
                 case LogType.Debug:

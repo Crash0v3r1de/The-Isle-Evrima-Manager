@@ -60,12 +60,19 @@ namespace The_Isle_Evrima_Manager
             {
                 RuntimeReqChecks();
             });
+            t3.IsBackground = true;
+            t3.Start();
             var t4 = new Thread(() =>
             {
                 MonitorMemory();
             });
             t4.IsBackground = true;
             t4.Start();
+            var t5 = new Thread(() => {
+                UpdateServerStatLabels();
+            });
+            t5.IsBackground = true;
+            t5.Start();
             lblServerStatus.ForeColor = Color.OrangeRed;
             lblServerStatus.Text = "Server idle...";
             lblCores.Text = Environment.ProcessorCount.ToString();
@@ -236,39 +243,72 @@ namespace The_Isle_Evrima_Manager
         {
             while (ManagerGlobalTracker.IsRunning)
             {
-                //UpdateStatusLabel();
-                lblServerStatus.ForeColor = Color.Black;
-
+                //UpdateStatusLabel();                
+                var fon = new Font(lblServerStatus.Font, FontStyle.Regular);
                 switch (ManagerGlobalTracker.CurrentStatus)
                 {
                     case ManagerStatus.idle:
-                        if (lblServerStatus.Text != "Server idle...") lblServerStatus.Text = "Server idle...";
+                        if (lblServerStatus.Text != "Server idle...") {
+                            fon = new Font(lblServerStatus.Font, FontStyle.Regular);
+                            lblServerStatus.Font = fon;
+                            lblServerStatus.ForeColor = Color.OrangeRed;
+                            lblServerStatus.Text = "Server idle...";
+                        }
                         break;
                     case ManagerStatus.downloadingSteamCMD:
-                        if (lblServerStatus.Text != "Downloading SteamCMD...") lblServerStatus.Text = "Downloading SteamCMD...";
+                        if (lblServerStatus.Text != "Downloading SteamCMD...") {
+                            fon = new Font(lblServerStatus.Font, FontStyle.Regular);
+                            lblServerStatus.Font = fon;
+                            lblServerStatus.ForeColor = Color.DarkCyan;
+                            lblServerStatus.Text = "Downloading SteamCMD...";
+                        }
                         break;
                     case ManagerStatus.downloadingServerFiles:
-                        if (lblServerStatus.Text != "Downloading server files...") lblServerStatus.Text = "Downloading server files...";
+                        if (lblServerStatus.Text != "Downloading server files...") {
+                            fon = new Font(lblServerStatus.Font, FontStyle.Regular);
+                            lblServerStatus.Font = fon;
+                            lblServerStatus.ForeColor = Color.DarkCyan;
+                            lblServerStatus.Text = "Downloading server files...";
+                        }
                         break;
                     case ManagerStatus.startingServer:
-                        if (lblServerStatus.Text != "Starting server...") lblServerStatus.Text = "Starting server...";
+                        if (lblServerStatus.Text != "Starting server...") {
+                            fon = new Font(lblServerStatus.Font, FontStyle.Bold);
+                            lblServerStatus.Font = fon;
+                            lblServerStatus.ForeColor = Color.GreenYellow;
+                            lblServerStatus.Text = "Starting server...";
+                        }
                         break;
                     case ManagerStatus.stoppingServer:
-                        if (lblServerStatus.Text != "Stopping server...") lblServerStatus.Text = "Stopping server...";
+                        if (lblServerStatus.Text != "Stopping server...") {
+                            fon = new Font(lblServerStatus.Font, FontStyle.Bold);
+                            lblServerStatus.Font = fon;
+                            lblServerStatus.ForeColor = Color.YellowGreen;
+                            lblServerStatus.Text = "Stopping server...";
+                        }
                         break;
                     case ManagerStatus.error:
                         if (lblServerStatus.Text != "Error halted...CHECK LOGS")
                         {
+                            fon = new Font(lblServerStatus.Font, FontStyle.Underline);
+                            lblServerStatus.Font = fon;
                             lblServerStatus.ForeColor = Color.Red;
                             lblServerStatus.Text = "Error halted...CHECK LOGS";
                         }
                         break;
                     case ManagerStatus.serverRunning:
-                        lblServerStatus.ForeColor = Color.Green;
+                        lblServerStatus.ForeColor = Color.SpringGreen;
+                        fon = new Font(lblServerStatus.Font, FontStyle.Bold);
+                        lblServerStatus.Font = fon;
                         lblServerStatus.Text = "Server running!";
                         break;
                     default:
-                        if (lblServerStatus.Text != "Server idle...") lblServerStatus.Text = "Server idle...";
+                        if (lblServerStatus.Text != "Server idle...") {
+                            fon = new Font(lblServerStatus.Font, FontStyle.Regular);
+                            lblServerStatus.Font = fon;
+                            lblServerStatus.ForeColor = Color.OrangeRed;
+                            lblServerStatus.Text = "Server idle...";
+                        }
                         break;
                 }
 
@@ -363,14 +403,17 @@ namespace The_Isle_Evrima_Manager
                 Thread.Sleep(ManagerGlobalTracker.serverStatsRefreshInt);
             }
         }
-        private void UpdateServerStatLabels(string plrDataCnt)
+        private void UpdateServerStatLabels()
         {
             if (InvokeRequired)
             {
-                Invoke(UpdateServerStatLabels, plrDataCnt);
+                Invoke(UpdateServerStatLabels);
                 return;
             }
-            lblPlayerDataCount.Text = plrDataCnt;
+            if (GameServerSettings.GameIniState.AdminSteamIDs.Count != 0) lblAdminCount.Text = GameServerSettings.GameIniState.AdminSteamIDs.Count.ToString();
+            if (GameServerSettings.GameIniState.WhitelistIDs.Count != 0) lblWhitelistCount.Text = GameServerSettings.GameIniState.WhitelistIDs.Count.ToString();
+            if (GameServerSettings.GameIniState.VIPs.Count != 0) lblVIPCount.Text = GameServerSettings.GameIniState.VIPs.Count.ToString();
+            lblPlayerDataCount.Text = ServerAnalytics.PlayerDataCount().ToString();
         }
 
         private void managerSettingsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -386,6 +429,7 @@ namespace The_Isle_Evrima_Manager
             {
                 Logger.Log("Copying required Steam DLLs...", LogType.Info);
                 if (!CoreFiles.CopyDLLs()) Logger.Log("Failed to copy Steam DLLs, please do manually and report issue on Github", LogType.Error);
+                Logger.Log("DLLs copied!",LogType.Info);
             }
         }
 

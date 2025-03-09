@@ -28,8 +28,11 @@ namespace The_Isle_Evrima_Manager.IO
             }
         }
         public static int PlayerDataCount() {
-            var files = Directory.GetFiles(savedPlayerDataDir).Where(f => f.ToLower().EndsWith("sav"));
-            return files.Count();
+            if (Directory.Exists(savedPlayerDataDir)) {
+                var files = Directory.GetFiles(savedPlayerDataDir).Where(f => f.ToLower().EndsWith("sav"));
+                return files.Count();
+            }
+            return 0;
         }
                 
     }
