@@ -41,6 +41,9 @@ namespace The_Isle_Evrima_Manager.IO
                 ParseRCONTasks(JsonConvert.DeserializeObject<List<RCONTaskItemJSON>>(json));
             }            
         }
+        public bool GameSettingsPresent() { 
+            return File.Exists(ManagerGlobalTracker.managerConfDir + "game-settings.json");
+        }
 
 
         #region Private Methods

@@ -158,6 +158,7 @@
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
             Name = "ServerWhitelist";
+            StartPosition = FormStartPosition.CenterParent;
             Text = "Game Server Whitelist IDs";
             Load += ServerWhitelist_Load;
             groupBox1.ResumeLayout(false);

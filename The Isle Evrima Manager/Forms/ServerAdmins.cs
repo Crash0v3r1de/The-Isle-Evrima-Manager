@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using The_Isle_Evrima_Manager.Threadz.ThreadTracking;
+using The_Isle_Evrima_Manager.Tools;
 
 namespace The_Isle_Evrima_Manager.Forms
 {
@@ -38,7 +39,7 @@ namespace The_Isle_Evrima_Manager.Forms
         private void button1_Click(object sender, EventArgs e)
         {
             GameServerSettings.GameIniState.AdminSteamIDs.RemoveAt(lstAdmins.SelectedIndex);
-            GameServerSettings.PendingSettingsApply = true;
+            if (GameServer.ServerRunning) GameServerSettings.PendingSettingsApply = true;
             lstAdmins.Items.Clear();
             LoadAdminList();
         }
@@ -47,6 +48,7 @@ namespace The_Isle_Evrima_Manager.Forms
         {
             if (GameServerSettings.GameIniState.AdminSteamIDs != null && GameServerSettings.GameIniState.AdminSteamIDs.Count > 0)
             {
+                lstAdmins.Items.Clear();
                 for (int x = 0; x < GameServerSettings.GameIniState.AdminSteamIDs.Count; x++)
                 {
                     lstAdmins.Items.Add(GameServerSettings.GameIniState.AdminSteamIDs[x]); // Load in logical order
@@ -68,7 +70,6 @@ namespace The_Isle_Evrima_Manager.Forms
                     if (txtAdminID.Text.Length > 17) MessageBox.Show("Steam ID is too long, please use a correct SteamID64.");
                     if (txtAdminID.Text.Length < 16) MessageBox.Show("Steam ID is too short, please use a correct SteamID64.");
                 }
-                txtAdminID.Text = "";
             }
             else
             {
@@ -79,8 +80,8 @@ namespace The_Isle_Evrima_Manager.Forms
                 }
                 else
                 {
-                    GameServerSettings.GameIniState.AdminSteamIDs.Add(txtAdminID.Text);
-                    GameServerSettings.PendingSettingsApply = true;
+                    if(!GameServerSettings.GameIniState.AdminSteamIDs.Contains(txtAdminID.Text)) GameServerSettings.GameIniState.AdminSteamIDs.Add(txtAdminID.Text);
+                    if(GameServer.ServerRunning)GameServerSettings.PendingSettingsApply = true;
                     LoadAdminList();
                     txtAdminID.Text = "";
                 }

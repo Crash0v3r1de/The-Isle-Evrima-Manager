@@ -18,8 +18,9 @@ namespace The_Isle_Evrima_Manager.Threadz.ThreadTracking
         public static string serverPath = Environment.CurrentDirectory + @"\server\";
         public static string dllDir = Environment.CurrentDirectory + @"\server\TheIsle\Binaries\Win64\";
         public static string serverExe = Environment.CurrentDirectory + @"\server\TheIsleServer.exe";
-        public static string gameINI { get; set; } = @"Saved\Config\WindowsServer\Game.ini";
-        public static string engineINI { get; set; } = @"Saved\Config\WindowsServer\Engine.ini";
+        public static string gameINI { get; set; } = @"TheIsle\Saved\Config\WindowsServer\Game.ini";
+        public static string engineINI { get; set; } = @"TheIsle\Saved\Config\WindowsServer\Engine.ini";
+        public static string serverCoreExe { get; set; } = Environment.CurrentDirectory + @"\server\TheIsle\Binaries\Win64\TheIsleServer-Win64-Shipping.exe";
         public static string logDir = Environment.CurrentDirectory + @"\logs\";
         public static string managerConfDir = Environment.CurrentDirectory + @"\conf\";
         public static int resourceRefreshInt = 1200;

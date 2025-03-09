@@ -270,6 +270,7 @@
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
             Name = "frmRCONTasks";
+            StartPosition = FormStartPosition.CenterParent;
             Text = "RCON Schedules Tasks";
             Load += frmRCONTasks_Load;
             menuStrip1.ResumeLayout(false);

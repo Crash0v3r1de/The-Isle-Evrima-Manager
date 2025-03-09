@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using The_Isle_Evrima_Manager.Threadz.ThreadTracking;
+using The_Isle_Evrima_Manager.Tools;
 
 namespace The_Isle_Evrima_Manager.Forms
 {
@@ -54,9 +55,9 @@ namespace The_Isle_Evrima_Manager.Forms
                     txtVIPID.Text = "";
                 }
                 else
-                {
-                    GameServerSettings.GameIniState.AdminSteamIDs.Add(txtVIPID.Text);
-                    GameServerSettings.PendingSettingsApply = true;
+                {                    
+                    if (!GameServerSettings.GameIniState.VIPs.Contains(txtVIPID.Text)) GameServerSettings.GameIniState.VIPs.Add(txtVIPID.Text);
+                    if (GameServer.ServerRunning) GameServerSettings.PendingSettingsApply = true;
                     LoadVIPList();
                     txtVIPID.Text = "";
                 }
@@ -83,6 +84,7 @@ namespace The_Isle_Evrima_Manager.Forms
         {
             if (GameServerSettings.GameIniState.VIPs != null && GameServerSettings.GameIniState.VIPs.Count > 0)
             {
+                lstVIPs.Items.Clear();
                 for (int x = 0; x < GameServerSettings.GameIniState.VIPs.Count; x++)
                 {
                     lstVIPs.Items.Add(GameServerSettings.GameIniState.VIPs[x]); // Load in logical order
@@ -93,7 +95,7 @@ namespace The_Isle_Evrima_Manager.Forms
         private void btnRemoveVIP_Click(object sender, EventArgs e)
         {
             GameServerSettings.GameIniState.VIPs.RemoveAt(lstVIPs.SelectedIndex);
-            GameServerSettings.PendingSettingsApply = true;
+            if (GameServer.ServerRunning) GameServerSettings.PendingSettingsApply = true;
             lstVIPs.Items.Clear();
             LoadVIPList();
         }

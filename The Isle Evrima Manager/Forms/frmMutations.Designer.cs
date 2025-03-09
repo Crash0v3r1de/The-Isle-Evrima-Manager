@@ -179,6 +179,7 @@
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
             Name = "frmMutations";
+            StartPosition = FormStartPosition.CenterParent;
             Text = "Server Mutations";
             Load += frmMutations_Load;
             menuStrip1.ResumeLayout(false);

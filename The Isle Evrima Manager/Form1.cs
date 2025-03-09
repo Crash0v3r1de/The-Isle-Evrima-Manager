@@ -170,6 +170,10 @@ namespace The_Isle_Evrima_Manager
             CheckRunningPriv();
             if (manSet.FirstRun()) SysPrep(); // Need to run this first to setup folders for logs
             else manSet.LoadManagerSettings();
+            if (manSet.GameSettingsPresent()) {
+                CoreFiles.LoadGameServerSettings();
+                CoreFiles.LoadGameServerStatusSettings();
+            }
             StartThreads();
             UpdateTitle();
             Logger.Log($"Tool Started | Current Dir: {Environment.CurrentDirectory}", LogType.Info);
@@ -204,9 +208,12 @@ namespace The_Isle_Evrima_Manager
                 return;
             }
 
-            if (update) {
+            if (update)
+            {
                 this.Text = $"The Isle Evirma Server Manager - v{Properties.Settings.Default.version} | Windows {Environment.OSVersion.Version.Major} | UPDATE AVAILABLE ON GITHUB!";
-            } else {
+            }
+            else
+            {
                 var up = new UpdateChecker();
                 if (up.ManagerUpdate())
                 {
@@ -214,9 +221,10 @@ namespace The_Isle_Evrima_Manager
                     Logger.Log("Manager Update Available!", LogType.Info);
                     this.Text = $"The Isle Evirma Server Manager - v{Properties.Settings.Default.version} | Windows {Environment.OSVersion.Version.Major} | UPDATE AVAILABLE ON GITHUB!";
                 }
-                else {
+                else
+                {
                     this.Text = $"The Isle Evirma Server Manager - v{Properties.Settings.Default.version} | Windows {Environment.OSVersion.Version.Major}";
-                }                
+                }
             }
         }
 
@@ -256,11 +264,8 @@ namespace The_Isle_Evrima_Manager
                         }
                         break;
                     case ManagerStatus.serverRunning:
-                        if (lblServerStatus.Text != "Server running!")
-                        {
-                            lblServerStatus.ForeColor = Color.Green;
-                            lblServerStatus.Text = "Server running!";
-                        }
+                        lblServerStatus.ForeColor = Color.Green;
+                        lblServerStatus.Text = "Server running!";
                         break;
                     default:
                         if (lblServerStatus.Text != "Server idle...") lblServerStatus.Text = "Server idle...";
@@ -371,7 +376,7 @@ namespace The_Isle_Evrima_Manager
         private void managerSettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ManagerSettings manSettings = new ManagerSettings();
-            manSettings.Show();
+            manSettings.ShowDialog(this);
         }
 
         private void steamClientToolStripMenuItem_Click(object sender, EventArgs e)
@@ -397,13 +402,13 @@ namespace The_Isle_Evrima_Manager
         private void configureRCONTasksToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmRCONTasks rTasks = new frmRCONTasks();
-            rTasks.ShowDialog();
+            rTasks.ShowDialog(this);
         }
 
         private void configureRCONConnectionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmRCONSettings rconSettings = new frmRCONSettings();
-            rconSettings.ShowDialog();
+            rconSettings.ShowDialog(this);
         }
 
         private void btnStartServerUI_Click(object sender, EventArgs e)
@@ -447,30 +452,55 @@ namespace The_Isle_Evrima_Manager
             CoreFiles.PrcoessServerPathMove(newPath);
             Logger.Log($"Changed server directory to {newPath}", LogType.Info);
         }
+        private void StopServerGracefully(bool applyingUpdate = false) {
+            if (applyingUpdate)
+            {
+                GameServer.StopGracefully();
+            }
+            else
+            {
+                var res = MessageBox.Show("Auto restart is enabled, disable and fully stop the server?", "Auto Restart Enabled", MessageBoxButtons.YesNo);
+                if (res == DialogResult.Yes) GameServerStatusTracker.RestartProcessOnFail = false;
+                GameServer.StopGracefully();
+            }
+        }
+        private void StopServerForcefully() {
+            var res = MessageBox.Show("Auto restart is enabled, disable and fully stop the server?", "Auto Restart Enabled", MessageBoxButtons.YesNo);
+            if (res == DialogResult.Yes) GameServerStatusTracker.RestartProcessOnFail = false;
+            GameServer.StopForcefully();
+        }
 
         private void btnUIStopServerGraceful_Click(object sender, EventArgs e)
         {
-            GameServer.StopGracefully();
+            StopServerGracefully();
         }
 
         private void btnStartIsleServer_Click(object sender, EventArgs e)
         {
-            GameServer.StartServer();
+            if (String.IsNullOrEmpty(GameServerSettings.GameIniSession.ServerName))
+            {
+                // Fresh start
+                PromptForSetup();
+            }
+            else
+            {
+                GameServer.StartServer();
+            }
         }
 
         private void btnStopIsleServer_Click(object sender, EventArgs e)
         {
-            GameServer.StopGracefully();
+            StopServerGracefully();
         }
 
         private void btnForceStopIsleServer_Click(object sender, EventArgs e)
         {
-            GameServer.StopForcefully();
+            StopServerForcefully();
         }
 
         private void btnForceStopUI_Click(object sender, EventArgs e)
         {
-            GameServer.StopForcefully();
+            StopServerForcefully();
         }
 
         private void UpdateGameServerPaths(string rootDir)
@@ -480,7 +510,10 @@ namespace The_Isle_Evrima_Manager
             ManagerGlobalTracker.serverPath = rootDir;
             ManagerGlobalTracker.dllDir = rootDir + @"\TheIsle\Binaries\Win64\";
             ManagerGlobalTracker.serverExe = rootDir + @"\TheIsleServer.exe";
+            ManagerGlobalTracker.serverCoreExe = rootDir + @"\TheIsle\Binaries\Win64\TheIsleServer-Win64-Shipping.exe";
             CoreFiles.SaveManagerSettings();
+            CoreFiles.SaveEngineINI();
+            CoreFiles.SaveGameINI();
         }
 
         #region Public Methods
@@ -500,14 +533,16 @@ namespace The_Isle_Evrima_Manager
                 }
                 else
                 {
-                    // TODO: add method for alert strings to be notified on
-                    if (!entry.Contains("Redirect"))
-                    { // ignore .NET redirect messages
-                        form.txtConsole.AppendText(entry + "\n");
-                        form.txtConsole.Refresh();
-                        form.txtConsole.SelectionStart = form.txtConsole.Text.Length;
-                        form.txtConsole.ScrollToCaret();
-                    }
+                    if (!string.IsNullOrWhiteSpace(entry)) {
+                        // TODO: add method for alert strings to be notified on
+                        if (!entry.Contains("Redirect"))
+                        { // ignore .NET redirect messages
+                            form.txtConsole.AppendText(entry + "\n");
+                            form.txtConsole.Refresh();
+                            form.txtConsole.SelectionStart = form.txtConsole.Text.Length;
+                            form.txtConsole.ScrollToCaret();
+                        }
+                    }                    
                 }
             }
         }
@@ -541,23 +576,32 @@ namespace The_Isle_Evrima_Manager
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             // Gracefully exit server, save settings to Game.ini in ini format, save settings into our own JSON and start the server again
-            GameServer.StopGracefully();
-            GameServerStatusTracker.AllowServerRunning = false; // wait for thread to start closing in it's loop
+            StopServerGracefully(true);
+            ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.stoppingServer);
             new Thread(() =>
             {
-                // this is where we wait and then process the changes
-                while (ManagerGlobalTracker.CurrentStatus != ManagerStatus.idle & GameServerSettings.PendingSettingsApply)
+                while (GameServer.ServerRunning)
                 {
-                    // wait on runtime status to change AND pending settings is true - additonal validation for bool check
-                    Thread.Sleep(1200);
+                    Thread.Sleep(1200); // Wait for exit
                 }
-                // Server should be stopped now
                 ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.savingSettings);
                 CoreFiles.SaveGameINI();
                 CoreFiles.SaveGameServerSettings();
+                GameServerSettings.PendingSettingsApply = false;
                 ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.startingServer);
                 GameServer.StartServer();
+                SettingsApplied();
             }).Start();
+        }
+
+        private void SettingsApplied() {
+            if (InvokeRequired)
+            {
+                Invoke(SettingsApplied);
+                return;
+            }
+            btnPendingSettingsChange.Enabled = false;
+            btnPendingSettingsChange.Visible = false;
         }
 
         private void troubleshootingIssuesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -586,6 +630,7 @@ namespace The_Isle_Evrima_Manager
             {
                 ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.savingSettings);
                 CoreFiles.SaveGameServerSettings();
+                CoreFiles.SaveGameServerStatusSettings();
                 ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.downloadingSteamCMD);
                 new BinaryDownloader().DownloadSteamCMD();
                 var steam = new SteamCMDControl();
@@ -619,7 +664,7 @@ namespace The_Isle_Evrima_Manager
                 if (result == DialogResult.Yes)
                 {
                     ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.stoppingServer);
-                    GameServer.StopGracefully();
+                    StopServerGracefully(true);
                     while (GameServer.ServerRunning)
                     {
                         Thread.Sleep(1500); // Wait for exit
@@ -630,6 +675,10 @@ namespace The_Isle_Evrima_Manager
                     GameServerSettings.PendingSettingsApply = false;
                     ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.startingServer);
                     GameServer.StartServer();
+                }
+                else {
+                    btnPendingSettingsChange.Visible = true;
+                    btnPendingSettingsChange.Enabled = true;
                 }
             }
         }
@@ -687,11 +736,29 @@ namespace The_Isle_Evrima_Manager
         private void checkForManagerUpdateToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var up = new UpdateChecker();
-            if (up.ManagerUpdate()) {
+            if (up.ManagerUpdate())
+            {
                 // Not newest compiled version compared to Github release tag
                 Logger.Log("Manager Update Available!", LogType.Info);
                 UpdateTitle(true);
             }
+        }
+
+        private void btnAutoRestartGameServer_Click(object sender, EventArgs e)
+        {
+            if (btnAutoRestartGameServer.Checked)
+            {
+                GameServerStatusTracker.RestartProcessOnFail = true;
+            }
+            else
+            {
+                GameServerStatusTracker.RestartProcessOnFail = false;
+            }
+        }
+
+        private void groupBox3_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }

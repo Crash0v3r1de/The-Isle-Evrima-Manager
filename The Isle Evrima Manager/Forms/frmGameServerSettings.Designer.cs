@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             txtMapName = new GroupBox();
+            numServerPort = new NumericUpDown();
+            label24 = new Label();
             lblCooldownNoticeExpanded = new LinkLabel();
             lblRegionCooldownNotice = new LinkLabel();
             txtRegionCooldownSecs = new NumericUpDown();
@@ -132,6 +134,7 @@
             chkPteroAI = new CheckBox();
             chkCompsoAI = new CheckBox();
             txtMapName.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numServerPort).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtRegionCooldownSecs).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numCorpseDecay).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtGrowthRate).BeginInit();
@@ -161,6 +164,8 @@
             // 
             // txtMapName
             // 
+            txtMapName.Controls.Add(numServerPort);
+            txtMapName.Controls.Add(label24);
             txtMapName.Controls.Add(lblCooldownNoticeExpanded);
             txtMapName.Controls.Add(lblRegionCooldownNotice);
             txtMapName.Controls.Add(txtRegionCooldownSecs);
@@ -204,6 +209,25 @@
             txtMapName.TabStop = false;
             txtMapName.Text = "General Server Settings";
             // 
+            // numServerPort
+            // 
+            numServerPort.Location = new Point(275, 79);
+            numServerPort.Maximum = new decimal(new int[] { 65353, 0, 0, 0 });
+            numServerPort.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            numServerPort.Name = "numServerPort";
+            numServerPort.Size = new Size(102, 23);
+            numServerPort.TabIndex = 38;
+            numServerPort.Value = new decimal(new int[] { 7777, 0, 0, 0 });
+            // 
+            // label24
+            // 
+            label24.AutoSize = true;
+            label24.Location = new Point(205, 82);
+            label24.Name = "label24";
+            label24.Size = new Size(64, 15);
+            label24.TabIndex = 37;
+            label24.Text = "Server Port";
+            // 
             // lblCooldownNoticeExpanded
             // 
             lblCooldownNoticeExpanded.AutoSize = true;
@@ -228,7 +252,7 @@
             // 
             // txtRegionCooldownSecs
             // 
-            txtRegionCooldownSecs.Location = new Point(343, 102);
+            txtRegionCooldownSecs.Location = new Point(462, 102);
             txtRegionCooldownSecs.Maximum = new decimal(new int[] { 999999999, 0, 0, 0 });
             txtRegionCooldownSecs.Name = "txtRegionCooldownSecs";
             txtRegionCooldownSecs.Size = new Size(120, 23);
@@ -238,7 +262,7 @@
             // label23
             // 
             label23.AutoSize = true;
-            label23.Location = new Point(338, 87);
+            label23.Location = new Point(457, 87);
             label23.Name = "label23";
             label23.Size = new Size(109, 15);
             label23.TabIndex = 33;
@@ -599,6 +623,7 @@
             groupBox1.TabIndex = 2;
             groupBox1.TabStop = false;
             groupBox1.Text = "RCON Settings";
+            groupBox1.Enter += groupBox1_Enter;
             // 
             // txtRCONPass
             // 
@@ -1327,10 +1352,12 @@
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
             Name = "frmGameServerSettings";
+            StartPosition = FormStartPosition.CenterParent;
             Text = "Main Game Server Settings - It's ALOT in one window, I know...";
             Load += frmServerSettings_Load;
             txtMapName.ResumeLayout(false);
             txtMapName.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)numServerPort).EndInit();
             ((System.ComponentModel.ISupportInitialize)txtRegionCooldownSecs).EndInit();
             ((System.ComponentModel.ISupportInitialize)numCorpseDecay).EndInit();
             ((System.ComponentModel.ISupportInitialize)txtGrowthRate).EndInit();
@@ -1473,5 +1500,7 @@
         private Label label23;
         private LinkLabel lblCooldownNoticeExpanded;
         private LinkLabel lblRegionCooldownNotice;
+        private NumericUpDown numServerPort;
+        private Label label24;
     }
 }

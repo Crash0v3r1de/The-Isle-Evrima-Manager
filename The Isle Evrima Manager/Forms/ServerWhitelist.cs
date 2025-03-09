@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using The_Isle_Evrima_Manager.Threadz.ThreadTracking;
+using The_Isle_Evrima_Manager.Tools;
 
 namespace The_Isle_Evrima_Manager.Forms
 {
@@ -88,8 +89,8 @@ namespace The_Isle_Evrima_Manager.Forms
         }
         private void ParseNewID(string id)
         {
-            GameServerSettings.GameIniState.WhitelistIDs.Add(id);
-            GameServerSettings.PendingSettingsApply = true;
+            if(!GameServerSettings.GameIniState.WhitelistIDs.Contains(id)) GameServerSettings.GameIniState.WhitelistIDs.Add(id);
+            if (GameServer.ServerRunning) GameServerSettings.PendingSettingsApply = true;
             ReloadIDList();
         }
         private void ReloadIDList()
@@ -104,7 +105,7 @@ namespace The_Isle_Evrima_Manager.Forms
         private void btnRemoveID_Click(object sender, EventArgs e)
         {
             GameServerSettings.GameIniState.AdminSteamIDs.RemoveAt(lstWhitelistIDs.SelectedIndex);
-            GameServerSettings.PendingSettingsApply = true;
+            if (GameServer.ServerRunning) GameServerSettings.PendingSettingsApply = true;
             lstWhitelistIDs.Items.Clear();
             ReloadIDList();
         }

@@ -2,25 +2,26 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using The_Isle_Evrima_Manager.Enums;
+using The_Isle_Evrima_Manager.Forms;
 using The_Isle_Evrima_Manager.IO;
 using The_Isle_Evrima_Manager.Threadz;
 using The_Isle_Evrima_Manager.Threadz.ThreadTracking;
+using The_Isle_Evrima_Manager.WebActions;
 
 namespace The_Isle_Evrima_Manager.Tools
 {
     public static class GameServer
     {
-        private static string serverPrimaryBinary = "TheIsleServer-Win64-Shipping.exe"; // This is the actual server
-        private static string serverSecondayBinary = "TheIsleServer.exe"; // Main binary to load the actual server
         private static PerformanceCounter counter = new PerformanceCounter();
         public static bool ServerRunning = false;
 
         public static string ServerMemoryUage()
         {
-            Process[] proc = Process.GetProcessesByName(serverPrimaryBinary); // returns an array but single instance will only have one binary running
+            Process[] proc = Process.GetProcessesByName("TheIsleServer-Win64-Shipping.exe"); // returns an array but single instance will only have one binary running
             counter.InstanceName = proc[0].ProcessName; // again single isntance this is fine
 
             var memUsage = counter.NextValue() / (int)(1024) / (int)(1024) / (int)(1024); // shown as GB
@@ -40,10 +41,13 @@ namespace The_Isle_Evrima_Manager.Tools
                 }
                 else
                 {
-                    steam.InitializeTool();
-                    steam.InstallIsleServer();
-                    CoreFiles.CopyDLLs();
-                    CoreFiles.SaveEngineINI(); // This doesn't change, it's The Isle's API keys to use Epic Online servers
+                    if(!ManagerGlobalTracker.steamCMDInitialized) steam.InitializeTool();
+                    if (!ManagerGlobalTracker.isleServerInstalled) {
+
+                        steam.InstallIsleServer();
+                        CoreFiles.CopyDLLs();
+                        CoreFiles.SaveEngineINI(); // This doesn't change, it's The Isle's API keys to use Epic Online servers
+                    }
                 }
                 if (ManagerGlobalTracker.isleServerInstalled)
                 {
@@ -55,6 +59,7 @@ namespace The_Isle_Evrima_Manager.Tools
                     }
                     else { 
                         // Prompt for server settings
+                        PromptForSetup();
                     }
                 }
 
@@ -63,6 +68,7 @@ namespace The_Isle_Evrima_Manager.Tools
             t.IsBackground = true;
             t.Start();
         }
+
         public static void StopGracefully()
         {
             ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.stoppingServer);
@@ -78,35 +84,24 @@ namespace The_Isle_Evrima_Manager.Tools
         private static void StartServerProcess()
         {
             Logger.Log("Starting game server...", LogType.Info);
+            ServerThread.server = new Process();
             ServerThread.server.StartInfo = StartArgs();
+
             ServerThread.server.OutputDataReceived += new DataReceivedEventHandler((sender, e) =>
             {
-                if (!String.IsNullOrEmpty(e.Data))
-                {
-                    Form1.AppendConsoleEntry(e.Data);
-                }
+                Form1.AppendConsoleEntry(e.Data);
             });
             ServerThread.server.ErrorDataReceived += new DataReceivedEventHandler((sender, e) =>
             {
-                if (!String.IsNullOrEmpty(e.Data))
-                {
-                    Form1.AppendConsoleEntry(e.Data);
-                }
+                Form1.AppendConsoleEntry(e.Data);
             });
-            ServerThread.server.EnableRaisingEvents = true;
-            //ServerThread.server.PriorityBoostEnabled = true;
-            // The way .NET is handling the console when hidden does not allow it to output into the textbox realtime
-            // Is what it is for now unless someone has a better code to handle it realtime
-            ServerThread.server.Start();
-            ServerThread.server.BeginOutputReadLine();
-            // TODO: Add validation to verify it's starting properly
-            new Thread(() =>
-            {
-                ServerThread.ServerThreadManager(); // Start watchdog thread
-            }).Start();
-
+            ServerRunning = true;
+            ServerThread.Start();
             ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.serverRunning);
-            Logger.Log("Server started!", LogType.Info);
+
+            new Thread(() => {
+                 ServerThread.ServerThreadManager();
+            }).Start();
         }
         private static ProcessStartInfo StartArgs() {
             ProcessStartInfo args = new ProcessStartInfo();
@@ -114,12 +109,74 @@ namespace The_Isle_Evrima_Manager.Tools
             args.UseShellExecute = false;
             args.RedirectStandardOutput = true;
             args.RedirectStandardError = true;
+            args.RedirectStandardInput = true;
             args.CreateNoWindow = true;
             args.WindowStyle = ProcessWindowStyle.Hidden;
-            args.FileName = ManagerGlobalTracker.serverExe;
+            args.FileName = ManagerGlobalTracker.serverCoreExe;
             return args;
         }
-        
+        private static void PromptForSetup()
+        {
+            new ManagerSettings().ShowDialog();
+            CoreFiles.SaveManagerSettings();
+
+            new frmGameServerSettings().ShowDialog();
+            if (GameServerSettings.GameIniSession.EnableRCON)
+            {
+                new frmRCONSettings().ShowDialog();
+                new frmRCONTasks().ShowDialog();
+                CoreFiles.SaveRCONSettings();
+                CoreFiles.SaveRCONTasks();
+            }
+            var result = MessageBox.Show("Do you want to change the game servers install location?\n*it installs in the server folder of the root of this tool*", "Change Server Install Path?", MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes) PromptServerDir();
+            new Thread(() =>
+            {
+                ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.savingSettings);
+                CoreFiles.SaveGameServerSettings();
+                CoreFiles.SaveGameServerStatusSettings();
+                ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.downloadingSteamCMD);
+                new BinaryDownloader().DownloadSteamCMD();
+                var steam = new SteamCMDControl();
+                steam.InitializeTool();
+                ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.downloadingServerFiles);
+                steam.InstallIsleServer();
+                CoreFiles.CopyDLLs();
+                CoreFiles.SaveEngineINI();
+                CoreFiles.SaveGameINI();
+                GameServerSettings.PendingSettingsApply = false;
+                ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.startingServer);
+                GameServer.StartServer();
+            }).Start();
+        }
+        private static void PromptServerDir()
+        {
+            FolderBrowserDialog dir = new FolderBrowserDialog();
+            dir.Tag = "Select the directory where the server files will be installed";
+            dir.ShowDialog();
+            while (true)
+            {
+                // quick loop to ensure instal is not on the root of a drive directly
+                DirectoryInfo d = new DirectoryInfo(dir.SelectedPath);
+                if (d.Parent == null) { MessageBox.Show("Steam cannot install directly onto a drive, please create a folder to use."); dir.ShowDialog(); }
+                else break;
+            }
+            var newPath = dir.SelectedPath;
+            UpdateGameServerPaths(newPath);
+            CoreFiles.SaveManagerSettings();
+            CoreFiles.PrcoessServerPathMove(newPath);
+            Logger.Log($"Changed server directory to {newPath}", LogType.Info);
+        }
+        private static void UpdateGameServerPaths(string rootDir)
+        {
+            // TODO: Not ideal but can redo later
+            ManagerGlobalTracker.customServerDir = true;
+            ManagerGlobalTracker.serverPath = rootDir;
+            ManagerGlobalTracker.dllDir = rootDir + @"\TheIsle\Binaries\Win64\";
+            ManagerGlobalTracker.serverExe = rootDir + @"\TheIsleServer.exe";
+            ManagerGlobalTracker.serverCoreExe = rootDir + @"\TheIsle\Binaries\Win64\TheIsleServer-Win64-Shipping.exe";
+            CoreFiles.SaveManagerSettings();
+        }
         #endregion
     }
 }

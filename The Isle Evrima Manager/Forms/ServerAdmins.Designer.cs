@@ -158,6 +158,7 @@
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
             Name = "ServerAdmins";
+            StartPosition = FormStartPosition.CenterParent;
             Text = "Game Server Admins";
             Load += ServerAdmins_Load;
             groupBox1.ResumeLayout(false);

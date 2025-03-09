@@ -32,6 +32,9 @@ namespace The_Isle_Evrima_Manager.Tools
                 case ManagerStatus.error:
                     ManagerGlobalTracker.CurrentStatus = ManagerStatus.error;
                     break;
+                case ManagerStatus.serverRunning:
+                    ManagerGlobalTracker.CurrentStatus = ManagerStatus.serverRunning;
+                    break;
             }
         }
     }

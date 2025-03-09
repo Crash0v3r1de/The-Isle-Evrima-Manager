@@ -62,6 +62,8 @@
             steamClientToolStripMenuItem = new ToolStripMenuItem();
             btnChangeProcPrior = new ToolStripMenuItem();
             changeServerDirectoryLocationToolStripMenuItem = new ToolStripMenuItem();
+            toolStripSeparator5 = new ToolStripSeparator();
+            checkForManagerUpdateToolStripMenuItem = new ToolStripMenuItem();
             toolStripDropDownButton3 = new ToolStripDropDownButton();
             btnStartIsleServer = new ToolStripMenuItem();
             btnStopIsleServer = new ToolStripMenuItem();
@@ -75,6 +77,7 @@
             toolStripSeparator4 = new ToolStripSeparator();
             btnVerifyIsleServer = new ToolStripMenuItem();
             btnServerStatsRefresh = new ToolStripMenuItem();
+            btnAutoRestartGameServer = new ToolStripMenuItem();
             toolStripDropDownButton5 = new ToolStripDropDownButton();
             configureRCONConnectionToolStripMenuItem = new ToolStripMenuItem();
             configureRCONTasksToolStripMenuItem = new ToolStripMenuItem();
@@ -95,8 +98,6 @@
             btnStartServerUI = new Button();
             btnUIStopServerGraceful = new Button();
             btnForceStopUI = new Button();
-            toolStripSeparator5 = new ToolStripSeparator();
-            checkForManagerUpdateToolStripMenuItem = new ToolStripMenuItem();
             stsStripMain.SuspendLayout();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
@@ -260,6 +261,7 @@
             groupBox3.TabIndex = 3;
             groupBox3.TabStop = false;
             groupBox3.Text = "Server Console";
+            groupBox3.Enter += groupBox3_Enter;
             // 
             // txtConsole
             // 
@@ -383,10 +385,22 @@
             changeServerDirectoryLocationToolStripMenuItem.Text = "Change Server Directory Location";
             changeServerDirectoryLocationToolStripMenuItem.Click += changeServerDirectoryLocationToolStripMenuItem_Click;
             // 
+            // toolStripSeparator5
+            // 
+            toolStripSeparator5.Name = "toolStripSeparator5";
+            toolStripSeparator5.Size = new Size(247, 6);
+            // 
+            // checkForManagerUpdateToolStripMenuItem
+            // 
+            checkForManagerUpdateToolStripMenuItem.Name = "checkForManagerUpdateToolStripMenuItem";
+            checkForManagerUpdateToolStripMenuItem.Size = new Size(250, 22);
+            checkForManagerUpdateToolStripMenuItem.Text = "Check for Manager Update";
+            checkForManagerUpdateToolStripMenuItem.Click += checkForManagerUpdateToolStripMenuItem_Click;
+            // 
             // toolStripDropDownButton3
             // 
             toolStripDropDownButton3.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            toolStripDropDownButton3.DropDownItems.AddRange(new ToolStripItem[] { btnStartIsleServer, btnStopIsleServer, btnForceStopIsleServer, toolStripSeparator2, generalServerSettingsToolStripMenuItem, userSettingsToolStripMenuItem, toolStripSeparator4, btnVerifyIsleServer, btnServerStatsRefresh });
+            toolStripDropDownButton3.DropDownItems.AddRange(new ToolStripItem[] { btnStartIsleServer, btnStopIsleServer, btnForceStopIsleServer, toolStripSeparator2, generalServerSettingsToolStripMenuItem, userSettingsToolStripMenuItem, toolStripSeparator4, btnVerifyIsleServer, btnServerStatsRefresh, btnAutoRestartGameServer });
             toolStripDropDownButton3.Image = (Image)resources.GetObject("toolStripDropDownButton3.Image");
             toolStripDropDownButton3.ImageTransparentColor = Color.Magenta;
             toolStripDropDownButton3.Name = "toolStripDropDownButton3";
@@ -436,21 +450,21 @@
             // adminsToolStripMenuItem
             // 
             adminsToolStripMenuItem.Name = "adminsToolStripMenuItem";
-            adminsToolStripMenuItem.Size = new Size(180, 22);
+            adminsToolStripMenuItem.Size = new Size(120, 22);
             adminsToolStripMenuItem.Text = "Admins";
             adminsToolStripMenuItem.Click += adminsToolStripMenuItem_Click;
             // 
             // vIPsToolStripMenuItem
             // 
             vIPsToolStripMenuItem.Name = "vIPsToolStripMenuItem";
-            vIPsToolStripMenuItem.Size = new Size(180, 22);
+            vIPsToolStripMenuItem.Size = new Size(120, 22);
             vIPsToolStripMenuItem.Text = "VIPs";
             vIPsToolStripMenuItem.Click += vIPsToolStripMenuItem_Click;
             // 
             // whitelistToolStripMenuItem
             // 
             whitelistToolStripMenuItem.Name = "whitelistToolStripMenuItem";
-            whitelistToolStripMenuItem.Size = new Size(180, 22);
+            whitelistToolStripMenuItem.Size = new Size(120, 22);
             whitelistToolStripMenuItem.Text = "Whitelist";
             whitelistToolStripMenuItem.Click += whitelistToolStripMenuItem_Click;
             // 
@@ -474,6 +488,15 @@
             btnServerStatsRefresh.Size = new Size(248, 22);
             btnServerStatsRefresh.Text = "Refresh Stats Data";
             btnServerStatsRefresh.Click += btnServerStatsRefresh_Click;
+            // 
+            // btnAutoRestartGameServer
+            // 
+            btnAutoRestartGameServer.Checked = true;
+            btnAutoRestartGameServer.CheckState = CheckState.Checked;
+            btnAutoRestartGameServer.Name = "btnAutoRestartGameServer";
+            btnAutoRestartGameServer.Size = new Size(248, 22);
+            btnAutoRestartGameServer.Text = "Auto Restart Server";
+            btnAutoRestartGameServer.Click += btnAutoRestartGameServer_Click;
             // 
             // toolStripDropDownButton5
             // 
@@ -536,8 +559,8 @@
             btnPendingSettingsChange.Image = (Image)resources.GetObject("btnPendingSettingsChange.Image");
             btnPendingSettingsChange.ImageTransparentColor = Color.Magenta;
             btnPendingSettingsChange.Name = "btnPendingSettingsChange";
-            btnPendingSettingsChange.Size = new Size(309, 22);
-            btnPendingSettingsChange.Text = "Game Server Running - Click to shutdown and update";
+            btnPendingSettingsChange.Size = new Size(218, 22);
+            btnPendingSettingsChange.Text = "Game Server Running - Click to apply";
             btnPendingSettingsChange.Click += toolStripButton1_Click;
             // 
             // groupBox4
@@ -659,18 +682,6 @@
             btnForceStopUI.UseVisualStyleBackColor = true;
             btnForceStopUI.Click += btnForceStopUI_Click;
             // 
-            // toolStripSeparator5
-            // 
-            toolStripSeparator5.Name = "toolStripSeparator5";
-            toolStripSeparator5.Size = new Size(247, 6);
-            // 
-            // checkForManagerUpdateToolStripMenuItem
-            // 
-            checkForManagerUpdateToolStripMenuItem.Name = "checkForManagerUpdateToolStripMenuItem";
-            checkForManagerUpdateToolStripMenuItem.Size = new Size(250, 22);
-            checkForManagerUpdateToolStripMenuItem.Text = "Check for Manager Update";
-            checkForManagerUpdateToolStripMenuItem.Click += checkForManagerUpdateToolStripMenuItem_Click;
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -686,6 +697,7 @@
             Controls.Add(groupBox1);
             Controls.Add(stsStripMain);
             Name = "Form1";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "The Isle Evirma Server Manager";
             Load += Form1_Load;
             stsStripMain.ResumeLayout(false);
@@ -773,5 +785,6 @@
         private ToolStripMenuItem troubleshootingIssuesToolStripMenuItem;
         private ToolStripSeparator toolStripSeparator5;
         private ToolStripMenuItem checkForManagerUpdateToolStripMenuItem;
+        private ToolStripMenuItem btnAutoRestartGameServer;
     }
 }

@@ -165,6 +165,7 @@
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
             Name = "frmRCONSettings";
+            StartPosition = FormStartPosition.CenterParent;
             Text = "RCON Connection Settings";
             Load += frmRCONSettings_Load;
             menuStrip1.ResumeLayout(false);

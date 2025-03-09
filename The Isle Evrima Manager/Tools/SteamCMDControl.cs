@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using The_Isle_Evrima_Manager.Enums;
 using The_Isle_Evrima_Manager.IO;
 using The_Isle_Evrima_Manager.Threadz.ThreadTracking;
+using The_Isle_Evrima_Manager.WebActions;
 
 namespace The_Isle_Evrima_Manager.Tools
 {
@@ -58,6 +59,7 @@ namespace The_Isle_Evrima_Manager.Tools
 
         public void InitializeTool()
         {
+            if(!ManagerGlobalTracker.steamCMDInstalled) new BinaryDownloader().DownloadSteamCMD();
             Logger.Log("Initializing SteamCMD...",LogType.Info);
             Process proc = new Process();
             proc.StartInfo = GetArgs(SteamCMDAction.Initialize);
@@ -68,8 +70,6 @@ namespace The_Isle_Evrima_Manager.Tools
                     Form1.AppendConsoleEntry(e.Data);
                 }
             });
-            // The way .NET is handling the console when hidden does not allow it to output into the textbox realtime
-            // Is what it is for now unless someone has a better code to handle it realtime
             proc.Start();
             proc.BeginOutputReadLine();
             while (!proc.HasExited) { Thread.Sleep(1200); }
@@ -89,8 +89,6 @@ namespace The_Isle_Evrima_Manager.Tools
                     Form1.AppendConsoleEntry(e.Data);
                 }
             });
-            // The way .NET is handling the console when hidden does not allow it to output into the textbox realtime
-            // Is what it is for now unless someone has a better code to handle it realtime
             proc.Start();
             proc.BeginOutputReadLine();
             while (!proc.HasExited) { Thread.Sleep(1200); }
@@ -111,8 +109,6 @@ namespace The_Isle_Evrima_Manager.Tools
                     Form1.AppendConsoleEntry(e.Data);
                 }
             });
-            // The way .NET is handling the console when hidden does not allow it to output into the textbox realtime
-            // Is what it is for now unless someone has a better code to handle it realtime
             proc.Start();
             proc.BeginOutputReadLine();
             while (!proc.HasExited) { Thread.Sleep(1200); }

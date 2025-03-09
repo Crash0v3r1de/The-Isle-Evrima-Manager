@@ -255,6 +255,7 @@
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
             Name = "ManagerSettings";
+            StartPosition = FormStartPosition.CenterParent;
             Text = "Manager Settings";
             Load += ManagerSettings_Load;
             groupBox1.ResumeLayout(false);
