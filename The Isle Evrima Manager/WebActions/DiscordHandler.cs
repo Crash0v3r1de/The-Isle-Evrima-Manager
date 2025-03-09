@@ -34,14 +34,13 @@ namespace The_Isle_Evrima_Manager.WebActions
 
             var WebHook = new
             {
-                username = "Text of the message",
-                content = "This is the main content section",
+                username = "EVRIME Server Manager",
+                content = "",
                 avatar_url = "https://github.com/Crash0v3r1de/the-isle-evrima-manager/raw/refs/heads/main/The%20Isle%20Evrima%20Manager/manager_icon_all_sizes.ico",
                 embeds = new List<object> {
                         new
                         {
                             title = "The Isle EVRIMA Server Manager Notification",
-                            url = "https://github.com/Crash0v3r1de/the-isle-evrima-manager/tree/main/The%20Isle%20Evrima%20Manager",
                             description = message,
                             color = int.Parse(alertColor, System.Globalization.NumberStyles.HexNumber)
                         },
@@ -51,7 +50,9 @@ namespace The_Isle_Evrima_Manager.WebActions
             {
                 string EndPoint = string.Format(ManagerGlobalTracker.discordWebhookURL);
                 var content = new StringContent(JsonConvert.SerializeObject(WebHook), Encoding.UTF8, "application/json");
-                Client.PostAsync(EndPoint, content).Wait();
+                var task = Client.PostAsync(EndPoint, content);
+                task.Wait();
+                if (!task.Result.IsSuccessStatusCode) { Logger.Log("Invalid Discord URL in Manager Settings!", LogType.Debug); }
             }
             else {
                 Logger.Log("Discord alert attempted, no Webhook URL configured but is enabled!",LogType.Debug);
