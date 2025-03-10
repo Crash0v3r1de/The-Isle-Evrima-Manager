@@ -24,7 +24,7 @@ Windows based server manager for running the isle evrima servers and managing th
 * Web based management system for deploying and managing multiple server instances running the manager
   * Optimzed manager stubs for web based deployments
   * Linux manager stub
-* Linux manager standlaone - console app of course
+* Linux manager standalone - console app of course
 * You're always welcome to submit ideas in the Issues tab - no guarantees on the ideas though, unless you code and make a PR to review and test
 
 ## Notice of included DLL files
