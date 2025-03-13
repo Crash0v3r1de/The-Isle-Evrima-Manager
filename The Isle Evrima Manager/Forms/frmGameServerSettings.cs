@@ -257,6 +257,8 @@ namespace The_Isle_Evrima_Manager.Forms
             {
                 CoreFiles.SaveEngineINI();
                 CoreFiles.SaveGameINI();
+                CoreFiles.SaveGameServerSettings();
+                CoreFiles.SaveGameServerStatusSettings();
                 this.Close();
                 this.Dispose();
             }

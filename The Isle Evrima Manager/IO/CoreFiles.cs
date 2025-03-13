@@ -45,12 +45,20 @@ namespace The_Isle_Evrima_Manager.IO
         }
         public static void SaveGameINI() {
             // Saved\Config\WindowsServer - folder structure needed inside server root directory
-            var ini = ParseGameServerSettingsIntoINI();            
+            var ini = ParseGameServerSettingsIntoINI();
+            var iniDir = ManagerGlobalTracker.serverPath + @"\TheIsle\Saved\Config\WnidowsServer";
+            if (ManagerGlobalTracker.serverPath.EndsWith('\\')) { 
+                iniDir = iniDir.TrimEnd('\\');
+            }
             if (!Directory.Exists(ManagerGlobalTracker.serverPath + @"\TheIsle\Saved\Config\WnidowsServer"))
             {
                  Directory.CreateDirectory(ManagerGlobalTracker.serverPath + @"\TheIsle\Saved\Config\WindowsServer");
             }
             var fullPath = ManagerGlobalTracker.serverPath +@"\"+ ManagerGlobalTracker.gameINI;
+            if (ManagerGlobalTracker.serverPath.EndsWith(@"\"))
+            {
+                fullPath = ManagerGlobalTracker.serverPath.TrimEnd('\\') + @"\" + ManagerGlobalTracker.engineINI;
+            }
             using (StreamWriter sw = new StreamWriter(fullPath, false)) { 
                 for (int x = 0;x < ini.Count; x++)
                 {
@@ -204,6 +212,9 @@ namespace The_Isle_Evrima_Manager.IO
         {
             // The server when ran seems to remove this file and this is used in the run arguments but we'll write it anyway
             var fullPath = ManagerGlobalTracker.serverPath +@"\"+ ManagerGlobalTracker.engineINI;
+            if (ManagerGlobalTracker.serverPath.EndsWith(@"\")) { 
+                fullPath = ManagerGlobalTracker.serverPath.TrimEnd('\\') + @"\" + ManagerGlobalTracker.engineINI;
+            }
             var dirPath = fullPath.Replace(@"\Engine.ini", "");
             if (Directory.Exists(dirPath)) {
                 // Server installed, good to write - TODO: trace what's writing the ini's before server download from start button

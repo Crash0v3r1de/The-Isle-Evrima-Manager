@@ -8,8 +8,8 @@ namespace The_Isle_Evrima_Manager.JSON
 {
     public class GameServerSettingsJSON
     {
-        public GameIniSession GameIniSession { get; set; } = new GameIniSession();
-        public GameIniStateBase GameIniState { get; set; } = new GameIniStateBase();
+        public GameIniSession GameIniSession { get; set; }
+        public GameIniStateBase GameIniState { get; set; }
         public bool PendingSettingsApply { get; set; } = false; // Also bool in Game Server Status
     }
 }

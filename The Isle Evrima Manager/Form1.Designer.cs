@@ -377,6 +377,7 @@
             btnChangeProcPrior.Name = "btnChangeProcPrior";
             btnChangeProcPrior.Size = new Size(250, 22);
             btnChangeProcPrior.Text = "Change Server Process Priority";
+            btnChangeProcPrior.Click += btnChangeProcPrior_Click;
             // 
             // changeServerDirectoryLocationToolStripMenuItem
             // 

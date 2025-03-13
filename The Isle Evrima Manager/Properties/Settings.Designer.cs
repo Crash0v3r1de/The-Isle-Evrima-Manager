@@ -25,7 +25,7 @@ namespace The_Isle_Evrima_Manager.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.3")]
         public string version {
             get {
                 return ((string)(this["version"]));

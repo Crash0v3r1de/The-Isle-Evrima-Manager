@@ -68,7 +68,8 @@ namespace The_Isle_Evrima_Manager
             });
             t4.IsBackground = true;
             t4.Start();
-            var t5 = new Thread(() => {
+            var t5 = new Thread(() =>
+            {
                 UpdateServerStatLabels();
             });
             t5.IsBackground = true;
@@ -177,7 +178,8 @@ namespace The_Isle_Evrima_Manager
             CheckRunningPriv();
             if (manSet.FirstRun()) SysPrep(); // Need to run this first to setup folders for logs
             else manSet.LoadManagerSettings();
-            if (manSet.GameSettingsPresent()) {
+            if (manSet.GameSettingsPresent())
+            {
                 CoreFiles.LoadGameServerSettings();
                 CoreFiles.LoadGameServerStatusSettings();
             }
@@ -248,7 +250,8 @@ namespace The_Isle_Evrima_Manager
                 switch (ManagerGlobalTracker.CurrentStatus)
                 {
                     case ManagerStatus.idle:
-                        if (lblServerStatus.Text != "Server idle...") {
+                        if (lblServerStatus.Text != "Server idle...")
+                        {
                             fon = new Font(lblServerStatus.Font, FontStyle.Regular);
                             lblServerStatus.Font = fon;
                             lblServerStatus.ForeColor = Color.OrangeRed;
@@ -256,7 +259,8 @@ namespace The_Isle_Evrima_Manager
                         }
                         break;
                     case ManagerStatus.downloadingSteamCMD:
-                        if (lblServerStatus.Text != "Downloading SteamCMD...") {
+                        if (lblServerStatus.Text != "Downloading SteamCMD...")
+                        {
                             fon = new Font(lblServerStatus.Font, FontStyle.Regular);
                             lblServerStatus.Font = fon;
                             lblServerStatus.ForeColor = Color.DarkCyan;
@@ -264,7 +268,8 @@ namespace The_Isle_Evrima_Manager
                         }
                         break;
                     case ManagerStatus.downloadingServerFiles:
-                        if (lblServerStatus.Text != "Downloading server files...") {
+                        if (lblServerStatus.Text != "Downloading server files...")
+                        {
                             fon = new Font(lblServerStatus.Font, FontStyle.Regular);
                             lblServerStatus.Font = fon;
                             lblServerStatus.ForeColor = Color.DarkCyan;
@@ -272,7 +277,8 @@ namespace The_Isle_Evrima_Manager
                         }
                         break;
                     case ManagerStatus.startingServer:
-                        if (lblServerStatus.Text != "Starting server...") {
+                        if (lblServerStatus.Text != "Starting server...")
+                        {
                             fon = new Font(lblServerStatus.Font, FontStyle.Bold);
                             lblServerStatus.Font = fon;
                             lblServerStatus.ForeColor = Color.GreenYellow;
@@ -280,7 +286,8 @@ namespace The_Isle_Evrima_Manager
                         }
                         break;
                     case ManagerStatus.stoppingServer:
-                        if (lblServerStatus.Text != "Stopping server...") {
+                        if (lblServerStatus.Text != "Stopping server...")
+                        {
                             fon = new Font(lblServerStatus.Font, FontStyle.Bold);
                             lblServerStatus.Font = fon;
                             lblServerStatus.ForeColor = Color.YellowGreen;
@@ -303,7 +310,8 @@ namespace The_Isle_Evrima_Manager
                         lblServerStatus.Text = "Server running!";
                         break;
                     default:
-                        if (lblServerStatus.Text != "Server idle...") {
+                        if (lblServerStatus.Text != "Server idle...")
+                        {
                             fon = new Font(lblServerStatus.Font, FontStyle.Regular);
                             lblServerStatus.Font = fon;
                             lblServerStatus.ForeColor = Color.OrangeRed;
@@ -429,7 +437,7 @@ namespace The_Isle_Evrima_Manager
             {
                 Logger.Log("Copying required Steam DLLs...", LogType.Info);
                 if (!CoreFiles.CopyDLLs()) Logger.Log("Failed to copy Steam DLLs, please do manually and report issue on Github", LogType.Error);
-                Logger.Log("DLLs copied!",LogType.Info);
+                Logger.Log("DLLs copied!", LogType.Info);
             }
         }
 
@@ -496,7 +504,8 @@ namespace The_Isle_Evrima_Manager
             CoreFiles.PrcoessServerPathMove(newPath);
             Logger.Log($"Changed server directory to {newPath}", LogType.Info);
         }
-        private void StopServerGracefully(bool applyingUpdate = false) {
+        private void StopServerGracefully(bool applyingUpdate = false)
+        {
             if (applyingUpdate)
             {
                 GameServer.StopGracefully();
@@ -508,7 +517,8 @@ namespace The_Isle_Evrima_Manager
                 GameServer.StopGracefully();
             }
         }
-        private void StopServerForcefully() {
+        private void StopServerForcefully()
+        {
             var res = MessageBox.Show("Auto restart is enabled, disable and fully stop the server?", "Auto Restart Enabled", MessageBoxButtons.YesNo);
             if (res == DialogResult.Yes) GameServerStatusTracker.RestartProcessOnFail = false;
             GameServer.StopForcefully();
@@ -577,7 +587,8 @@ namespace The_Isle_Evrima_Manager
                 }
                 else
                 {
-                    if (!string.IsNullOrWhiteSpace(entry)) {
+                    if (!string.IsNullOrWhiteSpace(entry))
+                    {
                         // TODO: add method for alert strings to be notified on
                         if (!entry.Contains("Redirect"))
                         { // ignore .NET redirect messages
@@ -586,7 +597,7 @@ namespace The_Isle_Evrima_Manager
                             form.txtConsole.SelectionStart = form.txtConsole.Text.Length;
                             form.txtConsole.ScrollToCaret();
                         }
-                    }                    
+                    }
                 }
             }
         }
@@ -638,7 +649,8 @@ namespace The_Isle_Evrima_Manager
             }).Start();
         }
 
-        private void SettingsApplied() {
+        private void SettingsApplied()
+        {
             if (InvokeRequired)
             {
                 Invoke(SettingsApplied);
@@ -720,7 +732,8 @@ namespace The_Isle_Evrima_Manager
                     ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.startingServer);
                     GameServer.StartServer();
                 }
-                else {
+                else
+                {
                     btnPendingSettingsChange.Visible = true;
                     btnPendingSettingsChange.Enabled = true;
                 }
@@ -803,6 +816,15 @@ namespace The_Isle_Evrima_Manager
         private void groupBox3_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnChangeProcPrior_Click(object sender, EventArgs e)
+        {
+            var result = MessageBox.Show("This will set the game server process to highest priority, you're sure?","Priority Bump",MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes) {
+                var proc = Process.GetProcessesByName("TheIsleServer-Win64-Shipping.exe");
+                proc[0].PriorityClass = ProcessPriorityClass.RealTime;
+            }
         }
     }
 }
