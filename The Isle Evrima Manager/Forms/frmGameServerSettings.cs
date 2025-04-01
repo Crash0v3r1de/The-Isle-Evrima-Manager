@@ -24,7 +24,8 @@ namespace The_Isle_Evrima_Manager.Forms
         }
         private void frmServerSettings_Load(object sender, EventArgs e)
         {
-            if (GameServerSettings.GameIniSession.ServerName != null && !string.IsNullOrWhiteSpace(GameServerSettings.GameIniSession.ServerName)) {
+            if (GameServerSettings.GameIniSession.ServerName != null && !string.IsNullOrWhiteSpace(GameServerSettings.GameIniSession.ServerName))
+            {
                 // settings have been made before, parse them into the UI
                 txtAIDensity.Value = GameServerSettings.GameIniSession.AIDensity;
                 txtAIInt.Value = GameServerSettings.GameIniSession.AISpawnInterval;
@@ -71,8 +72,10 @@ namespace The_Isle_Evrima_Manager.Forms
             }
         }
 
-        private void LoadDinos() {
-            if (GameServerSettings.GameIniState.AllowedClasses.Count != 0) {
+        private void LoadDinos()
+        {
+            if (GameServerSettings.GameIniState.AllowedClasses.Count != 0)
+            {
                 UncheckDinos();
                 foreach (var d in GameServerSettings.GameIniState.AllowedClasses)
                 {
@@ -93,10 +96,12 @@ namespace The_Isle_Evrima_Manager.Forms
                     if (d.ClassName == "Dilophosaurus") chkDilophosaurus.Checked = true;
                     if (d.ClassName == "Herrerasaurus") chkHerrerasaurus.Checked = true;
                     if (d.ClassName == "Maiasaura") chkMaiasaura.Checked = true;
+                    if(d.ClassName == "Omniraptor") chkOmniraptor.Checked = true;
                 }
-            }            
+            }
         }
-        private void UncheckDinos() {
+        private void UncheckDinos()
+        {
             chkDryosaurus.Checked = false;
             chkHypsilophodon.Checked = false;
             chkPachycephalosaurus.Checked = false;
@@ -114,8 +119,10 @@ namespace The_Isle_Evrima_Manager.Forms
             chkHerrerasaurus.Checked = false;
             chkMaiasaura.Checked = false;
         }
-        private void LoadDisallowedAI() {
-            if (GameServerSettings.GameIniState.DisallowedAIClasses.Count != 0) {
+        private void LoadDisallowedAI()
+        {
+            if (GameServerSettings.GameIniState.DisallowedAIClasses.Count != 0)
+            {
                 foreach (var a in GameServerSettings.GameIniState.DisallowedAIClasses)
                 {
                     if (a.AIName == "Compsognathus") chkCompsoAI.Checked = false;
@@ -126,7 +133,7 @@ namespace The_Isle_Evrima_Manager.Forms
                     if (a.AIName == "Seaturtle") chkSeaturtleAI.Checked = false;
 
                 }
-            }            
+            }
         }
 
         private void exitAndDiscardToolStripMenuItem_Click(object sender, EventArgs e)
@@ -251,7 +258,8 @@ namespace The_Isle_Evrima_Manager.Forms
                     // Leave this window open and exit method
                     dontClose = false;
                 }
-            }else dontClose = false;
+            }
+            else dontClose = false;
             if (!dontClose) allValid = true;
             if (allValid)
             {
@@ -319,12 +327,13 @@ namespace The_Isle_Evrima_Manager.Forms
                 GameServerSettings.GameIniSession.RegionSpawnCooldownTimeSeconds = GetUtcOffsetInSeconds();
                 // Server will still apply cooldown timer if this is not the amount of seconds your server is from UTC time
             }
-            else {
+            else
+            {
                 GameServerSettings.GameIniSession.UseRegionSpawning = chkRegionSpawn.Checked;
                 GameServerSettings.GameIniSession.RegionSpawnCooldown = chkRegionSpawnCooldown.Checked;
                 GameServerSettings.GameIniSession.RegionSpawnCooldownTimeSeconds = (int)txtRegionCooldownSecs.Value;
                 GameServerStatusTracker.ServerPort = (int)numServerPort.Value;
-            }            
+            }
         }
         private void ParseDynoClasses()
         {
@@ -426,6 +435,12 @@ namespace The_Isle_Evrima_Manager.Forms
                 GameServerSettings.GameIniState.AllowedClasses.Add(dino);
                 dino = new DinoClass();
             }
+            if (chkOmniraptor.Checked)
+            {
+                dino.ClassName = "Omniraptor";
+                GameServerSettings.GameIniState.AllowedClasses.Add(dino);
+                dino = new DinoClass();
+            }
         }
         private void ParseAIClasses()
         {
@@ -464,6 +479,11 @@ namespace The_Isle_Evrima_Manager.Forms
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void chkOmniraptor_CheckedChanged(object sender, EventArgs e)
         {
 
         }

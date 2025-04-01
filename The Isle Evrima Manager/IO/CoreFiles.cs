@@ -46,18 +46,25 @@ namespace The_Isle_Evrima_Manager.IO
         public static void SaveGameINI() {
             // Saved\Config\WindowsServer - folder structure needed inside server root directory
             var ini = ParseGameServerSettingsIntoINI();
-            var iniDir = ManagerGlobalTracker.serverPath + @"\TheIsle\Saved\Config\WnidowsServer";
-            if (ManagerGlobalTracker.serverPath.EndsWith('\\')) { 
-                iniDir = iniDir.TrimEnd('\\');
+            string iniDir = "";
+            if (ManagerGlobalTracker.serverPath.EndsWith('\\'))
+            {
+                iniDir = ManagerGlobalTracker.serverPath.TrimEnd('\\');
+            }
+            else {
+                iniDir = ManagerGlobalTracker.serverPath + @"\TheIsle\Saved\Config\WnidowsServer";
             }
             if (!Directory.Exists(ManagerGlobalTracker.serverPath + @"\TheIsle\Saved\Config\WnidowsServer"))
             {
-                 Directory.CreateDirectory(ManagerGlobalTracker.serverPath + @"\TheIsle\Saved\Config\WindowsServer");
+                Directory.CreateDirectory(ManagerGlobalTracker.serverPath + @"\TheIsle\Saved\Config\WindowsServer");
             }
             var fullPath = ManagerGlobalTracker.serverPath +@"\"+ ManagerGlobalTracker.gameINI;
-            if (ManagerGlobalTracker.serverPath.EndsWith(@"\"))
+            if (ManagerGlobalTracker.serverPath.EndsWith('\\'))
             {
-                fullPath = ManagerGlobalTracker.serverPath.TrimEnd('\\') + @"\" + ManagerGlobalTracker.engineINI;
+                fullPath = ManagerGlobalTracker.serverPath + ManagerGlobalTracker.gameINI;
+            }
+            else {
+                fullPath = ManagerGlobalTracker.serverPath + @"\" + ManagerGlobalTracker.gameINI;
             }
             using (StreamWriter sw = new StreamWriter(fullPath, false)) { 
                 for (int x = 0;x < ini.Count; x++)

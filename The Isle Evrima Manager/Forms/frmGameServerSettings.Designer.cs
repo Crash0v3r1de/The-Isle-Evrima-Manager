@@ -1142,6 +1142,7 @@
             chkOmniraptor.TabIndex = 9;
             chkOmniraptor.Text = "Omniraptor";
             chkOmniraptor.UseVisualStyleBackColor = true;
+            chkOmniraptor.CheckedChanged += chkOmniraptor_CheckedChanged;
             // 
             // chkDiabloceratops
             // 
