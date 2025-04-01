@@ -98,6 +98,10 @@
             btnStartServerUI = new Button();
             btnUIStopServerGraceful = new Button();
             btnForceStopUI = new Button();
+            toolStripSeparator6 = new ToolStripSeparator();
+            testsToolStripMenuItem = new ToolStripMenuItem();
+            btnTestRCONConnection = new ToolStripMenuItem();
+            btnTestRCONCommand = new ToolStripMenuItem();
             stsStripMain.SuspendLayout();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
@@ -502,7 +506,7 @@
             // toolStripDropDownButton5
             // 
             toolStripDropDownButton5.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            toolStripDropDownButton5.DropDownItems.AddRange(new ToolStripItem[] { configureRCONConnectionToolStripMenuItem, configureRCONTasksToolStripMenuItem });
+            toolStripDropDownButton5.DropDownItems.AddRange(new ToolStripItem[] { configureRCONConnectionToolStripMenuItem, configureRCONTasksToolStripMenuItem, toolStripSeparator6, testsToolStripMenuItem });
             toolStripDropDownButton5.Image = (Image)resources.GetObject("toolStripDropDownButton5.Image");
             toolStripDropDownButton5.ImageTransparentColor = Color.Magenta;
             toolStripDropDownButton5.Name = "toolStripDropDownButton5";
@@ -683,6 +687,31 @@
             btnForceStopUI.UseVisualStyleBackColor = true;
             btnForceStopUI.Click += btnForceStopUI_Click;
             // 
+            // toolStripSeparator6
+            // 
+            toolStripSeparator6.Name = "toolStripSeparator6";
+            toolStripSeparator6.Size = new Size(225, 6);
+            // 
+            // testsToolStripMenuItem
+            // 
+            testsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { btnTestRCONConnection, btnTestRCONCommand });
+            testsToolStripMenuItem.Name = "testsToolStripMenuItem";
+            testsToolStripMenuItem.Size = new Size(228, 22);
+            testsToolStripMenuItem.Text = "Tests";
+            // 
+            // btnTestRCONConnection
+            // 
+            btnTestRCONConnection.Name = "btnTestRCONConnection";
+            btnTestRCONConnection.Size = new Size(180, 22);
+            btnTestRCONConnection.Text = "Test Connections";
+            btnTestRCONConnection.Click += btnTestRCONConnection_Click;
+            // 
+            // btnTestRCONCommand
+            // 
+            btnTestRCONCommand.Name = "btnTestRCONCommand";
+            btnTestRCONCommand.Size = new Size(180, 22);
+            btnTestRCONCommand.Text = "Test Command";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -787,5 +816,9 @@
         private ToolStripSeparator toolStripSeparator5;
         private ToolStripMenuItem checkForManagerUpdateToolStripMenuItem;
         private ToolStripMenuItem btnAutoRestartGameServer;
+        private ToolStripSeparator toolStripSeparator6;
+        private ToolStripMenuItem testsToolStripMenuItem;
+        private ToolStripMenuItem btnTestRCONConnection;
+        private ToolStripMenuItem btnTestRCONCommand;
     }
 }

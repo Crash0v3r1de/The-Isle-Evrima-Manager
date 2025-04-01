@@ -307,7 +307,7 @@ namespace The_Isle_Evrima_Manager.IO
             if(GameServerSettings.GameIniState.AdminSteamIDs.Count == 0) rawINI.Add($"AdminSteamIDs=");
             foreach (var id in GameServerSettings.GameIniState.AdminSteamIDs)
             {
-                rawINI.Add($"AdminSteamIDs={id}");
+                rawINI.Add($"AdminsSteamIDs={id}");
             }
             if (GameServerSettings.GameIniState.WhitelistIDs.Count == 0) rawINI.Add($"WhitelistIDs=");
             foreach (var id in GameServerSettings.GameIniState.WhitelistIDs)

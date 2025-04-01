@@ -820,11 +820,17 @@ namespace The_Isle_Evrima_Manager
 
         private void btnChangeProcPrior_Click(object sender, EventArgs e)
         {
-            var result = MessageBox.Show("This will set the game server process to highest priority, you're sure?","Priority Bump",MessageBoxButtons.YesNo);
-            if (result == DialogResult.Yes) {
+            var result = MessageBox.Show("This will set the game server process to highest priority, you're sure?", "Priority Bump", MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes)
+            {
                 var proc = Process.GetProcessesByName("TheIsleServer-Win64-Shipping.exe");
                 proc[0].PriorityClass = ProcessPriorityClass.RealTime;
             }
+        }
+
+        private void btnTestRCONConnection_Click(object sender, EventArgs e)
+        {
+            var server = new MessageBox("Enter Server Address","Server Address",);
         }
     }
 }
