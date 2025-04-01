@@ -18,5 +18,7 @@ namespace The_Isle_Evrima_Manager.JSON.RCON_Task
         public bool TaskMonthly { get; set; }
         public bool TaskDaily { get; set; }
         public string? CustomCommand { get; set; }
+        public DateTime TaskCompleted { get; set; }
+        public bool TaskReset { get; set; }
     }
 }

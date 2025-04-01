@@ -1,3 +1,5 @@
+using CoreRCON;
+using Microsoft.VisualBasic;
 using Microsoft.VisualBasic.Devices;
 using System.Configuration;
 using System.Diagnostics;
@@ -159,16 +161,6 @@ namespace The_Isle_Evrima_Manager
                 baseSpeed = b.ToString("0.0");
                 maxSpeed = m.ToString("0.0");
             }
-            // Might be usable, look into later - really not a big priority at the moment
-            //PerformanceCounter cpuCounter = new PerformanceCounter("Processor Information", "% Processor Performance", "_Total");
-            //double cpuValue = cpuCounter.NextValue();
-            //foreach (ManagementObject obj in new ManagementObjectSearcher("SELECT *, Name FROM Win32_Processor").Get())
-            //{
-            //    double maxSpeed = Convert.ToDouble(obj["MaxClockSpeed"]) / 1000;
-            //    double turboSpeed = maxSpeed * cpuValue / 100;
-            //    var data = string.Format("{0} Running at {1:0.00}Ghz, Turbo Speed: {2:0.00}Ghz", obj["Name"], maxSpeed, turboSpeed);
-            //    Debug.WriteLine(data);
-            //}
         }
 
 
@@ -828,9 +820,24 @@ namespace The_Isle_Evrima_Manager
             }
         }
 
+        // ...
+
         private void btnTestRCONConnection_Click(object sender, EventArgs e)
         {
-            var server = new MessageBox("Enter Server Address","Server Address",);
+            var ip = RCONGlobalTracker.rconHost;
+            var port = RCONGlobalTracker.rconPort;
+            string pass = RCONGlobalTracker.rconPassword;
+            if (!RCONGlobalTracker.rconEnabled) {
+                ip = Interaction.InputBox("Enter RCON server address:", "RCON Connection Test", "localhost"); // Only VB.NET object for some reason
+                port = Interaction.InputBox("Enter RCON server port:", "RCON Connection Test", "8888");
+                pass = Interaction.InputBox("Enter RCON server password:", "RCON Connection Test", "");
+            }
+            new Task(async () => await RCONCore.ConnectAsync(ip, port, pass)).Start();
+            while (!RCONGlobalTracker.isConnected) {
+                Thread.Sleep(900);
+            }
+            RCONCore.SendCommand(RCONType.Announcement,"Test Announcement");
+            Console.WriteLine("RCON Connection Test Complete");
         }
     }
 }

@@ -81,6 +81,10 @@
             toolStripDropDownButton5 = new ToolStripDropDownButton();
             configureRCONConnectionToolStripMenuItem = new ToolStripMenuItem();
             configureRCONTasksToolStripMenuItem = new ToolStripMenuItem();
+            toolStripSeparator6 = new ToolStripSeparator();
+            testsToolStripMenuItem = new ToolStripMenuItem();
+            btnTestRCONConnection = new ToolStripMenuItem();
+            btnTestRCONCommand = new ToolStripMenuItem();
             toolStripSeparator3 = new ToolStripSeparator();
             toolStripDropDownButton4 = new ToolStripDropDownButton();
             troubleshootingIssuesToolStripMenuItem = new ToolStripMenuItem();
@@ -98,10 +102,7 @@
             btnStartServerUI = new Button();
             btnUIStopServerGraceful = new Button();
             btnForceStopUI = new Button();
-            toolStripSeparator6 = new ToolStripSeparator();
-            testsToolStripMenuItem = new ToolStripMenuItem();
-            btnTestRCONConnection = new ToolStripMenuItem();
-            btnTestRCONCommand = new ToolStripMenuItem();
+            toolStripLabel1 = new ToolStripLabel();
             stsStripMain.SuspendLayout();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
@@ -278,7 +279,7 @@
             // 
             // toolStrip1
             // 
-            toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripDropDownButton1, toolStripDropDownButton2, toolStripDropDownButton3, toolStripDropDownButton5, toolStripSeparator3, toolStripDropDownButton4, btnPendingSettingsChange });
+            toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripDropDownButton1, toolStripDropDownButton2, toolStripDropDownButton3, toolStripDropDownButton5, toolStripSeparator3, toolStripDropDownButton4, btnPendingSettingsChange, toolStripLabel1 });
             toolStrip1.Location = new Point(0, 0);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Size = new Size(800, 25);
@@ -527,6 +528,31 @@
             configureRCONTasksToolStripMenuItem.Text = "Configure RCON Tasks";
             configureRCONTasksToolStripMenuItem.Click += configureRCONTasksToolStripMenuItem_Click;
             // 
+            // toolStripSeparator6
+            // 
+            toolStripSeparator6.Name = "toolStripSeparator6";
+            toolStripSeparator6.Size = new Size(225, 6);
+            // 
+            // testsToolStripMenuItem
+            // 
+            testsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { btnTestRCONConnection, btnTestRCONCommand });
+            testsToolStripMenuItem.Name = "testsToolStripMenuItem";
+            testsToolStripMenuItem.Size = new Size(228, 22);
+            testsToolStripMenuItem.Text = "Tests";
+            // 
+            // btnTestRCONConnection
+            // 
+            btnTestRCONConnection.Name = "btnTestRCONConnection";
+            btnTestRCONConnection.Size = new Size(180, 22);
+            btnTestRCONConnection.Text = "Test Connections";
+            btnTestRCONConnection.Click += btnTestRCONConnection_Click;
+            // 
+            // btnTestRCONCommand
+            // 
+            btnTestRCONCommand.Name = "btnTestRCONCommand";
+            btnTestRCONCommand.Size = new Size(180, 22);
+            btnTestRCONCommand.Text = "Test Command";
+            // 
             // toolStripSeparator3
             // 
             toolStripSeparator3.Name = "toolStripSeparator3";
@@ -687,30 +713,11 @@
             btnForceStopUI.UseVisualStyleBackColor = true;
             btnForceStopUI.Click += btnForceStopUI_Click;
             // 
-            // toolStripSeparator6
+            // toolStripLabel1
             // 
-            toolStripSeparator6.Name = "toolStripSeparator6";
-            toolStripSeparator6.Size = new Size(225, 6);
-            // 
-            // testsToolStripMenuItem
-            // 
-            testsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { btnTestRCONConnection, btnTestRCONCommand });
-            testsToolStripMenuItem.Name = "testsToolStripMenuItem";
-            testsToolStripMenuItem.Size = new Size(228, 22);
-            testsToolStripMenuItem.Text = "Tests";
-            // 
-            // btnTestRCONConnection
-            // 
-            btnTestRCONConnection.Name = "btnTestRCONConnection";
-            btnTestRCONConnection.Size = new Size(180, 22);
-            btnTestRCONConnection.Text = "Test Connections";
-            btnTestRCONConnection.Click += btnTestRCONConnection_Click;
-            // 
-            // btnTestRCONCommand
-            // 
-            btnTestRCONCommand.Name = "btnTestRCONCommand";
-            btnTestRCONCommand.Size = new Size(180, 22);
-            btnTestRCONCommand.Text = "Test Command";
+            toolStripLabel1.Name = "toolStripLabel1";
+            toolStripLabel1.Size = new Size(311, 22);
+            toolStripLabel1.Text = "TODO: ADD OPTION TO NOT RE SAVE GAME.INI ON LOAD";
             // 
             // Form1
             // 
@@ -820,5 +827,6 @@
         private ToolStripMenuItem testsToolStripMenuItem;
         private ToolStripMenuItem btnTestRCONConnection;
         private ToolStripMenuItem btnTestRCONCommand;
+        private ToolStripLabel toolStripLabel1;
     }
 }

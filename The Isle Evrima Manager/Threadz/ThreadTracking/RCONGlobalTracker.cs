@@ -8,9 +8,10 @@ namespace The_Isle_Evrima_Manager.Threadz.ThreadTracking
 {
     public static class RCONGlobalTracker
     {
-        public static string rconHost = "127.0.0.1";
-        public static string rconPort = "1000";
-        public static string rconPassword = "password";
-        public static bool rconEnabled = false;
+        public static string rconHost { get; set; } = "127.0.0.1";
+        public static string rconPort { get; set; } = "1000";
+        public static string rconPassword { get; set; } = "password";
+        public static bool rconEnabled { get; set; } = false;
+        public static bool isConnected { get; set; } = false;
     }
 }
