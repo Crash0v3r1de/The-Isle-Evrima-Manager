@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Principal;
 using System.Text;
+using System.Windows.Forms;
 using The_Isle_Evrima_Manager.Enums;
 using The_Isle_Evrima_Manager.Forms;
 using The_Isle_Evrima_Manager.IO;
@@ -166,6 +167,7 @@ namespace The_Isle_Evrima_Manager
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            toolStripLabel1.Visible = false; // TODO: remove after I figure and fix this out - lolz
             btnPendingSettingsChange.Visible = false;
             CheckRunningPriv();
             if (manSet.FirstRun()) SysPrep(); // Need to run this first to setup folders for logs
