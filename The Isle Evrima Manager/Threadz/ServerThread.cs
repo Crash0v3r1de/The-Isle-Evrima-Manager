@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using The_Isle_Evrima_Manager.Enums;
 using The_Isle_Evrima_Manager.IO;
+using The_Isle_Evrima_Manager.JSON;
 using The_Isle_Evrima_Manager.Threadz.ThreadTracking;
 using The_Isle_Evrima_Manager.Tools;
 
@@ -28,6 +29,7 @@ namespace The_Isle_Evrima_Manager.Threadz
         // The above for sending CTRL+C to the server process graceful shutdown
         public static Process server;
         private static volatile bool SENDING_CTRL_C_TO_CHILD = false;
+        private static int rebootCounter = 0;
 
 
         public static void ServerThreadManager() {
@@ -83,6 +85,34 @@ namespace The_Isle_Evrima_Manager.Threadz
                                 server.WaitForExit();
                                 ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.idle);
                                 GameServer.ServerRunning = false;
+                            }
+                            if (NightlyRebootLogic()) {
+                                if (server != null)
+                                {
+                                    if (AttachConsole((uint)server.Id))
+                                    {
+                                        SetConsoleCtrlHandler(null, true);
+                                        try
+                                        {
+                                            if (!GenerateConsoleCtrlEvent(CTRL_C_EVENT, 0))
+                                                server.WaitForExit();
+                                        }
+                                        finally
+                                        {
+                                            // nothing
+                                        }
+                                    }
+                                    server.WaitForExit();
+                                    if (server.HasExited)
+                                    {
+                                        Logger.Log("Server stoped!", LogType.Info);
+                                        ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.idle);
+                                        GameServer.ServerRunning = false;
+                                    }
+                                    Thread.Sleep(8000); // 8 seconds should be enough?
+                                    // Start server again
+                                    Start();
+                                }
                             }
                             Thread.Sleep(5000); // TODO: Maybe add this as manager setting eventually
                             if (server == null || server.HasExited) GameServer.ServerRunning = false;
@@ -149,6 +179,36 @@ namespace The_Isle_Evrima_Manager.Threadz
                                 Logger.Log("Server exited(crash?) - restart disabled in settings...", LogType.Error);
                                 break; // exit the loop and exit thread since not watching the server anymore
                             }
+                            if (NightlyRebootLogic())
+                            {
+                                if (server != null)
+                                {
+                                    if (AttachConsole((uint)server.Id))
+                                    {
+                                        SetConsoleCtrlHandler(null, true);
+                                        try
+                                        {
+                                            if (!GenerateConsoleCtrlEvent(CTRL_C_EVENT, 0))
+                                                server.WaitForExit();
+                                        }
+                                        finally
+                                        {
+                                            // nothing
+                                        }
+                                    }
+                                    server.WaitForExit();
+                                    if (server.HasExited)
+                                    {
+                                        Logger.Log("Server stoped!", LogType.Info);
+                                        ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.idle);
+                                        GameServer.ServerRunning = false;
+                                    }
+                                    Thread.Sleep(8000); // 8 seconds should be enough?
+                                    // Start server again
+                                    Start();
+                                    Thread.Sleep(5000); // 5 seconds for binary to load to logic and see it's still running since no restart on crash enabled
+                                }
+                            }
                             if (server != null && server.HasExited) GameServer.ServerRunning = false;
                             else GameServer.ServerRunning = true;
                             Thread.Sleep(5000); // TODO: Maybe add this as manager setting eventually
@@ -176,7 +236,72 @@ namespace The_Isle_Evrima_Manager.Threadz
             CTRL_CLOSE = 2,
             CTRL_LOGOFF = 5,
             CTRL_SHUTDOWN = 6
-        }        
+        }
+
+        private static bool NightlyRebootLogic()
+        {
+            // 1AM reboot
+                if (DateTime.Now.Hour == 0)
+                {
+                    // Hour heads up
+                    try
+                    {
+                        RCONCore.ConnectAsync(RCONGlobalTracker.rconHost, RCONGlobalTracker.rconPort, RCONGlobalTracker.rconPassword);
+                        RCONCore.SendCommand(RCONType.Announcement, "Server is restarting in 1 hour");
+                    }
+                    catch (Exception ex) { Logger.Log($"Error reboot announcement - {ex.Message}", LogType.Error); }
+                }
+                if (DateTime.Now.Hour == 0 & DateTime.Now.Minute == 30)
+                {
+                    // half hour heads up
+                    try
+                    {
+                        RCONCore.ConnectAsync(RCONGlobalTracker.rconHost, RCONGlobalTracker.rconPort, RCONGlobalTracker.rconPassword);
+                        RCONCore.SendCommand(RCONType.Announcement, "Server is restarting in 30 minutes");
+                    }
+                    catch (Exception ex) { Logger.Log($"Error reboot announcement - {ex.Message}", LogType.Error); }
+                }
+                if (DateTime.Now.Hour == 0 & DateTime.Now.Minute == 50)
+                {
+                    // 10 minute heads up
+                    try
+                    {
+                        RCONCore.ConnectAsync(RCONGlobalTracker.rconHost, RCONGlobalTracker.rconPort, RCONGlobalTracker.rconPassword);
+                        RCONCore.SendCommand(RCONType.Announcement, "Server is restarting in 10 minutes");
+                    }
+                    catch (Exception ex) { Logger.Log($"Error reboot announcement - {ex.Message}", LogType.Error); }
+                }
+                if (DateTime.Now.Hour == 0 & DateTime.Now.Minute == 55)
+                {
+                    // 5 minute heads up
+                    try
+                    {
+                        RCONCore.ConnectAsync(RCONGlobalTracker.rconHost, RCONGlobalTracker.rconPort, RCONGlobalTracker.rconPassword);
+                        RCONCore.SendCommand(RCONType.Announcement, "Server is restarting in 5 minutes - SAFE LOG NOW");
+                    }
+                    catch (Exception ex) { Logger.Log($"Error reboot announcement - {ex.Message}", LogType.Error); }
+                }
+                if (DateTime.Now.Hour == 0 & DateTime.Now.Minute == 58)
+                {
+                    // 2 minute heads up - they're probably screwed now
+                    try
+                    {
+                        RCONCore.ConnectAsync(RCONGlobalTracker.rconHost, RCONGlobalTracker.rconPort, RCONGlobalTracker.rconPassword);
+                        RCONCore.SendCommand(RCONType.Announcement, "Server is restarting in 2 minutes...it might be too late to safe log now");
+                    }
+                    catch (Exception ex) { Logger.Log($"Error reboot announcement - {ex.Message}", LogType.Error); }
+                }
+                if (rebootCounter == 0 & DateTime.Now.Hour == 1)
+                {
+                    return true;
+                }
+                if (rebootCounter != 0 & DateTime.Now.Hour == 2)
+                {
+                    // reset counter to 0 for next night processing
+                    rebootCounter = 0;
+                }
+                return false;
+            }
 
         #endregion
     }

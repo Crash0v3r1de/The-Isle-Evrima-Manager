@@ -67,6 +67,8 @@ namespace The_Isle_Evrima_Manager.Forms
                 txtSpeciesMigrationTime.Value = GameServerSettings.GameIniSession.SpeciaMigrationTime;
                 chkRegionSpawn.Checked = GameServerSettings.GameIniSession.UseRegionSpawning;
                 numServerPort.Value = GameServerStatusTracker.ServerPort;
+                chkNightlyReboot.Checked = NightlyReboots.NightlyRestartsEnabled;
+                chkRCONAnnounce.Checked = NightlyReboots.UseRCONAnnouncements;
                 LoadDinos();
                 LoadDisallowedAI();
             }
@@ -221,6 +223,8 @@ namespace The_Isle_Evrima_Manager.Forms
             var disallowAICount = GameServerSettings.GameIniState.DisallowedAIClasses.Count;
             bool dontClose = true;
 
+            NightlyReboots.NightlyRestartsEnabled = chkNightlyReboot.Checked;
+            NightlyReboots.UseRCONAnnouncements = chkRCONAnnounce.Checked;
             if (adminCount <= 0)
             {
                 // admin good
@@ -267,6 +271,7 @@ namespace The_Isle_Evrima_Manager.Forms
                 CoreFiles.SaveGameINI();
                 CoreFiles.SaveGameServerSettings();
                 CoreFiles.SaveGameServerStatusSettings();
+                CoreFiles.SaveRebootOption();
                 this.Close();
                 this.Dispose();
             }

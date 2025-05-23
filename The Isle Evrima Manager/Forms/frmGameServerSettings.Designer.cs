@@ -133,6 +133,10 @@
             chkBoarAI = new CheckBox();
             chkPteroAI = new CheckBox();
             chkCompsoAI = new CheckBox();
+            groupBox8 = new GroupBox();
+            label25 = new Label();
+            chkRCONAnnounce = new CheckBox();
+            chkNightlyReboot = new CheckBox();
             txtMapName.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numServerPort).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtRegionCooldownSecs).BeginInit();
@@ -160,6 +164,7 @@
             ((System.ComponentModel.ISupportInitialize)txtSpeciesMigrationTime).BeginInit();
             groupBox6.SuspendLayout();
             groupBox7.SuspendLayout();
+            groupBox8.SuspendLayout();
             SuspendLayout();
             // 
             // txtMapName
@@ -684,7 +689,7 @@
             groupBox2.Controls.Add(label10);
             groupBox2.Controls.Add(label9);
             groupBox2.Controls.Add(chkDynamicWeather);
-            groupBox2.Location = new Point(639, 434);
+            groupBox2.Location = new Point(734, 447);
             groupBox2.Name = "groupBox2";
             groupBox2.Size = new Size(238, 166);
             groupBox2.TabIndex = 3;
@@ -1078,9 +1083,9 @@
             chkDilophosaurus.CheckState = CheckState.Checked;
             chkDilophosaurus.Location = new Point(143, 149);
             chkDilophosaurus.Name = "chkDilophosaurus";
-            chkDilophosaurus.Size = new Size(89, 19);
+            chkDilophosaurus.Size = new Size(102, 19);
             chkDilophosaurus.TabIndex = 14;
-            chkDilophosaurus.Text = "checkBox16";
+            chkDilophosaurus.Text = "Dilophosaurus";
             chkDilophosaurus.UseVisualStyleBackColor = true;
             // 
             // chkGallimimus
@@ -1339,11 +1344,53 @@
             chkCompsoAI.Text = "Compsognathus";
             chkCompsoAI.UseVisualStyleBackColor = true;
             // 
+            // groupBox8
+            // 
+            groupBox8.Controls.Add(label25);
+            groupBox8.Controls.Add(chkRCONAnnounce);
+            groupBox8.Controls.Add(chkNightlyReboot);
+            groupBox8.Location = new Point(629, 447);
+            groupBox8.Name = "groupBox8";
+            groupBox8.Size = new Size(99, 170);
+            groupBox8.TabIndex = 8;
+            groupBox8.TabStop = false;
+            groupBox8.Text = "Nightly Restart";
+            // 
+            // label25
+            // 
+            label25.AutoSize = true;
+            label25.Location = new Point(4, 109);
+            label25.Name = "label25";
+            label25.Size = new Size(93, 15);
+            label25.TabIndex = 2;
+            label25.Text = "(requires RCON)";
+            // 
+            // chkRCONAnnounce
+            // 
+            chkRCONAnnounce.AutoSize = true;
+            chkRCONAnnounce.Location = new Point(6, 79);
+            chkRCONAnnounce.Name = "chkRCONAnnounce";
+            chkRCONAnnounce.Size = new Size(81, 19);
+            chkRCONAnnounce.TabIndex = 1;
+            chkRCONAnnounce.Text = "Announce";
+            chkRCONAnnounce.UseVisualStyleBackColor = true;
+            // 
+            // chkNightlyReboot
+            // 
+            chkNightlyReboot.AutoSize = true;
+            chkNightlyReboot.Location = new Point(7, 47);
+            chkNightlyReboot.Name = "chkNightlyReboot";
+            chkNightlyReboot.Size = new Size(61, 19);
+            chkNightlyReboot.TabIndex = 0;
+            chkNightlyReboot.Text = "Enable";
+            chkNightlyReboot.UseVisualStyleBackColor = true;
+            // 
             // frmGameServerSettings
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(979, 625);
+            Controls.Add(groupBox8);
             Controls.Add(groupBox7);
             Controls.Add(groupBox6);
             Controls.Add(groupBox4);
@@ -1393,6 +1440,8 @@
             groupBox6.PerformLayout();
             groupBox7.ResumeLayout(false);
             groupBox7.PerformLayout();
+            groupBox8.ResumeLayout(false);
+            groupBox8.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1504,5 +1553,9 @@
         private LinkLabel lblRegionCooldownNotice;
         private NumericUpDown numServerPort;
         private Label label24;
+        private GroupBox groupBox8;
+        private Label label25;
+        private CheckBox chkRCONAnnounce;
+        private CheckBox chkNightlyReboot;
     }
 }

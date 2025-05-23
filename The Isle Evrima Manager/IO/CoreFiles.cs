@@ -213,6 +213,28 @@ namespace The_Isle_Evrima_Manager.IO
                 GameServerStatusTracker.ServerPort = parsed.ServerPort;
             }
         }
+        public static void SaveRebootOption() { 
+            using (StreamWriter sw = new StreamWriter(ManagerGlobalTracker.managerConfDir + "reboot-settings.json", false))
+            {
+                sw.Write(JsonConvert.SerializeObject(new
+                {
+                    NightlyRestartsEnabled = NightlyReboots.NightlyRestartsEnabled,
+                    UseRCONAnnouncements = NightlyReboots.UseRCONAnnouncements
+                }));
+            }
+        }
+        public static void LoadRebootOption()
+        {
+            var path = ManagerGlobalTracker.managerConfDir + "reboot-settings.json";
+            if (File.Exists(path)) {
+                using (StreamReader sr = new StreamReader(path))
+                {
+                    var parsed = JsonConvert.DeserializeObject<RebootSettingsJSON>(sr.ReadToEnd());
+                    NightlyReboots.NightlyRestartsEnabled = parsed.NightlyRestartsEnabled;
+                    NightlyReboots.UseRCONAnnouncements = parsed.UseRCONAnnouncements;
+                }
+            }            
+        }
 
         #region Private Methods
         private static void WriteEngineINI()

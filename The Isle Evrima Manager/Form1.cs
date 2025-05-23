@@ -174,7 +174,8 @@ namespace The_Isle_Evrima_Manager
             {
                 CoreFiles.LoadGameServerSettings();
                 CoreFiles.LoadGameServerStatusSettings();
-            }
+                CoreFiles.LoadRebootOption();
+            }            
             StartThreads();
             UpdateTitle();
             Logger.Log($"Tool Started | Current Dir: {Environment.CurrentDirectory}", LogType.Info);
