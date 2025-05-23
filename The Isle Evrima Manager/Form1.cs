@@ -251,6 +251,7 @@ namespace The_Isle_Evrima_Manager
                             lblServerStatus.Font = fon;
                             lblServerStatus.ForeColor = Color.OrangeRed;
                             lblServerStatus.Text = "Server idle...";
+                            btnStartIsleServer.Enabled = true;
                         }
                         break;
                     case ManagerStatus.downloadingSteamCMD:
@@ -260,6 +261,7 @@ namespace The_Isle_Evrima_Manager
                             lblServerStatus.Font = fon;
                             lblServerStatus.ForeColor = Color.DarkCyan;
                             lblServerStatus.Text = "Downloading SteamCMD...";
+                            btnStartIsleServer.Enabled = true;
                         }
                         break;
                     case ManagerStatus.downloadingServerFiles:
@@ -269,6 +271,7 @@ namespace The_Isle_Evrima_Manager
                             lblServerStatus.Font = fon;
                             lblServerStatus.ForeColor = Color.DarkCyan;
                             lblServerStatus.Text = "Downloading server files...";
+                            btnStartIsleServer.Enabled = true;
                         }
                         break;
                     case ManagerStatus.startingServer:
@@ -278,6 +281,7 @@ namespace The_Isle_Evrima_Manager
                             lblServerStatus.Font = fon;
                             lblServerStatus.ForeColor = Color.GreenYellow;
                             lblServerStatus.Text = "Starting server...";
+                            btnStartIsleServer.Enabled = false;
                         }
                         break;
                     case ManagerStatus.stoppingServer:
@@ -287,6 +291,7 @@ namespace The_Isle_Evrima_Manager
                             lblServerStatus.Font = fon;
                             lblServerStatus.ForeColor = Color.YellowGreen;
                             lblServerStatus.Text = "Stopping server...";
+                            btnStartIsleServer.Enabled = true;
                         }
                         break;
                     case ManagerStatus.error:
@@ -296,6 +301,7 @@ namespace The_Isle_Evrima_Manager
                             lblServerStatus.Font = fon;
                             lblServerStatus.ForeColor = Color.Red;
                             lblServerStatus.Text = "Error halted...CHECK LOGS";
+                            btnStartIsleServer.Enabled = true;
                         }
                         break;
                     case ManagerStatus.serverRunning:
@@ -303,6 +309,7 @@ namespace The_Isle_Evrima_Manager
                         fon = new Font(lblServerStatus.Font, FontStyle.Bold);
                         lblServerStatus.Font = fon;
                         lblServerStatus.Text = "Server running!";
+                        btnStartIsleServer.Enabled = false;
                         break;
                     default:
                         if (lblServerStatus.Text != "Server idle...")
@@ -311,6 +318,7 @@ namespace The_Isle_Evrima_Manager
                             lblServerStatus.Font = fon;
                             lblServerStatus.ForeColor = Color.OrangeRed;
                             lblServerStatus.Text = "Server idle...";
+                            btnStartIsleServer.Enabled = true;
                         }
                         break;
                 }
