@@ -293,6 +293,7 @@ namespace The_Isle_Evrima_Manager.Threadz
                 }
                 if (rebootCounter == 0 & DateTime.Now.Hour == 1)
                 {
+                rebootCounter++;
                     return true;
                 }
                 if (rebootCounter != 0 & DateTime.Now.Hour == 2)
