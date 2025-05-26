@@ -240,7 +240,9 @@ namespace The_Isle_Evrima_Manager.Threadz
 
         private static bool NightlyRebootLogic()
         {
-            // 1AM reboot
+            if (NightlyReboots.NightlyRestartsEnabled)
+            {
+                // 1AM reboot
                 if (DateTime.Now.Hour == 0)
                 {
                     // Hour heads up
@@ -293,7 +295,7 @@ namespace The_Isle_Evrima_Manager.Threadz
                 }
                 if (rebootCounter == 0 & DateTime.Now.Hour == 1)
                 {
-                rebootCounter++;
+                    rebootCounter++;
                     return true;
                 }
                 if (rebootCounter != 0 & DateTime.Now.Hour == 2)
@@ -303,6 +305,8 @@ namespace The_Isle_Evrima_Manager.Threadz
                 }
                 return false;
             }
+            return false;
+        }
 
         #endregion
     }
