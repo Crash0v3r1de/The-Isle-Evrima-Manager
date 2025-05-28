@@ -226,6 +226,8 @@ namespace The_Isle_Evrima_Manager.Threadz
                 }
                 if (rebootCounter == 0 & DateTime.Now.Hour == 1)
                 {
+                    RCONCore.ConnectAsync(RCONGlobalTracker.rconHost, RCONGlobalTracker.rconPort, RCONGlobalTracker.rconPassword);
+                    RCONCore.SendCommand(RCONType.Save);
                     rebootCounter++;
                     return true;
                 }
