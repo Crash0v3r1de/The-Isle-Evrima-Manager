@@ -57,6 +57,7 @@ namespace The_Isle_Evrima_Manager.Tools
                     var fullPath = ManagerGlobalTracker.serverPath + ManagerGlobalTracker.gameINI;
                     if (File.Exists(fullPath))
                     {
+                        GameServerStatusTracker.AllowServerRunning = true;
                         StartServerProcess();
                     }
                     else { 

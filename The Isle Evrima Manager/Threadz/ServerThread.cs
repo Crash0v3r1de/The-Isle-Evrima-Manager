@@ -33,11 +33,12 @@ namespace The_Isle_Evrima_Manager.Threadz
         private static int rebootCounter = 0;
         private static bool exitedRestartLoop = false; // Used to know if we exited the restart loop - from manual user interaction
         private static bool runningInRestartLoop = false; // reference if we were in the restart loop then exited with above bool verification
+        private static bool fullyExit = false;
 
 
         public static void ServerThreadManager() {
             try {
-                while (GameServer.ServerRunning) {
+                while (GameServer.ServerRunning&&!fullyExit) {
                     if (GameServerStatusTracker.RestartProcessOnFail)
                     {
                         runningInRestartLoop = true;
@@ -46,10 +47,13 @@ namespace The_Isle_Evrima_Manager.Threadz
                             if (server == null || server.HasExited)
                             {
                                 Logger.Log("Server exited(crash?) - restarting...", LogType.Error);
-                                Start(); // Restart server
+                                // GameServer.Start(); // Restart server                                
+                                GameServer.StartServer();
+                                fullyExit = true; // exit the thread since we restarted the server
+                                // Kill this thread for a new one to start
                             }
 
-                            if (!GameServerStatusTracker.AllowServerRunning)
+                            if (!GameServerStatusTracker.AllowServerRunning&&!server.HasExited)
                             {
                                 Logger.Log("Server stopping...", LogType.Info);
                                 GracefulStop();
@@ -228,6 +232,7 @@ namespace The_Isle_Evrima_Manager.Threadz
                 {
                     RCONCore.ConnectAsync(RCONGlobalTracker.rconHost, RCONGlobalTracker.rconPort, RCONGlobalTracker.rconPassword);
                     RCONCore.SendCommand(RCONType.Save);
+                    Thread.Sleep(5000); // wait for save to finish - no way to verify save is done yet
                     rebootCounter++;
                     return true;
                 }

@@ -516,17 +516,10 @@ namespace The_Isle_Evrima_Manager
             }
             else
             {
-                // start beforer we change variables
-                var thread = new Thread(() =>
-                {
-                    AvoidSettingsOverwrite();
-                });
-                thread.IsBackground = true;
-                thread.Start();
-
                 var res = MessageBox.Show("Auto restart is enabled, disable and fully stop the server?", "Auto Restart Enabled", MessageBoxButtons.YesNo);
                 if (res == DialogResult.Yes) { GameServerStatusTracker.RestartProcessOnFail = false; }
-                GameServer.StopGracefully();
+                else { GameServerStatusTracker.RestartProcessOnFail = true; }
+                    GameServer.StopGracefully();
             }
         }
         private void StopServerForcefully()
@@ -550,14 +543,7 @@ namespace The_Isle_Evrima_Manager
             }
             else
             {
-                GameServer.StartServer();
-                // I think I should start this now?
-                var thread = new Thread(() =>
-                {
-                    AvoidSettingsOverwrite();
-                });
-                thread.IsBackground = true;
-                thread.Start();
+                GameServer.StartServer();                
             }
         }
 
