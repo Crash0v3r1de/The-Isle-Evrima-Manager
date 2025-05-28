@@ -121,7 +121,7 @@ namespace The_Isle_Evrima_Manager
             while (!allGood)
             {
                 bool cplusgood = false;
-                bool steamgood = false;
+                var steamgood = reqs.SteamPresent();
                 if (!cplusres)
                 {
                     lblcplusplus.ForeColor = Color.OrangeRed;
@@ -279,7 +279,7 @@ namespace The_Isle_Evrima_Manager
                         {
                             fon = new Font(lblServerStatus.Font, FontStyle.Bold);
                             lblServerStatus.Font = fon;
-                            lblServerStatus.ForeColor = Color.GreenYellow;
+                            lblServerStatus.ForeColor = Color.MediumTurquoise;
                             lblServerStatus.Text = "Starting server...";
                             btnStartIsleServer.Enabled = false;
                         }
@@ -475,6 +475,7 @@ namespace The_Isle_Evrima_Manager
             }
             else
             {
+                GameServerStatusTracker.AllowServerRunning = true;
                 GameServer.StartServer();
             }
         }
@@ -515,8 +516,16 @@ namespace The_Isle_Evrima_Manager
             }
             else
             {
+                // start beforer we change variables
+                var thread = new Thread(() =>
+                {
+                    AvoidSettingsOverwrite();
+                });
+                thread.IsBackground = true;
+                thread.Start();
+
                 var res = MessageBox.Show("Auto restart is enabled, disable and fully stop the server?", "Auto Restart Enabled", MessageBoxButtons.YesNo);
-                if (res == DialogResult.Yes) GameServerStatusTracker.RestartProcessOnFail = false;
+                if (res == DialogResult.Yes) { GameServerStatusTracker.RestartProcessOnFail = false; }
                 GameServer.StopGracefully();
             }
         }
@@ -542,6 +551,35 @@ namespace The_Isle_Evrima_Manager
             else
             {
                 GameServer.StartServer();
+                // I think I should start this now?
+                var thread = new Thread(() =>
+                {
+                    AvoidSettingsOverwrite();
+                });
+                thread.IsBackground = true;
+                thread.Start();
+            }
+        }
+
+        private static void AvoidSettingsOverwrite() {
+            bool restartOnFail = GameServerStatusTracker.RestartProcessOnFail;
+            bool serverRunning = GameServerStatusTracker.AllowServerRunning;
+            bool resetRestartOnFail = false;
+            while (true) {
+                if (restartOnFail != GameServerStatusTracker.RestartProcessOnFail) {
+                    // user disabled this - most likely from graceful restart
+                    resetRestartOnFail = true;
+                }
+                if (serverRunning != GameServerStatusTracker.AllowServerRunning) {
+                    // server stopped - resave previous settings
+                    if (resetRestartOnFail) {
+                        GameServerStatusTracker.RestartProcessOnFail = true;
+                        GameServerStatusTracker.AllowServerRunning = true;
+
+                        break; // exit loop, exit thread
+                    }
+                }
+                Thread.Sleep(5000); // 10 seconds enough?
             }
         }
 

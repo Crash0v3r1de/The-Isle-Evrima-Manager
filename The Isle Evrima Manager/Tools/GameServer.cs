@@ -64,56 +64,7 @@ namespace The_Isle_Evrima_Manager.Tools
                         PromptForSetup();
                     }
                 }
-                // 1AM reboot
-                if (NightlyReboots.NightlyRestartsEnabled) {
-                    if (DateTime.Now.Hour == 0) {
-                        // Hour heads up
-                        try {
-                            RCONCore.ConnectAsync(RCONGlobalTracker.rconHost, RCONGlobalTracker.rconPort, RCONGlobalTracker.rconPassword);
-                            RCONCore.SendCommand(RCONType.Announcement, "Server is restarting in 1 hour");
-                        } catch(Exception ex) { Logger.Log($"Error reboot announcement - {ex.Message}",LogType.Error); }                        
-                    }
-                    if (DateTime.Now.Hour == 0 & DateTime.Now.Minute == 30) {
-                        // half hour heads up
-                        try {
-                            RCONCore.ConnectAsync(RCONGlobalTracker.rconHost, RCONGlobalTracker.rconPort, RCONGlobalTracker.rconPassword);
-                            RCONCore.SendCommand(RCONType.Announcement, "Server is restarting in 30 minutes");
-                        } catch (Exception ex) { Logger.Log($"Error reboot announcement - {ex.Message}", LogType.Error); }                        
-                    }
-                    if (DateTime.Now.Hour == 0 & DateTime.Now.Minute == 50)
-                    {
-                        // 10 minute heads up
-                        try
-                        {
-                            RCONCore.ConnectAsync(RCONGlobalTracker.rconHost, RCONGlobalTracker.rconPort, RCONGlobalTracker.rconPassword);
-                            RCONCore.SendCommand(RCONType.Announcement, "Server is restarting in 10 minutes");
-                        }
-                        catch (Exception ex) { Logger.Log($"Error reboot announcement - {ex.Message}", LogType.Error); }
-                    }
-                    if (DateTime.Now.Hour == 0 & DateTime.Now.Minute == 55)
-                    {
-                        // 5 minute heads up
-                        try
-                        {
-                            RCONCore.ConnectAsync(RCONGlobalTracker.rconHost, RCONGlobalTracker.rconPort, RCONGlobalTracker.rconPassword);
-                            RCONCore.SendCommand(RCONType.Announcement, "Server is restarting in 5 minutes - SAFE LOG NOW");
-                        }
-                        catch (Exception ex) { Logger.Log($"Error reboot announcement - {ex.Message}", LogType.Error); }
-                    }
-                    if (DateTime.Now.Hour == 0 & DateTime.Now.Minute == 58)
-                    {
-                        // 2 minute heads up - they're probably screwed now
-                        try
-                        {
-                            RCONCore.ConnectAsync(RCONGlobalTracker.rconHost, RCONGlobalTracker.rconPort, RCONGlobalTracker.rconPassword);
-                            RCONCore.SendCommand(RCONType.Announcement, "Server is restarting in 2 minutes...it might be too late to safe log now");
-                        }
-                        catch (Exception ex) { Logger.Log($"Error reboot announcement - {ex.Message}", LogType.Error); }
-                    }
-                    if (rebootCounter == 0 & DateTime.Now.Hour == 1) { 
-                        
-                    }
-                }
+                
                 ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.serverRunning);
             });
             t.IsBackground = true;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -30,6 +31,8 @@ namespace The_Isle_Evrima_Manager.Threadz
         public static Process server;
         private static volatile bool SENDING_CTRL_C_TO_CHILD = false;
         private static int rebootCounter = 0;
+        private static bool exitedRestartLoop = false; // Used to know if we exited the restart loop - from manual user interaction
+        private static bool runningInRestartLoop = false; // reference if we were in the restart loop then exited with above bool verification
 
 
         public static void ServerThreadManager() {
@@ -37,6 +40,7 @@ namespace The_Isle_Evrima_Manager.Threadz
                 while (GameServer.ServerRunning) {
                     if (GameServerStatusTracker.RestartProcessOnFail)
                     {
+                        runningInRestartLoop = true;
                         while (GameServerStatusTracker.RestartProcessOnFail)
                         {
                             if (server == null || server.HasExited)
@@ -48,35 +52,7 @@ namespace The_Isle_Evrima_Manager.Threadz
                             if (!GameServerStatusTracker.AllowServerRunning)
                             {
                                 Logger.Log("Server stopping...", LogType.Info);
-                                if (server != null)
-                                {
-                                    if (AttachConsole((uint)server.Id))
-                                    {
-                                        SetConsoleCtrlHandler(null, true);
-                                        try
-                                        {
-                                            if (!GenerateConsoleCtrlEvent(CTRL_C_EVENT, 0))
-                                                server.WaitForExit();
-                                        }
-                                        finally
-                                        {
-                                            // nothing
-                                        }
-                                    }
-                                    server.WaitForExit();
-                                    if (server.HasExited)
-                                    {
-                                        Logger.Log("Server stoped!", LogType.Info);
-                                        ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.idle);
-                                        GameServer.ServerRunning = false;
-                                    }
-                                }
-
-                                while (!server.HasExited)
-                                {
-                                    if (server.HasExited) break;
-                                    Thread.Sleep(1200);
-                                }
+                                GracefulStop();
                             }
                             if (GameServerStatusTracker.ForceStop)
                             {
@@ -87,30 +63,14 @@ namespace The_Isle_Evrima_Manager.Threadz
                                 GameServer.ServerRunning = false;
                             }
                             if (NightlyRebootLogic()) {
+                                ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.stoppingServer);
+                                Logger.Log("Nightly reboot starting!",LogType.Info);
                                 if (server != null)
                                 {
-                                    if (AttachConsole((uint)server.Id))
-                                    {
-                                        SetConsoleCtrlHandler(null, true);
-                                        try
-                                        {
-                                            if (!GenerateConsoleCtrlEvent(CTRL_C_EVENT, 0))
-                                                server.WaitForExit();
-                                        }
-                                        finally
-                                        {
-                                            // nothing
-                                        }
-                                    }
-                                    server.WaitForExit();
-                                    if (server.HasExited)
-                                    {
-                                        Logger.Log("Server stoped!", LogType.Info);
-                                        ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.idle);
-                                        GameServer.ServerRunning = false;
-                                    }
+                                    GracefulStop();
                                     Thread.Sleep(8000); // 8 seconds should be enough?
                                     // Start server again
+                                    ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.startingServer);
                                     Start();
                                 }
                             }
@@ -121,35 +81,20 @@ namespace The_Isle_Evrima_Manager.Threadz
                     }
                     else
                     {
+                        if (runningInRestartLoop) {
+                            exitedRestartLoop = true;
+                            break; // just exit the ServerRunning loop since we don't want to restart the server on fail and graceful exit
+                        }
+
                         // Don't restart thread
-                        while (true)
+                        while (!exitedRestartLoop) // this'll always be false if we never enter the restart logic above
                         {
                             if (!GameServerStatusTracker.AllowServerRunning && !GameServerStatusTracker.ForceStop)
                             {
                                 Logger.Log("Server stopping...", LogType.Info);
                                 if (server != null)
                                 {
-                                    if (AttachConsole((uint)server.Id))
-                                    {
-                                        SetConsoleCtrlHandler(null, true);
-                                        try
-                                        {
-                                            if (!GenerateConsoleCtrlEvent(CTRL_C_EVENT, 0))
-                                                server.WaitForExit();
-                                        }
-                                        finally
-                                        {
-                                            // nothing
-                                        }
-                                    }
-                                    server.WaitForExit();
-                                    if (server.HasExited)
-                                    {
-                                        Logger.Log("Server stoped!", LogType.Info);
-                                        ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.idle);
-                                        GameServer.ServerRunning = false;
-                                        break;
-                                    }
+                                    GracefulStop();
                                 }
 
                                 while (!server.HasExited)
@@ -181,30 +126,14 @@ namespace The_Isle_Evrima_Manager.Threadz
                             }
                             if (NightlyRebootLogic())
                             {
+                                ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.stoppingServer);
+                                Logger.Log("Nightly reboot starting!", LogType.Info);
                                 if (server != null)
                                 {
-                                    if (AttachConsole((uint)server.Id))
-                                    {
-                                        SetConsoleCtrlHandler(null, true);
-                                        try
-                                        {
-                                            if (!GenerateConsoleCtrlEvent(CTRL_C_EVENT, 0))
-                                                server.WaitForExit();
-                                        }
-                                        finally
-                                        {
-                                            // nothing
-                                        }
-                                    }
-                                    server.WaitForExit();
-                                    if (server.HasExited)
-                                    {
-                                        Logger.Log("Server stoped!", LogType.Info);
-                                        ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.idle);
-                                        GameServer.ServerRunning = false;
-                                    }
+                                    GracefulStop();
                                     Thread.Sleep(8000); // 8 seconds should be enough?
                                     // Start server again
+                                    ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.startingServer);
                                     Start();
                                     Thread.Sleep(5000); // 5 seconds for binary to load to logic and see it's still running since no restart on crash enabled
                                 }
@@ -214,11 +143,13 @@ namespace The_Isle_Evrima_Manager.Threadz
                             Thread.Sleep(5000); // TODO: Maybe add this as manager setting eventually
                         }
                     }
-                }                
+                }
+                GracefulStop();
             }
-            catch(Exception ex) { Logger.Log($"Fatal Thread Manager | {ex.Message}",LogType.Error); }            
+            catch(Exception ex) { Logger.Log($"Fatal Thread Manager | {ex.Message}",LogType.Error); }
+            Logger.Log("Server thread manager stopped! (this might be expected if you fully stopped the server)", LogType.Error);
         }
-        public static void Start(/*ProcessStartInfo args*/) {
+        public static void Start() {
             if (server != null && server.StartInfo != null) {
                 server.Start();
                 server.BeginOutputReadLine();
@@ -306,6 +237,37 @@ namespace The_Isle_Evrima_Manager.Threadz
                 return false;
             }
             return false;
+        }
+        private static void GracefulStop() {
+            if (server != null)
+            {
+                if (AttachConsole((uint)server.Id))
+                {
+                    SetConsoleCtrlHandler(null, true);
+                    try
+                    {
+                        if (!GenerateConsoleCtrlEvent(CTRL_C_EVENT, 0))
+                            server.WaitForExit();
+                    }
+                    finally
+                    {
+                        // nothing
+                    }
+                }
+                server.WaitForExit();
+                if (server.HasExited)
+                {
+                    Logger.Log("Server stoped!", LogType.Info);
+                    ManagerStatusHandler.UpdateManagerStatus(ManagerStatus.idle);
+                    GameServer.ServerRunning = false;
+                }
+            }
+
+            while (!server.HasExited)
+            {
+                if (server.HasExited) break;
+                Thread.Sleep(1200);
+            }
         }
 
         #endregion
